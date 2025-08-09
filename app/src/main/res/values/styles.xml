@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+
+
+    <!-- ========================= -->
+    <!-- BASE STYLES               -->
+    <!-- ========================= -->
+
+    <!-- Base LoopLab style -->
+    <style name="LoopLab" />
+
+    <!-- ========================= -->
+    <!-- TYPOGRAPHY STYLES         -->
+    <!-- ========================= -->
+
+    <style name="LoopLab.TextAppearance.Headline1" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">@color/foreground</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <style name="LoopLab.TextAppearance.Headline2" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/foreground</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">-0.01</item>
+    </style>
+
+    <style name="LoopLab.TextAppearance.Headline3" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/foreground</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="LoopLab.TextAppearance.Title1" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/foreground</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="LoopLab.TextAppearance.Title2" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/foreground</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="LoopLab.TextAppearance.Title3" parent="TextAppearance.Material3.TitleSmall">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/foreground</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="LoopLab.TextAppearance.Body1" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/foreground</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:lineSpacingMultiplier">1.5</item>
+    </style>
+
+    <style name="LoopLab.TextAppearance.Body2" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/foreground</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:lineSpacingMultiplier">1.4</item>
+    </style>
+
+    <style name="LoopLab.TextAppearance.Caption" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/muted_foreground</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="LoopLab.TextAppearance.Overline" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/muted_foreground</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">0.1</item>
+    </style>
+
+    <!-- ========================= -->
+    <!-- HEADING STYLES            -->
+    <!-- ========================= -->
+
+    <style name="LoopLab.Heading">
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
+    <style name="LoopLab.Heading2">
+        <item name="android:layout_marginBottom">12dp</item>
+    </style>
+
+    <style name="LoopLab.Heading3">
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <style name="LoopLab.Title">
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <style name="LoopLab.Subtitle">
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+
+    <style name="LoopLab.Body" />
+    <style name="LoopLab.Caption" />
+
+    <!-- ========================= -->
+    <!-- BUTTON STYLES             -->
+    <!-- ========================= -->
+
+    <style name="Widget.LoopLab.Button.Primary" parent="Widget.Material3.Button">
+        <item name="android:textColor">@color/primary_foreground</item>
+        <item name="backgroundTint">@color/primary</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingEnd">24dp</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="rippleColor">@color/ripple_light</item>
+        <item name="elevation">2dp</item>
+    </style>
+
+    <style name="Widget.LoopLab.Button.Secondary" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textColor">@color/primary</item>
+        <item name="strokeColor">@color/primary</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingEnd">24dp</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="rippleColor">@color/ripple_light</item>
+    </style>
+
+    <style name="Widget.LoopLab.Button.Tertiary" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="rippleColor">@color/ripple_light</item>
+    </style>
+
+    <style name="Widget.LoopLab.Button.Icon" parent="Widget.Material3.Button.IconButton">
+        <item name="iconTint">@color/primary</item>
+        <item name="backgroundTint">@color/card</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="elevation">1dp</item>
+        <item name="rippleColor">@color/ripple_light</item>
+    </style>
+
+    <style name="Widget.LoopLab.Button.Floating" parent="Widget.Material3.Button">
+        <item name="android:textColor">@color/primary_foreground</item>
+        <item name="backgroundTint">@color/primary</item>
+        <item name="cornerRadius">28dp</item>
+        <item name="elevation">6dp</item>
+        <item name="rippleColor">@color/ripple_light</item>
+    </style>
+
+    <!-- ========================= -->
+    <!-- CARD STYLES               -->
+    <!-- ========================= -->
+
+    <style name="Widget.LoopLab.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/card</item>
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="contentPadding">16dp</item>
+        <item name="strokeColor">@color/card_border</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="Widget.LoopLab.Card.Interactive" parent="Widget.LoopLab.Card">
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:foreground">@drawable/ripple_card</item>
+        <item name="cardElevation">4dp</item>
+    </style>
+
+    <style name="Widget.LoopLab.Card.Highlight" parent="Widget.LoopLab.Card">
+        <item name="cardElevation">8dp</item>
+        <item name="strokeColor">@color/primary</item>
+        <item name="strokeWidth">2dp</item>
+    </style>
+
+    <!-- ========================= -->
+    <!-- INPUT STYLES              -->
+    <!-- ========================= -->
+
+    <style name="Widget.LoopLab.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+        <item name="boxStrokeColor">@color/input_border_focused</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="hintTextColor">@color/primary</item>
+        <item name="android:textColorHint">@color/muted_foreground</item>
+    </style>
+
+    <style name="Widget.LoopLab.TextInputLayout.Error" parent="Widget.LoopLab.TextInputLayout">
+        <item name="boxStrokeColor">@color/error</item>
+        <item name="errorTextColor">@color/error</item>
+    </style>
+
+    <!-- ========================= -->
+    <!-- CHIP STYLES               -->
+    <!-- ========================= -->
+
+    <style name="Widget.LoopLab.Chip" parent="Widget.Material3.Chip.Assist">
+        <item name="chipBackgroundColor">@color/muted</item>
+        <item name="android:textColor">@color/foreground</item>
+        <item name="chipCornerRadius">20dp</item>
+    </style>
+
+    <style name="Widget.LoopLab.Chip.Selected" parent="Widget.LoopLab.Chip">
+        <item name="chipBackgroundColor">@color/primary</item>
+        <item name="android:textColor">@color/primary_foreground</item>
+    </style>
+
+    <style name="Widget.LoopLab.Chip.Filter" parent="Widget.Material3.Chip.Filter">
+        <item name="chipBackgroundColor">@color/muted</item>
+        <item name="android:textColor">@color/foreground</item>
+        <item name="chipCornerRadius">20dp</item>
+    </style>
+
+    <!-- ========================= -->
+    <!-- PROGRESS STYLES           -->
+    <!-- ========================= -->
+
+    <style name="Widget.LoopLab.ProgressBar" parent="Widget.Material3.LinearProgressIndicator">
+        <item name="trackColor">@color/progress_background</item>
+        <item name="indicatorColor">@color/progress_primary</item>
+        <item name="trackCornerRadius">8dp</item>
+    </style>
+
+    <style name="Widget.LoopLab.ProgressBar.Circular" parent="Widget.Material3.CircularProgressIndicator">
+        <item name="trackColor">@color/progress_background</item>
+        <item name="indicatorColor">@color/progress_primary</item>
+        <item name="trackThickness">4dp</item>
+        <item name="indicatorSize">48dp</item>
+    </style>
+
+    <!-- ========================= -->
+    <!-- BOTTOM NAVIGATION STYLES  -->
+    <!-- ========================= -->
+
+    <style name="Widget.LoopLab.BottomNavigation" parent="Widget.Material3.BottomNavigationView">
+        <item name="itemIconTint">@color/bottom_nav_item_tint</item>
+        <item name="itemTextColor">@color/bottom_nav_item_tint</item>
+        <item name="itemRippleColor">@color/ripple_light</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="android:background">@color/card</item>
+        <item name="elevation">8dp</item>
+    </style>
+
+    <!-- ========================= -->
+    <!-- TOOLBAR STYLES            -->
+    <!-- ========================= -->
+
+    <style name="Widget.LoopLab.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/card</item>
+        <item name="titleTextColor">@color/foreground</item>
+        <item name="subtitleTextColor">@color/muted_foreground</item>
+        <item name="elevation">2dp</item>
+    </style>
+
+    <!-- ========================= -->
+    <!-- DIALOG STYLES             -->
+    <!-- ========================= -->
+
+    <style name="Widget.LoopLab.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/primary_foreground</item>
+        <item name="colorSurface">@color/card</item>
+        <item name="colorOnSurface">@color/card_foreground</item>
+        <item name="cornerRadius">16dp</item>
+    </style>
+
+    <style name="Theme.LoopLab.Dialog" parent="Theme.Material3.DayNight.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowMinWidthMajor">85%</item>
+        <item name="android:windowMinWidthMinor">85%</item>
+    </style>
+
+    <!-- ========================= -->
+    <!-- BOTTOM SHEET STYLES       -->
+    <!-- ========================= -->
+
+    <style name="Widget.LoopLab.BottomSheet" parent="Widget.Material3.BottomSheet">
+        <item name="shapeAppearance">@style/ShapeAppearance.LoopLab.LargeComponent</item>
+        <item name="backgroundTint">@color/card</item>
+    </style>
+
+    <!-- ========================= -->
+    <!-- SHAPE STYLES              -->
+    <!-- ========================= -->
+
+    <style name="ShapeAppearance.LoopLab.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="ShapeAppearance.LoopLab.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="ShapeAppearance.LoopLab.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+</resources>

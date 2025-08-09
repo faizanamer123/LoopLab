@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ========================= -->
+    <!-- LIGHT THEME COLORS        -->
+    <!-- ========================= -->
+
+    <!-- Basic Colors - Light -->
+    <color name="light_background">#FFFFFF</color>
+    <color name="light_foreground">#0F172A</color>
+    <color name="light_card">#FFFFFF</color>
+    <color name="light_card_foreground">#0F172A</color>
+    <color name="light_popover">#FFFFFF</color>
+    <color name="light_popover_foreground">#0F172A</color>
+
+    <!-- Primary Colors - Light -->
+    <color name="light_primary">#1E293B</color>
+    <color name="light_primary_foreground">#F8FAFC</color>
+    <color name="light_primary_variant">#334155</color>
+    <color name="light_primary_glow">#64748B</color>
+
+    <!-- Secondary Colors - Light -->
+    <color name="light_secondary">#F1F5F9</color>
+    <color name="light_secondary_foreground">#1E293B</color>
+
+    <!-- Muted Colors - Light -->
+    <color name="light_muted">#F1F5F9</color>
+    <color name="light_muted_foreground">#64748B</color>
+
+    <!-- Accent Colors - Light -->
+    <color name="light_accent">#F1F5F9</color>
+    <color name="light_accent_foreground">#1E293B</color>
+
+    <!-- Destructive Colors - Light -->
+    <color name="light_destructive">#EF4444</color>
+    <color name="light_destructive_foreground">#F8FAFC</color>
+
+    <!-- Border and Input - Light -->
+    <color name="light_border">#E2E8F0</color>
+    <color name="light_input">#E2E8F0</color>
+    <color name="light_ring">#0F172A</color>
+
+    <!-- Sidebar Colors - Light -->
+    <color name="light_sidebar_background">#FAFAFA</color>
+    <color name="light_sidebar_foreground">#3F3F46</color>
+    <color name="light_sidebar_primary">#18181B</color>
+    <color name="light_sidebar_primary_foreground">#FAFAFA</color>
+    <color name="light_sidebar_accent">#F4F4F5</color>
+    <color name="light_sidebar_accent_foreground">#18181B</color>
+    <color name="light_sidebar_border">#E4E4E7</color>
+    <color name="light_sidebar_ring">#3B82F6</color>
+
+    <!-- Effects - Light -->
+    <color name="light_shadow_elevated">#471E293B</color>
+
+
+    <!-- ========================= -->
+    <!-- DARK THEME COLORS         -->
+    <!-- ========================= -->
+
+    <!-- Basic Colors - Dark -->
+    <color name="dark_background">#0F172A</color>
+    <color name="dark_foreground">#F8FAFC</color>
+    <color name="dark_card">#0F172A</color>
+    <color name="dark_card_foreground">#F8FAFC</color>
+    <color name="dark_popover">#0F172A</color>
+    <color name="dark_popover_foreground">#F8FAFC</color>
+
+    <!-- Primary Colors - Dark -->
+    <color name="dark_primary">#F8FAFC</color>
+    <color name="dark_primary_foreground">#1E293B</color>
+    <color name="dark_primary_variant">#334155</color>
+    <color name="dark_primary_glow">#64748B</color>
+
+    <!-- Secondary Colors - Dark -->
+    <color name="dark_secondary">#1E293B</color>
+    <color name="dark_secondary_foreground">#F8FAFC</color>
+
+    <!-- Muted Colors - Dark -->
+    <color name="dark_muted">#1E293B</color>
+    <color name="dark_muted_foreground">#94A3B8</color>
+
+    <!-- Accent Colors - Dark -->
+    <color name="dark_accent">#1E293B</color>
+    <color name="dark_accent_foreground">#F8FAFC</color>
+
+    <!-- Destructive Colors - Dark -->
+    <color name="dark_destructive">#991B1B</color>
+    <color name="dark_destructive_foreground">#F8FAFC</color>
+
+    <!-- Border and Input - Dark -->
+    <color name="dark_border">#1E293B</color>
+    <color name="dark_input">#1E293B</color>
+    <color name="dark_ring">#CBD5E1</color>
+
+    <!-- Sidebar Colors - Dark -->
+    <color name="dark_sidebar_background">#18181B</color>
+    <color name="dark_sidebar_foreground">#F4F4F5</color>
+    <color name="dark_sidebar_primary">#3B82F6</color>
+    <color name="dark_sidebar_primary_foreground">#FFFFFF</color>
+    <color name="dark_sidebar_accent">#262626</color>
+    <color name="dark_sidebar_accent_foreground">#F4F4F5</color>
+    <color name="dark_sidebar_border">#262626</color>
+    <color name="dark_sidebar_ring">#3B82F6</color>
+
+    <!-- Effects - Dark -->
+    <color name="dark_shadow_elevated">#47F8FAFC</color>
+
+
+    <!-- ========================= -->
+    <!-- ADAPTIVE THEME COLORS     -->
+    <!-- (default to light; overridden in values-night) -->
+    <!-- ========================= -->
+
+    <!-- Basic Colors - Adaptive -->
+    <color name="background">@color/light_background</color>
+    <color name="foreground">@color/light_foreground</color>
+    <color name="card">@color/light_card</color>
+    <color name="card_foreground">@color/light_card_foreground</color>
+    <color name="popover">@color/light_popover</color>
+    <color name="popover_foreground">@color/light_popover_foreground</color>
+
+    <!-- Primary Colors - Adaptive -->
+    <color name="primary">@color/light_primary</color>
+    <color name="primary_foreground">@color/light_primary_foreground</color>
+    <color name="primary_variant">@color/light_primary_variant</color>
+    <color name="primary_glow">@color/light_primary_glow</color>
+
+    <!-- Secondary Colors - Adaptive -->
+    <color name="secondary">@color/light_secondary</color>
+    <color name="secondary_foreground">@color/light_secondary_foreground</color>
+
+    <!-- Muted Colors - Adaptive -->
+    <color name="muted">@color/light_muted</color>
+    <color name="muted_foreground">@color/light_muted_foreground</color>
+
+    <!-- Accent Colors - Adaptive -->
+    <color name="accent">@color/light_accent</color>
+    <color name="accent_foreground">@color/light_accent_foreground</color>
+
+    <!-- Destructive Colors - Adaptive -->
+    <color name="destructive">@color/light_destructive</color>
+    <color name="destructive_foreground">@color/light_destructive_foreground</color>
+
+    <!-- Border and Input - Adaptive -->
+    <color name="border">@color/light_border</color>
+    <color name="input">@color/light_input</color>
+    <color name="ring">@color/light_ring</color>
+
+    <!-- Sidebar Colors - Adaptive -->
+    <color name="sidebar_background">@color/light_sidebar_background</color>
+    <color name="sidebar_foreground">@color/light_sidebar_foreground</color>
+    <color name="sidebar_primary">@color/light_sidebar_primary</color>
+    <color name="sidebar_primary_foreground">@color/light_sidebar_primary_foreground</color>
+    <color name="sidebar_accent">@color/light_sidebar_accent</color>
+    <color name="sidebar_accent_foreground">@color/light_sidebar_accent_foreground</color>
+    <color name="sidebar_border">@color/light_sidebar_border</color>
+    <color name="sidebar_ring">@color/light_sidebar_ring</color>
+
+    <!-- Effects - Adaptive -->
+    <color name="shadow_elevated">@color/light_shadow_elevated</color>
+
+
+    <!-- ========================= -->
+    <!-- LOOPLAB BRAND COLORS      -->
+    <!-- ========================= -->
+    <!-- Keep only one definition of these names across values files -->
+    <color name="looplab_blue">#3B82F6</color>
+    <color name="looplab_dark_blue">#1E40AF</color>
+    <color name="looplab_light_blue">#60A5FA</color>
+    <color name="looplab_accent">#06B6D4</color>
+    <color name="looplab_gradient_start">#1E293B</color>
+    <color name="looplab_gradient_end">#3B82F6</color>
+
+    <!-- ========================= -->
+    <!-- STATUS COLORS             -->
+    <!-- ========================= -->
+    <color name="success">#10B981</color>
+    <color name="success_foreground">#FFFFFF</color>
+    <color name="success_light">#D1FAE5</color>
+
+    <color name="warning">#F59E0B</color>
+    <color name="warning_foreground">#FFFFFF</color>
+    <color name="warning_light">#FEF3C7</color>
+
+    <color name="error">#EF4444</color>
+    <color name="error_foreground">#FFFFFF</color>
+    <color name="error_light">#FEE2E2</color>
+
+    <color name="info">#3B82F6</color>
+    <color name="info_foreground">#FFFFFF</color>
+    <color name="info_light">#DBEAFE</color>
+
+    <!-- ========================= -->
+    <!-- COMMON COLORS             -->
+    <!-- (omit black/white to avoid duplicates) -->
+    <!-- ========================= -->
+    <color name="transparent">#00000000</color>
+    <color name="semi_transparent">#80000000</color>
+
+    <!-- Gray Scale -->
+    <color name="gray_50">#F9FAFB</color>
+    <color name="gray_100">#F3F4F6</color>
+    <color name="gray_200">#E5E7EB</color>
+    <color name="gray_300">#D1D5DB</color>
+    <color name="gray_400">#9CA3AF</color>
+    <color name="gray_500">#6B7280</color>
+    <color name="gray_600">#4B5563</color>
+    <color name="gray_700">#374151</color>
+    <color name="gray_800">#1F2937</color>
+    <color name="gray_900">#111827</color>
+
+
+    <!-- ========================= -->
+    <!-- SYSTEM COLORS             -->
+    <!-- ========================= -->
+    <color name="status_bar">@color/primary</color>
+    <color name="status_bar_dark">@color/dark_background</color>
+    <color name="navigation_bar">@color/background</color>
+    <color name="navigation_bar_dark">@color/dark_background</color>
+
+    <!-- Ripple Effects -->
+    <color name="ripple_light">#1A000000</color>
+    <color name="ripple_dark">#1AFFFFFF</color>
+
+    <!-- Overlay Colors -->
+    <color name="overlay_light">#40000000</color>
+    <color name="overlay_dark">#40FFFFFF</color>
+
+    <!-- Divider Colors -->
+    <color name="divider_light">#1F000000</color>
+    <color name="divider_dark">#1FFFFFFF</color>
+
+
+    <!-- ========================= -->
+    <!-- COMPONENT SPECIFIC COLORS -->
+    <!-- ========================= -->
+    <color name="button_primary">@color/primary</color>
+    <color name="button_primary_pressed">@color/primary_variant</color>
+    <color name="button_secondary">@color/secondary</color>
+    <color name="button_secondary_pressed">@color/gray_200</color>
+
+    <!-- Input Field Colors -->
+    <color name="input_background">@color/input</color>
+    <color name="input_border">@color/border</color>
+    <color name="input_border_focused">@color/primary</color>
+    <color name="input_text">@color/foreground</color>
+    <color name="input_hint">#80000000</color>
+    <color name="input_stroke">@color/border</color>
+
+    <!-- Card Colors -->
+    <color name="card_background">@color/card</color>
+    <color name="card_border">@color/border</color>
+    <color name="card_shadow">#10000000</color>
+
+    <!-- Navigation Colors -->
+    <color name="nav_selected">@color/primary</color>
+    <color name="nav_unselected">@color/muted_foreground</color>
+    <color name="nav_background">@color/card</color>
+
+    <!-- Progress Colors -->
+    <color name="progress_primary">@color/primary</color>
+    <color name="progress_secondary">@color/muted</color>
+    <color name="progress_background">#E5E7EB</color>
+
+    <!-- Badge Colors -->
+    <color name="badge_primary">@color/primary</color>
+    <color name="badge_success">@color/success</color>
+    <color name="badge_warning">@color/warning</color>
+    <color name="badge_error">@color/error</color>
+
+
+    <!-- ========================= -->
+    <!-- LEARNING MODULE COLORS    -->
+    <!-- ========================= -->
+    <color name="course_completed">#10B981</color>
+    <color name="course_in_progress">#F59E0B</color>
+    <color name="course_not_started">#6B7280</color>
+
+    <!-- Video Player Colors -->
+    <color name="video_control_background">#CC000000</color>
+    <color name="video_progress">#3B82F6</color>
+    <color name="video_buffer">#9CA3AF</color>
+
+    <!-- Live Session Colors -->
+    <color name="live_session_active">#EF4444</color>
+    <color name="live_session_upcoming">#F59E0B</color>
+    <color name="live_session_ended">#6B7280</color>
+
+
+    <!-- ========================= -->
+    <!-- CHAT COLORS               -->
+    <!-- ========================= -->
+    <color name="chat_sent_message">@color/primary</color>
+    <color name="chat_received_message">@color/muted</color>
+    <color name="chat_sent_text">@color/primary_foreground</color>
+    <color name="chat_received_text">@color/foreground</color>
+
+    <!-- Online Status -->
+    <color name="status_online">#10B981</color>
+    <color name="status_away">#F59E0B</color>
+    <color name="status_offline">#6B7280</color>
+
+
+    <!-- ========================= -->
+    <!-- EVENT COLORS              -->
+    <!-- ========================= -->
+    <color name="event_workshop">#8B5CF6</color>
+    <color name="event_webinar">#3B82F6</color>
+    <color name="event_hackathon">#EF4444</color>
+    <color name="event_meetup">#10B981</color>
+    <color name="event_conference">#F59E0B</color>
+
+
+    <!-- ========================= -->
+    <!-- ADMIN DASHBOARD COLORS    -->
+    <!-- ========================= -->
+    <color name="analytics_primary">#3B82F6</color>
+    <color name="analytics_secondary">#10B981</color>
+    <color name="analytics_tertiary">#F59E0B</color>
+    <color name="analytics_quaternary">#8B5CF6</color>
+
+    <!-- Chart Colors -->
+    <color name="chart_line_1">#3B82F6</color>
+    <color name="chart_line_2">#10B981</color>
+    <color name="chart_line_3">#F59E0B</color>
+    <color name="chart_line_4">#EF4444</color>
+    <color name="chart_line_5">#8B5CF6</color>
+
+</resources>
+
+
