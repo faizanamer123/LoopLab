@@ -192,13 +192,9 @@ public class CoursePreviewActivity extends AppCompatActivity {
             tvRating.setVisibility(View.GONE);
         }
         
-        // Display course progress
-        if (currentUserId != null && course.enrolledCount > 0) {
-            // TODO: Get actual progress from enrollment data
-            // For now, show a placeholder progress
-            int progress = calculateCourseProgress(course);
-            tvProgressPercent.setText(progress + "%");
-            courseProgressBar.setProgress(progress);
+        // Display actual course progress
+        if (currentUserId != null) {
+            loadActualCourseProgress(course.id);
         } else {
             // Show 0% progress for non-enrolled users
             tvProgressPercent.setText("0%");
@@ -210,14 +206,54 @@ public class CoursePreviewActivity extends AppCompatActivity {
         tvProgressPercent.setVisibility(View.VISIBLE);
     }
     
-    private int calculateCourseProgress(Models.Course course) {
-        // TODO: Implement actual progress calculation based on completed lectures
-        // For now, return a placeholder value
-        if (course.lectureCount > 0) {
-            // Simulate progress based on lecture count
-            return Math.min(75, (course.lectureCount * 10)); // Placeholder logic
-        }
-        return 0;
+    private void loadActualCourseProgress(String courseId) {
+        courseService.getCourseProgress(currentUserId, courseId, new CourseService.ProgressCallback() {
+            @Override
+            public void onSuccess(Models.Progress progress) {
+                // Calculate progress percentage based on completed lectures vs total lectures
+                if (progress.completedLectures != null && progress.completedLectures.size() > 0) {
+                    // Get total lectures count for this course
+                    courseService.getCourseLectures(courseId, new CourseService.LectureCallback() {
+                        @Override
+                        public void onSuccess(List<Models.Lecture> lectures) {
+                            int totalLectures = lectures.size();
+                            int completedLectures = progress.completedLectures.size();
+                            int progressPercentage = totalLectures > 0 ? (completedLectures * 100) / totalLectures : 0;
+                            
+                            tvProgressPercent.setText(progressPercentage + "%");
+                            courseProgressBar.setProgress(progressPercentage);
+                            
+                            // Update progress bar color based on completion level
+                            if (progressPercentage >= 100) {
+                                courseProgressBar.setIndicatorColor(getResources().getColor(android.R.color.holo_green_dark));
+                            } else if (progressPercentage >= 50) {
+                                courseProgressBar.setIndicatorColor(getResources().getColor(android.R.color.holo_blue_dark));
+                            } else {
+                                courseProgressBar.setIndicatorColor(getResources().getColor(android.R.color.holo_orange_dark));
+                            }
+                        }
+                        
+                        @Override
+                        public void onError(String error) {
+                            // Fallback to 0% progress
+                            tvProgressPercent.setText("0%");
+                            courseProgressBar.setProgress(0);
+                        }
+                    });
+                } else {
+                    // No completed lectures
+                    tvProgressPercent.setText("0%");
+                    courseProgressBar.setProgress(0);
+                }
+            }
+            
+            @Override
+            public void onError(String error) {
+                // Fallback to 0% progress
+                tvProgressPercent.setText("0%");
+                courseProgressBar.setProgress(0);
+            }
+        });
     }
 
     private void fetchInstructorName(String instructorId) {

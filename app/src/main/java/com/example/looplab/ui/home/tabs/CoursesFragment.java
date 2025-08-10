@@ -282,7 +282,8 @@ public class CoursesFragment extends Fragment {
                                 Models.Enrollment enrollment = querySnapshot.getDocuments().get(0)
                                         .toObject(Models.Enrollment.class);
                                 if (enrollment != null) {
-                                    showEnrolledState(enrollment.progress);
+                                    // Load actual progress from progress data
+                                    loadActualCourseProgress(course.id);
                                 }
                             } else {
                                 // User is not enrolled
@@ -294,6 +295,43 @@ public class CoursesFragment extends Fragment {
                         });
             }
             
+            private void loadActualCourseProgress(String courseId) {
+                CourseService courseService = new CourseService();
+                courseService.getCourseProgress(currentUserId, courseId, new CourseService.ProgressCallback() {
+                    @Override
+                    public void onSuccess(Models.Progress progress) {
+                        if (progress.completedLectures != null && progress.completedLectures.size() > 0) {
+                            // Get total lectures count for this course
+                            courseService.getCourseLectures(courseId, new CourseService.LectureCallback() {
+                                @Override
+                                public void onSuccess(List<Models.Lecture> lectures) {
+                                    int totalLectures = lectures.size();
+                                    int completedLectures = progress.completedLectures.size();
+                                    int progressPercentage = totalLectures > 0 ? (completedLectures * 100) / totalLectures : 0;
+                                    
+                                    showEnrolledState(progressPercentage);
+                                }
+                                
+                                @Override
+                                public void onError(String error) {
+                                    // Fallback to 0% progress
+                                    showEnrolledState(0);
+                                }
+                            });
+                        } else {
+                            // No completed lectures
+                            showEnrolledState(0);
+                        }
+                    }
+                    
+                    @Override
+                    public void onError(String error) {
+                        // Fallback to 0% progress
+                        showEnrolledState(0);
+                    }
+                });
+            }
+            
             private void showEnrolledState(int progress) {
                 btnEnroll.setText("Continue");
                 btnEnroll.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
@@ -302,6 +340,15 @@ public class CoursesFragment extends Fragment {
                 progressOverlay.setVisibility(View.VISIBLE);
                 progressBar.setProgress(progress);
                 tvProgressPercent.setText(progress + "%");
+                
+                // Update progress bar color based on completion level
+                if (progress >= 100) {
+                    progressBar.setIndicatorColor(itemView.getContext().getColor(android.R.color.holo_green_dark));
+                } else if (progress >= 50) {
+                    progressBar.setIndicatorColor(itemView.getContext().getColor(android.R.color.holo_blue_dark));
+                } else {
+                    progressBar.setIndicatorColor(itemView.getContext().getColor(android.R.color.holo_orange_dark));
+                }
             }
             
             private void showEnrollState() {

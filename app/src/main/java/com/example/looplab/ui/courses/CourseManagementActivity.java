@@ -162,7 +162,7 @@ public class CourseManagementActivity extends AppCompatActivity {
                     // TODO: Navigate to course progress view
                     Toast.makeText(CourseManagementActivity.this, "Progress view coming soon", Toast.LENGTH_SHORT).show();
                 }
-            });
+            }, currentUserId);
         }
         
         rvCourses.setAdapter(adapter);
@@ -342,19 +342,24 @@ public class CourseManagementActivity extends AppCompatActivity {
     }
 
     // Enrolled courses adapter for students
-    static class EnrolledCoursesAdapter extends RecyclerView.Adapter<EnrolledCoursesAdapter.VH> {
-        interface Listener { 
-            void onOpenCourse(Models.Course c);
-            void onViewProgress(Models.Course c);
-        }
-        private final java.util.List<Models.Course> data = new java.util.ArrayList<>();
-        private final Listener listener;
-        EnrolledCoursesAdapter(Listener l) { this.listener = l; }
+            static class EnrolledCoursesAdapter extends RecyclerView.Adapter<EnrolledCoursesAdapter.VH> {
+            interface Listener { 
+                void onOpenCourse(Models.Course c);
+                void onViewProgress(Models.Course c);
+            }
+            private final java.util.List<Models.Course> data = new java.util.ArrayList<>();
+            private final Listener listener;
+            private final String currentUserId;
+            
+            EnrolledCoursesAdapter(Listener l, String userId) { 
+                this.listener = l; 
+                this.currentUserId = userId;
+            }
         void submit(java.util.List<Models.Course> list) { data.clear(); if (list!=null) data.addAll(list); notifyDataSetChanged(); }
-        @Override public VH onCreateViewHolder(android.view.ViewGroup p, int v) { return new VH(android.view.LayoutInflater.from(p.getContext()).inflate(R.layout.item_course_enhanced, p, false)); }
+        @Override public VH onCreateViewHolder(android.view.ViewGroup p, int v) { return new VH(android.view.LayoutInflater.from(p.getContext()).inflate(R.layout.item_course_enhanced, p, false), currentUserId); }
         @Override public void onBindViewHolder(VH h, int i) { h.bind(data.get(i), listener); }
         @Override public int getItemCount() { return data.size(); }
-        static class VH extends RecyclerView.ViewHolder {
+        class VH extends RecyclerView.ViewHolder {
             private final android.widget.TextView tvCourseTitle; 
             private final android.widget.TextView tvInstructor; 
             private final android.widget.TextView tvLectureCount; 
@@ -365,9 +370,11 @@ public class CourseManagementActivity extends AppCompatActivity {
             private final android.widget.LinearLayout progressOverlay;
             private final android.widget.TextView tvProgressPercent;
             private final com.google.android.material.progressindicator.LinearProgressIndicator progressBar;
+            private final String currentUserId;
             
-            VH(android.view.View itemView){ 
+            VH(android.view.View itemView, String userId){ 
                 super(itemView); 
+                this.currentUserId = userId;
                 tvCourseTitle=itemView.findViewById(R.id.tvCourseTitle); 
                 tvInstructor=itemView.findViewById(R.id.tvInstructor); 
                 tvLectureCount=itemView.findViewById(R.id.tvLectureCount); 
@@ -385,13 +392,9 @@ public class CourseManagementActivity extends AppCompatActivity {
                 tvInstructor.setText(c.instructorName != null ? "by " + c.instructorName : "by Unknown instructor");
                 tvLectureCount.setText(c.lectureCount + " lectures");
                 tvDuration.setText("Enrolled: " + c.enrolledCount);
-                tvDifficulty.setText("Progress: " + getEnrollmentProgress(c) + "%");
                 
-                // Show progress overlay for enrolled courses
-                progressOverlay.setVisibility(View.VISIBLE);
-                int progress = getEnrollmentProgress(c);
-                tvProgressPercent.setText(progress + "%");
-                progressBar.setProgress(progress);
+                // Load actual progress for enrolled courses
+                loadActualCourseProgress(c.id);
                 
                 // Change button text and actions for enrolled courses
                 btnEnroll.setText("Open Course");
@@ -401,10 +404,63 @@ public class CourseManagementActivity extends AppCompatActivity {
                 btnPreview.setOnClickListener(v -> l.onViewProgress(c));
             }
             
+            private void loadActualCourseProgress(String courseId) {
+                CourseService courseService = new CourseService();
+                courseService.getCourseProgress(currentUserId, courseId, new CourseService.ProgressCallback() {
+                    @Override
+                    public void onSuccess(Models.Progress progress) {
+                        if (progress.completedLectures != null && progress.completedLectures.size() > 0) {
+                            // Get total lectures count for this course
+                            courseService.getCourseLectures(courseId, new CourseService.LectureCallback() {
+                                @Override
+                                public void onSuccess(List<Models.Lecture> lectures) {
+                                    int totalLectures = lectures.size();
+                                    int completedLectures = progress.completedLectures.size();
+                                    int progressPercentage = totalLectures > 0 ? (completedLectures * 100) / totalLectures : 0;
+                                    
+                                    updateProgressUI(progressPercentage);
+                                }
+                                
+                                @Override
+                                public void onError(String error) {
+                                    // Fallback to 0% progress
+                                    updateProgressUI(0);
+                                }
+                            });
+                        } else {
+                            // No completed lectures
+                            updateProgressUI(0);
+                        }
+                    }
+                    
+                    @Override
+                    public void onError(String error) {
+                        // Fallback to 0% progress
+                        updateProgressUI(0);
+                    }
+                });
+            }
+            
+            private void updateProgressUI(int progress) {
+                tvDifficulty.setText("Progress: " + progress + "%");
+                progressOverlay.setVisibility(View.VISIBLE);
+                tvProgressPercent.setText(progress + "%");
+                progressBar.setProgress(progress);
+                
+                // Update progress bar color based on completion level
+                if (progress >= 100) {
+                    progressBar.setIndicatorColor(itemView.getContext().getColor(android.R.color.holo_green_dark));
+                } else if (progress >= 50) {
+                    progressBar.setIndicatorColor(itemView.getContext().getColor(android.R.color.holo_blue_dark));
+                } else {
+                    progressBar.setIndicatorColor(itemView.getContext().getColor(android.R.color.holo_orange_dark));
+                }
+            }
+            
             private int getEnrollmentProgress(Models.Course course) {
-                // TODO: Get actual progress from enrollment data
-                // For now, return a placeholder value
-                return 25; // Placeholder progress
+                // Get actual progress from progress data
+                // For now, return a placeholder value until we implement async loading
+                return 0; // Will be updated with actual progress
             }
         }
     }
