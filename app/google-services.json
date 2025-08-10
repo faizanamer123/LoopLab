@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1001192149348",
+    "project_id": "looplab-11e71",
+    "storage_bucket": "looplab-11e71.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001192149348:android:be43ae509365b67fa2aa71",
+        "android_client_info": {
+          "package_name": "com.example.looplab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1001192149348-jctd7ri94asnss9l1gc0sbvastc6gosf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.looplab",
+            "certificate_hash": "e4798fd8a0c85627fe82208f5e942aeea7dae8fa"
+          }
+        },
+        {
+          "client_id": "1001192149348-5h9ejd2gkene12skdnenl6413n0hkbtt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSK5qe216FPQD0AVKkhP8NgiqPUJwE8KA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1001192149348-5h9ejd2gkene12skdnenl6413n0hkbtt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

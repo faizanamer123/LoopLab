@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Brand Colors (core variant only; base colors are defined in colors_looplab.xml) -->
+    <color name="secondary_variant">#C51162</color>
+    
+    <!-- Background Colors -->
+    <color name="surface">#FFFFFF</color>
+    <color name="selection_highlight">#FFBB86FC</color>
+
+    <!-- Text Colors -->
+    <color name="on_primary">#FFFFFF</color>
+    <color name="on_secondary">#FFFFFF</color>
+    <color name="on_background">#212121</color>
+    <color name="on_surface">#212121</color>
+    
+    <!-- System Colors defined in colors_looplab.xml -->
+    
+    <!-- Accent Colors defined in colors_looplab.xml -->
+    
+    <!-- Card and Divider Colors -->
+    <color name="divider">#E0E0E0</color>
+    
+    <!-- Status Colors -->
+    <color name="online">#4CAF50</color>
+    <color name="offline">#9E9E9E</color>
+    
+    <!-- Transparent Colors defined in colors_looplab.xml -->
+    
+    <!-- Dark Theme Colors -->
+    <color name="primary_dark">#5C6BC0</color>
+    <color name="background_dark">#121212</color>
+    <color name="surface_dark">#1E1E1E</color>
+    <color name="on_background_dark">#FFFFFF</color>
+    <color name="on_surface_dark">#FFFFFF</color>
+    
+    <!-- Text Colors for Different States -->
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="text_disabled">#BDBDBD</color>
+
+    <!-- Common named colors used in layouts -->
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    
+    <!-- Gradient Colors -->
+    <color name="gradient_start">#1976D2</color>
+    <color name="gradient_end">#42A5F5</color>
+</resources>
