@@ -3,14 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp"
         app:navigationIcon="@drawable/ic_back"
-        app:title="Announcements" />
+        app:navigationIconTint="#000000"
+        app:title="Announcements"
+        app:titleTextColor="#000000"
+        android:fitsSystemWindows="true"/>
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progressIndicator"
@@ -18,22 +24,30 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="16dp"
-        android:visibility="gone" />
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:indicatorColor="#000000"
+        app:trackColor="#80000000" />
 
     <TextView
         android:id="@+id/tvEmpty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No announcements yet"
+        android:fontFamily="@font/manrope_semibold"
         android:gravity="center"
-        android:visibility="gone"
-        android:padding="16dp" />
+        android:padding="16dp"
+        android:text="No announcements yet"
+        android:textColor="#80000000"
+        android:textSize="18sp"
+        android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvAnnouncements"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:clipToPadding="false"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAdd"
@@ -41,8 +55,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        app:srcCompat="@drawable/ic_add" />
+        app:srcCompat="@drawable/ic_add"
+        app:backgroundTint="#000000"
+        app:tint="#FFFFFF"
+        app:elevation="0dp"
+        app:borderWidth="0dp"/>
 
 </LinearLayout>
-
-
