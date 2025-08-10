@@ -1,57 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:layout_marginVertical="8dp"
-    android:layout_marginHorizontal="8dp"
-    android:background="#FF9292">
-
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:fontFamily="@font/manrope_bold"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        android:text="Announcement" />
-
-    <TextView
-        android:id="@+id/tvSubtitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/manrope_semibold"
-        android:text="By Admin"
-        android:textColor="#AF3232"
-        android:textSize="14sp" />
+    android:layout_marginVertical="6dp"
+    android:layout_marginHorizontal="16dp"
+    app:cardBackgroundColor="#FF9292"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp"
-        android:gravity="center_vertical">
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="Announcement"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:lineSpacingMultiplier="1.1" />
+
+                <TextView
+                    android:id="@+id/tvSubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:text="By Admin"
+                    android:textColor="#AF3232"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDelete"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:contentDescription="Delete announcement"
+                app:icon="@drawable/ic_delete"
+                app:iconTint="#AF3232"
+                app:iconSize="20dp"
+                app:backgroundTint="@android:color/transparent"
+                app:rippleColor="#40AF3232" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvMeta"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginTop="12dp"
             android:fontFamily="@font/manrope_medium"
+            android:text="Date/time"
             android:textColor="#AF3232"
-            android:textSize="12sp"
-            android:text="Date/time" />
+            android:textSize="13sp"
+            android:alpha="0.8" />
 
-        <ImageButton
-            android:id="@+id/btnDelete"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:contentDescription="Delete"
-            android:src="@drawable/ic_delete"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:tint="#AF3232"/>
     </LinearLayout>
 
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>
