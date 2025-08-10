@@ -4,22 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="#FFFFFF">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/surface">
+        android:background="@android:color/transparent"
+        app:elevation="0dp"
+        android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             app:navigationIcon="@drawable/ic_back"
-            app:title="Course"
+            app:navigationIconTint="#000000"
             app:subtitle="Lectures"
-            app:titleTextColor="@color/text_primary"
-            app:subtitleTextColor="@color/text_secondary" />
+            app:subtitleTextColor="#80000000"
+            app:title="Course"
+            app:titleTextColor="#000000" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -29,18 +33,18 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <!-- Video Player Section -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/surface">
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -51,7 +55,7 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="240dp"
-                        android:background="@color/surface_variant">
+                        android:background="#E0E0E0">
 
                         <VideoView
                             android:id="@+id/videoView"
@@ -71,23 +75,24 @@
                             android:id="@+id/videoPlaceholder"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
+                            android:background="@android:color/transparent"
                             android:gravity="center"
-                            android:background="@color/surface_variant">
+                            android:orientation="vertical">
 
                             <ImageView
                                 android:layout_width="64dp"
                                 android:layout_height="64dp"
+                                android:contentDescription="Play video"
                                 android:src="@drawable/ic_play_circle"
-                                android:tint="@color/primary"
-                                android:contentDescription="Play video" />
+                                android:tint="#80000000" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
+                                android:fontFamily="@font/manrope_medium"
                                 android:text="Select a lecture to start learning"
-                                android:textColor="@color/text_secondary"
+                                android:textColor="#80000000"
                                 android:textSize="14sp" />
 
                         </LinearLayout>
@@ -95,11 +100,12 @@
                         <!-- Loading Indicator -->
                         <com.google.android.material.progressindicator.CircularProgressIndicator
                             android:id="@+id/progressIndicator"
+                            style="@style/Widget.Material3.CircularProgressIndicator"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_gravity="center"
                             android:visibility="gone"
-                            style="@style/Widget.Material3.CircularProgressIndicator" />
+                            app:indicatorColor="#000000" />
 
                     </FrameLayout>
 
@@ -114,29 +120,35 @@
                             android:id="@+id/tvCurrentLectureTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
                             android:text="No lecture selected"
+                            android:textColor="#000000"
                             android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/text_primary" />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/tvCurrentLectureDuration"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
+                            android:fontFamily="@font/manrope_medium"
                             android:text=""
-                            android:textSize="14sp"
-                            android:textColor="@color/text_secondary" />
+                            android:textColor="#80000000"
+                            android:textSize="14sp" />
 
                         <!-- YouTube Video Completion Button -->
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnMarkComplete"
+                            style="@style/Widget.Material3.Button.UnelevatedButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
+                            android:fontFamily="@font/manrope_semibold"
                             android:text="Mark as Complete"
+                            android:textColor="#FFFFFF"
                             android:visibility="gone"
-                            style="@style/Widget.Material3.Button.OutlinedButton" />
+                            app:backgroundTint="#000000"
+                            app:cornerRadius="20dp" />
 
                     </LinearLayout>
 
@@ -150,9 +162,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
-                app:cardBackgroundColor="@color/surface">
+                app:cardBackgroundColor="#90FCC8"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -163,33 +175,37 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_semibold"
                         android:text="Course Progress"
+                        android:textColor="#000000"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_primary" />
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:layout_marginTop="8dp"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
                             android:id="@+id/courseProgressBar"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_marginEnd="12dp"
+                            android:layout_weight="1"
+                            app:indicatorColor="#000000"
+                            app:trackColor="#4D000000"
                             app:trackCornerRadius="8dp" />
 
                         <TextView
                             android:id="@+id/tvProgressPercentage"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_medium"
                             android:text="0%"
-                            android:textSize="14sp"
-                            android:textColor="@color/text_secondary" />
+                            android:textColor="#000000"
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -201,27 +217,29 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginBottom="8dp"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/manrope_bold"
                     android:text="Course Content"
+                    android:textColor="#000000"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_primary" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvLecturesCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_medium"
                     android:text="0 lectures"
-                    android:textSize="14sp"
-                    android:textColor="@color/text_secondary" />
+                    android:textColor="#80000000"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -239,12 +257,13 @@
                 android:id="@+id/tvEmpty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="No lectures available yet"
                 android:gravity="center"
                 android:padding="32dp"
-                android:visibility="gone"
-                android:textColor="@color/text_secondary"
-                android:textSize="16sp" />
+                android:fontFamily="@font/manrope_semibold"
+                android:text="No lectures available yet"
+                android:textColor="#80000000"
+                android:textSize="16sp"
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -256,10 +275,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
+        app:backgroundTint="#000000"
         app:srcCompat="@drawable/ic_add"
-        app:backgroundTint="@color/primary"
-        app:tint="@color/white" />
+        app:tint="#FFFFFF"
+        app:elevation="0dp"
+        app:borderWidth="0dp"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-
