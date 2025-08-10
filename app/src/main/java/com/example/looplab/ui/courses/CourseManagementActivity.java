@@ -123,35 +123,67 @@ public class CourseManagementActivity extends AppCompatActivity {
     }
 
     private void createAppropriateAdapter() {
-        if ("teacher".equals(currentUserRole) || "admin".equals(currentUserRole)) {
-            // Create management adapter for teachers/admins
-        adapter = new ManageCoursesAdapter(new ManageCoursesAdapter.Listener() {
-            @Override public void onTogglePublish(Models.Course c, boolean publish) {
-                c.isPublished = publish;
-                courseService.updateCourse(c, new CourseService.CourseCallback() {
-                    @Override public void onSuccess() { Toast.makeText(CourseManagementActivity.this, publish?"Published":"Unpublished", Toast.LENGTH_SHORT).show(); }
-                    @Override public void onError(String error) { Toast.makeText(CourseManagementActivity.this, error, Toast.LENGTH_SHORT).show(); }
-                });
-            }
-            @Override public void onPickThumbnail(Models.Course c) {
-                pendingThumbnailCourseId = c.id;
-                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-                i.setType("image/*");
-                imagePickerLauncher.launch(Intent.createChooser(i, "Select Thumbnail"));
-            }
-            @Override public void onOpenDetails(Models.Course c) {
-                Intent i = new Intent(CourseManagementActivity.this, CourseDetailActivity.class);
-                i.putExtra(CourseDetailActivity.EXTRA_COURSE_ID, c.id);
-                startActivity(i);
-            }
-            @Override public void onEditCourse(Models.Course c) {
-                Intent intent = new Intent(CourseManagementActivity.this, EditCourseActivity.class);
-                intent.putExtra("course_id", c.id);
-                startActivityForResult(intent, REQUEST_EDIT_COURSE);
-            }
-        });
+        android.util.Log.d("CourseManagement", "Creating appropriate adapter for role: " + currentUserRole);
+        
+        if ("admin".equals(currentUserRole)) {
+            // Create management adapter for admins (can manage all courses)
+            android.util.Log.d("CourseManagement", "Creating ManageCoursesAdapter for admin");
+            adapter = new ManageCoursesAdapter(new ManageCoursesAdapter.Listener() {
+                @Override public void onTogglePublish(Models.Course c, boolean publish) {
+                    c.isPublished = publish;
+                    courseService.updateCourse(c, new CourseService.CourseCallback() {
+                        @Override public void onSuccess() { Toast.makeText(CourseManagementActivity.this, publish?"Published":"Unpublished", Toast.LENGTH_SHORT).show(); }
+                        @Override public void onError(String error) { Toast.makeText(CourseManagementActivity.this, error, Toast.LENGTH_SHORT).show(); }
+                    });
+                }
+                @Override public void onPickThumbnail(Models.Course c) {
+                    pendingThumbnailCourseId = c.id;
+                    Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                    i.setType("image/*");
+                    imagePickerLauncher.launch(Intent.createChooser(i, "Select Thumbnail"));
+                }
+                @Override public void onOpenDetails(Models.Course c) {
+                    Intent i = new Intent(CourseManagementActivity.this, CourseDetailActivity.class);
+                    i.putExtra(CourseDetailActivity.EXTRA_COURSE_ID, c.id);
+                    startActivity(i);
+                }
+                @Override public void onEditCourse(Models.Course c) {
+                    Intent intent = new Intent(CourseManagementActivity.this, EditCourseActivity.class);
+                    intent.putExtra("course_id", c.id);
+                    startActivityForResult(intent, REQUEST_EDIT_COURSE);
+                }
+            });
+        } else if ("teacher".equals(currentUserRole)) {
+            // Create management adapter for teachers (can only manage their own courses)
+            android.util.Log.d("CourseManagement", "Creating ManageCoursesAdapter for teacher");
+            adapter = new ManageCoursesAdapter(new ManageCoursesAdapter.Listener() {
+                @Override public void onTogglePublish(Models.Course c, boolean publish) {
+                    c.isPublished = publish;
+                    courseService.updateCourse(c, new CourseService.CourseCallback() {
+                        @Override public void onSuccess() { Toast.makeText(CourseManagementActivity.this, publish?"Published":"Unpublished", Toast.LENGTH_SHORT).show(); }
+                        @Override public void onError(String error) { Toast.makeText(CourseManagementActivity.this, error, Toast.LENGTH_SHORT).show(); }
+                    });
+                }
+                @Override public void onPickThumbnail(Models.Course c) {
+                    pendingThumbnailCourseId = c.id;
+                    Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                    i.setType("image/*");
+                    imagePickerLauncher.launch(Intent.createChooser(i, "Select Thumbnail"));
+                }
+                @Override public void onOpenDetails(Models.Course c) {
+                    Intent i = new Intent(CourseManagementActivity.this, CourseDetailActivity.class);
+                    i.putExtra(CourseDetailActivity.EXTRA_COURSE_ID, c.id);
+                    startActivity(i);
+                }
+                @Override public void onEditCourse(Models.Course c) {
+                    Intent intent = new Intent(CourseManagementActivity.this, EditCourseActivity.class);
+                    intent.putExtra("course_id", c.id);
+                    startActivityForResult(intent, REQUEST_EDIT_COURSE);
+                }
+            });
         } else {
             // Create enrollment adapter for students
+            android.util.Log.d("CourseManagement", "Creating EnrolledCoursesAdapter for student");
             adapter = new EnrolledCoursesAdapter(new EnrolledCoursesAdapter.Listener() {
                 @Override public void onOpenCourse(Models.Course c) {
                     Intent i = new Intent(CourseManagementActivity.this, CourseDetailActivity.class);
@@ -165,6 +197,7 @@ public class CourseManagementActivity extends AppCompatActivity {
             }, currentUserId);
         }
         
+        android.util.Log.d("CourseManagement", "Adapter created and set: " + adapter.getClass().getSimpleName());
         rvCourses.setAdapter(adapter);
     }
 
@@ -173,10 +206,16 @@ public class CourseManagementActivity extends AppCompatActivity {
     }
 
     private void submitDataToAdapter(List<Models.Course> courses) {
+        android.util.Log.d("CourseManagement", "Submitting " + courses.size() + " courses to adapter. Adapter type: " + (adapter != null ? adapter.getClass().getSimpleName() : "null"));
+        
         if (adapter instanceof ManageCoursesAdapter) {
+            android.util.Log.d("CourseManagement", "Using ManageCoursesAdapter");
             ((ManageCoursesAdapter) adapter).submit(courses);
         } else if (adapter instanceof EnrolledCoursesAdapter) {
+            android.util.Log.d("CourseManagement", "Using EnrolledCoursesAdapter");
             ((EnrolledCoursesAdapter) adapter).submit(courses);
+        } else {
+            android.util.Log.e("CourseManagement", "Unknown adapter type: " + (adapter != null ? adapter.getClass().getSimpleName() : "null"));
         }
     }
 
@@ -189,34 +228,63 @@ public class CourseManagementActivity extends AppCompatActivity {
             return;
         }
 
-        if ("teacher".equals(currentUserRole) || "admin".equals(currentUserRole)) {
-            // Load courses that the user is teaching
-        courseService.getCoursesByInstructor(currentUserId, new CourseService.CourseListCallback() {
-            @Override
-            public void onSuccess(List<Models.Course> courses) {
-                progressIndicator.setVisibility(View.GONE);
-                    submitDataToAdapter(courses);
-            }
+        // Debug logging
+        android.util.Log.d("CourseManagement", "Loading courses for user: " + currentUserId + " with role: " + currentUserRole);
 
-            @Override
-            public void onError(String error) {
-                progressIndicator.setVisibility(View.GONE);
-                Toast.makeText(CourseManagementActivity.this, "Error loading courses: " + error, Toast.LENGTH_SHORT).show();
-                // Load sample data if network fails
-                loadSampleCourses();
-            }
-        });
-        } else {
-            // Load courses that the user is enrolled in (student role)
-            courseService.getUserEnrollments(currentUserId, new CourseService.CourseListCallback() {
+        if ("admin".equals(currentUserRole)) {
+            // For admins, load ALL courses in the system
+            android.util.Log.d("CourseManagement", "Loading all courses for admin");
+            courseService.getAllCourses(new CourseService.CourseListCallback() {
                 @Override
                 public void onSuccess(List<Models.Course> courses) {
+                    android.util.Log.d("CourseManagement", "Admin courses loaded successfully: " + courses.size() + " courses");
                     progressIndicator.setVisibility(View.GONE);
                     submitDataToAdapter(courses);
                 }
 
                 @Override
                 public void onError(String error) {
+                    android.util.Log.e("CourseManagement", "Error loading admin courses: " + error);
+                    progressIndicator.setVisibility(View.GONE);
+                    Toast.makeText(CourseManagementActivity.this, "Error loading courses: " + error, Toast.LENGTH_SHORT).show();
+                    // Load sample data if network fails
+                    loadSampleCourses();
+                }
+            });
+        } else if ("teacher".equals(currentUserRole)) {
+            // For teachers, load courses that the user is teaching
+            android.util.Log.d("CourseManagement", "Loading courses for teacher: " + currentUserId);
+            courseService.getCoursesByInstructor(currentUserId, new CourseService.CourseListCallback() {
+                @Override
+                public void onSuccess(List<Models.Course> courses) {
+                    android.util.Log.d("CourseManagement", "Teacher courses loaded successfully: " + courses.size() + " courses");
+                    progressIndicator.setVisibility(View.GONE);
+                    submitDataToAdapter(courses);
+                }
+
+                @Override
+                public void onError(String error) {
+                    android.util.Log.e("CourseManagement", "Error loading teacher courses: " + error);
+                    progressIndicator.setVisibility(View.GONE);
+                    Toast.makeText(CourseManagementActivity.this, "Error loading courses: " + error, Toast.LENGTH_SHORT).show();
+                    // Load sample data if network fails
+                    loadSampleCourses();
+                }
+            });
+        } else {
+            // Load courses that the user is enrolled in (student role)
+            android.util.Log.d("CourseManagement", "Loading enrolled courses for student: " + currentUserId);
+            courseService.getUserEnrollments(currentUserId, new CourseService.CourseListCallback() {
+                @Override
+                public void onSuccess(List<Models.Course> courses) {
+                    android.util.Log.d("CourseManagement", "Student courses loaded successfully: " + courses.size() + " courses");
+                    progressIndicator.setVisibility(View.GONE);
+                    submitDataToAdapter(courses);
+                }
+
+                @Override
+                public void onError(String error) {
+                    android.util.Log.e("CourseManagement", "Error loading enrolled courses: " + error);
                     progressIndicator.setVisibility(View.GONE);
                     Toast.makeText(CourseManagementActivity.this, "Error loading enrolled courses: " + error, Toast.LENGTH_SHORT).show();
                 }

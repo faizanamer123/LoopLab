@@ -109,6 +109,28 @@ public class CourseService {
                 });
     }
     
+    // Get all courses (for admin management)
+    public void getAllCourses(CourseListCallback callback) {
+        FirebaseRefs.courses().get()
+                .addOnSuccessListener(querySnapshot -> {
+                    List<Models.Course> courses = new ArrayList<>();
+                    for (var doc : querySnapshot.getDocuments()) {
+                        Models.Course course = doc.toObject(Models.Course.class);
+                        if (course != null) {
+                            course.id = doc.getId();
+                            courses.add(course);
+                        }
+                    }
+                    // Sort courses by createdAt in descending order (newest first) in memory
+                    courses.sort((c1, c2) -> Long.compare(c2.createdAt, c1.createdAt));
+                    callback.onSuccess(courses);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error getting all courses", e);
+                    callback.onError("Failed to get all courses: " + e.getMessage());
+                });
+    }
+
     // Get a single course by ID
     public void getCourse(String courseId, SingleCourseCallback callback) {
         FirebaseRefs.courses().document(courseId).get()
