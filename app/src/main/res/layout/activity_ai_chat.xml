@@ -74,7 +74,6 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
         <!-- Configuration Error Banner -->
         <TextView
             android:id="@+id/tvConfigHint"
@@ -93,10 +92,11 @@
         <LinearLayout
             android:id="@+id/welcomeContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
+            android:paddingBottom="120dp"
             android:visibility="visible">
 
             <ImageView
@@ -142,7 +142,7 @@
             android:clipToPadding="false"
             android:paddingHorizontal="16dp"
             android:paddingTop="16dp"
-            android:paddingBottom="8dp"
+            android:paddingBottom="120dp"
             android:visibility="gone" />
 
         <!-- Typing Indicator -->
@@ -196,15 +196,19 @@
 
         </LinearLayout>
 
-        <!-- Input Area -->
-        <LinearLayout
-            android:id="@+id/inputArea"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/light_card"
-            android:elevation="8dp"
-            android:orientation="vertical"
-            android:padding="16dp">
+    </LinearLayout>
+
+    <!-- Input Area - Fixed at bottom -->
+    <LinearLayout
+        android:id="@+id/inputArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/light_card"
+        android:elevation="8dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp">
 
 
             <!-- Input Container -->
@@ -267,8 +271,6 @@
                 android:visibility="gone" />
 
         </LinearLayout>
-
-    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
