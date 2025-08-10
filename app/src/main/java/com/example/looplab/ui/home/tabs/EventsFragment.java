@@ -335,9 +335,13 @@ public class EventsFragment extends Fragment implements EventsAdapter.OnEventAct
                         event.registered = true;
                         if (event.attendees == null) event.attendees = new java.util.ArrayList<>();
                         if (!event.attendees.contains(currentUserId)) event.attendees.add(currentUserId);
+                        
+                        // Update the specific item in the adapter for immediate UI feedback
+                        adapter.updateItem(event);
                         break;
                     }
                 }
+                // Also refresh the filtered list
                 filterEvents();
             }
 
@@ -372,6 +376,11 @@ public class EventsFragment extends Fragment implements EventsAdapter.OnEventAct
         super.onResume();
         loadUserRole();
         loadEvents();
+        
+        // Refresh the adapter to ensure button states are correct
+        if (adapter != null && !allEvents.isEmpty()) {
+            adapter.notifyDataSetChanged();
+        }
     }
 }
 
