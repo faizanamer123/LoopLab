@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -97,6 +98,9 @@ public class CourseDetailActivity extends AppCompatActivity {
         youtubeWebView = findViewById(R.id.youtubeWebView);
         tvEmpty = findViewById(R.id.tvEmpty);
         fabAddLecture = findViewById(R.id.fabAddLecture);
+        
+        // Initialize FAB as hidden by default - will be shown only for instructors
+        fabAddLecture.setVisibility(View.GONE);
         
         // New UI elements
         videoPlaceholder = findViewById(R.id.videoPlaceholder);
@@ -212,34 +216,79 @@ public class CourseDetailActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Show the completion button for YouTube videos
+     * This button allows students to manually mark videos as complete
+     * since we can't automatically detect completion in WebView
+     */
     private void showYouTubeCompletionButton() {
-        // Show completion button for YouTube videos since we can't auto-detect completion
         if (currentLecture != null && isYouTubeVideo(currentLecture.videoUrl)) {
-            btnMarkComplete.setVisibility(View.VISIBLE);
-            btnMarkComplete.setOnClickListener(v -> markYouTubeVideoAsComplete(v));
+            // Only show button if lecture is not already completed
+            if (!currentLecture.completed) {
+                btnMarkComplete.setVisibility(View.VISIBLE);
+                btnMarkComplete.setText("Mark as Complete");
+                btnMarkComplete.setEnabled(true);
+                
+                // Set up click listener for marking completion
+                btnMarkComplete.setOnClickListener(v -> markYouTubeVideoAsComplete(v));
+            } else {
+                // Lecture already completed, hide button
+                btnMarkComplete.setVisibility(View.GONE);
+            }
         } else {
+            // Not a YouTube video or no current lecture
             btnMarkComplete.setVisibility(View.GONE);
         }
     }
 
+    /**
+     * Mark the current YouTube video as complete and update course progress
+     * This method handles comprehensive progress tracking including:
+     * - Lecture completion status
+     * - Watch time tracking
+     * - Course progress calculation
+     * - UI updates
+     */
     public void markYouTubeVideoAsComplete(View view) {
         if (currentLecture != null && currentUserId != null) {
-            // Mark the current YouTube video as completed
+            // Show loading state
+            btnMarkComplete.setEnabled(false);
+            btnMarkComplete.setText("Marking...");
+            
+            // Mark the current YouTube video as completed with comprehensive progress data
             courseService.updateLectureProgress(currentUserId, courseId, currentLecture.id, currentWatchSeconds, true,
                     new CourseService.ProgressCallback() {
                         @Override
                         public void onSuccess(Models.Progress progress) {
-                            // Mark lecture as completed
+                            // Update local lecture data
                             currentLecture.completed = true;
-                            completedLectures++;
+                            
+                            // Update completed lectures count and recalculate progress
+                            updateCompletedLecturesCount();
                             updateCourseProgress();
+                            
+                            // Update UI
+                            updateLectureItemUI(currentLecture);
                             lecturesAdapter.notifyDataSetChanged();
                             
-                            Toast.makeText(CourseDetailActivity.this, "Lecture marked as completed!", Toast.LENGTH_SHORT).show();
+                            // Show success message with progress info
+                            int progressPercentage = totalLectures > 0 ? (completedLectures * 100) / totalLectures : 0;
+                            String message = String.format("Lecture completed! Course progress: %d%% (%d/%d lectures)", 
+                                progressPercentage, completedLectures, totalLectures);
+                            Toast.makeText(CourseDetailActivity.this, message, Toast.LENGTH_LONG).show();
+                            
+                            // Hide the mark complete button after successful completion
+                            btnMarkComplete.setVisibility(View.GONE);
+                            
+                            // Check if course is fully completed
+                            checkCourseCompletion();
                         }
 
                         @Override
                         public void onError(String error) {
+                            // Restore button state on error
+                            btnMarkComplete.setEnabled(true);
+                            btnMarkComplete.setText("Mark as Complete");
                             Toast.makeText(CourseDetailActivity.this, "Error marking lecture as complete: " + error, Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -251,19 +300,35 @@ public class CourseDetailActivity extends AppCompatActivity {
         lecturesAdapter = new LecturesAdapter(lecture -> playLecture(lecture));
         rvLectures.setAdapter(lecturesAdapter);
         
-        // Set up FAB click listener
-        fabAddLecture.setOnClickListener(v -> {
-            // Only for instructors of this course
-            FirebaseRefs.courses().document(courseId).get().addOnSuccessListener(doc -> {
-                Models.Course c = doc.toObject(Models.Course.class);
-                if (c != null && currentUserId != null && currentUserId.equals(c.instructorId)) {
+        // Check if current user is the course instructor and show/hide FAB accordingly
+        checkUserPermissionsAndSetupFAB();
+    }
+
+    /**
+     * Check if the current user has instructor permissions for this course
+     * and show/hide the FAB accordingly.
+     * - Instructors: FAB is visible and functional
+     * - Students: FAB is completely hidden
+     */
+    private void checkUserPermissionsAndSetupFAB() {
+        // Check if current user is the course instructor
+        FirebaseRefs.courses().document(courseId).get().addOnSuccessListener(doc -> {
+            Models.Course c = doc.toObject(Models.Course.class);
+            if (c != null && currentUserId != null && currentUserId.equals(c.instructorId)) {
+                // User is the instructor - show FAB and set up click listener
+                fabAddLecture.setVisibility(View.VISIBLE);
+                fabAddLecture.setOnClickListener(v -> {
                     Intent i = new Intent(this, CreateLectureActivity.class);
                     i.putExtra("course_id", courseId);
                     startActivity(i);
-                } else {
-                    Toast.makeText(this, "Only the course instructor can add lectures", Toast.LENGTH_SHORT).show();
-                }
-            });
+                });
+            } else {
+                // User is a student - hide FAB completely
+                fabAddLecture.setVisibility(View.GONE);
+            }
+        }).addOnFailureListener(e -> {
+            // If there's an error loading course info, hide FAB for safety
+            fabAddLecture.setVisibility(View.GONE);
         });
     }
 
@@ -310,6 +375,10 @@ public class CourseDetailActivity extends AppCompatActivity {
                     // Show first lecture info but don't auto-play
                     updateCurrentLectureInfo(lectures.get(0));
                 }
+                
+                // Load user progress after lectures are loaded
+                // This will update completion status and progress UI
+                loadUserProgress();
             }
 
             @Override
@@ -321,14 +390,29 @@ public class CourseDetailActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Load user's progress for this course from Firebase
+     * This includes completed lectures and watch time data
+     */
     private void loadUserProgress() {
         if (currentUserId == null) return;
         
         courseService.getUserProgress(currentUserId, courseId, new CourseService.ProgressCallback() {
             @Override
             public void onSuccess(Models.Progress progress) {
-                if (progress != null) {
-                    completedLectures = progress.completedLectures != null ? progress.completedLectures.size() : 0;
+                if (progress != null && progress.completedLectures != null) {
+                    // Update completed lectures count from Firebase data
+                    completedLectures = progress.completedLectures.size();
+                    
+                    // Update local lecture completion status based on Firebase data
+                    updateLocalLectureCompletionStatus(progress.completedLectures);
+                    
+                    // Update UI
+                    updateCourseProgress();
+                    lecturesAdapter.notifyDataSetChanged();
+                } else {
+                    // No progress data found, start fresh
+                    completedLectures = 0;
                     updateCourseProgress();
                 }
             }
@@ -342,12 +426,97 @@ public class CourseDetailActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Update local lecture completion status based on Firebase progress data
+     */
+    private void updateLocalLectureCompletionStatus(List<String> completedLectureIds) {
+        if (completedLectureIds == null) return;
+        
+        for (Models.Lecture lecture : allLectures) {
+            lecture.completed = completedLectureIds.contains(lecture.id);
+        }
+    }
+
+    /**
+     * Update the course progress UI with current completion status
+     */
     private void updateCourseProgress() {
         if (totalLectures > 0) {
             int progress = (completedLectures * 100) / totalLectures;
             courseProgressBar.setProgress(progress);
             tvProgressPercentage.setText(progress + "%");
+            
+            // Update progress bar color based on completion level
+            if (progress >= 100) {
+                // Course completed - show success color
+                courseProgressBar.setIndicatorColor(getResources().getColor(android.R.color.holo_green_dark));
+            } else if (progress >= 50) {
+                // Good progress - show progress color
+                courseProgressBar.setIndicatorColor(getResources().getColor(android.R.color.holo_blue_dark));
+            } else {
+                // Early progress - show default color
+                courseProgressBar.setIndicatorColor(getResources().getColor(android.R.color.holo_orange_dark));
+            }
         }
+    }
+
+    /**
+     * Update the completed lectures count by counting all completed lectures
+     */
+    private void updateCompletedLecturesCount() {
+        completedLectures = 0;
+        for (Models.Lecture lecture : allLectures) {
+            if (lecture.completed) {
+                completedLectures++;
+            }
+        }
+    }
+
+    /**
+     * Update the UI for a specific lecture item to reflect completion status
+     */
+    private void updateLectureItemUI(Models.Lecture lecture) {
+        // Find the lecture in the adapter and update its UI
+        int position = -1;
+        for (int i = 0; i < allLectures.size(); i++) {
+            if (allLectures.get(i).id.equals(lecture.id)) {
+                position = i;
+                break;
+            }
+        }
+        
+        if (position != -1) {
+            // Update the lecture in the list
+            allLectures.set(position, lecture);
+            // Notify the adapter of the specific item change
+            lecturesAdapter.notifyItemChanged(position);
+        }
+    }
+
+    /**
+     * Check if the course is fully completed and show appropriate feedback
+     */
+    private void checkCourseCompletion() {
+        if (completedLectures >= totalLectures && totalLectures > 0) {
+            // Course is fully completed
+            showCourseCompletionCelebration();
+        }
+    }
+
+    /**
+     * Show celebration UI when course is fully completed
+     */
+    private void showCourseCompletionCelebration() {
+        // Show a congratulatory message
+        String message = "🎉 Congratulations! You've completed the entire course! 🎉";
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        
+        // Update the course progress bar to show 100% completion
+        courseProgressBar.setProgress(100);
+        tvProgressPercentage.setText("100%");
+        
+        // You could also show a dialog or navigate to a completion screen here
+        // For now, we'll just show the toast message
     }
 
     private void updateCurrentLectureInfo(Models.Lecture lecture) {
@@ -363,11 +532,18 @@ public class CourseDetailActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Play a lecture video (either local video or YouTube)
+     * Resets progress tracking and updates UI accordingly
+     */
     private void playLecture(Models.Lecture lecture) {
         if (lecture == null || lecture.videoUrl == null || lecture.videoUrl.isEmpty()) {
             Toast.makeText(this, "Lecture has no video", Toast.LENGTH_SHORT).show();
             return;
         }
+        
+        // Reset progress tracking for new lecture
+        resetProgressTracking();
         
         currentLecture = lecture;
         currentWatchSeconds = 0;
@@ -392,6 +568,20 @@ public class CourseDetailActivity extends AppCompatActivity {
             Toast.makeText(this, "Error loading video: " + e.getMessage(), Toast.LENGTH_LONG).show();
             showVideoPlaceholder();
         }
+    }
+
+    /**
+     * Reset progress tracking when switching between lectures
+     */
+    private void resetProgressTracking() {
+        // Stop current progress tracking
+        progressHandler.removeCallbacksAndMessages(null);
+        
+        // Reset watch time
+        currentWatchSeconds = 0;
+        
+        // Hide completion button
+        btnMarkComplete.setVisibility(View.GONE);
     }
     
     private Uri getVideoUri(String videoUrl) {
@@ -447,6 +637,10 @@ public class CourseDetailActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Play a YouTube video in the embedded WebView
+     * Sets up the video player and shows completion tracking UI
+     */
     private void playYouTubeVideo(String videoUrl) {
         try {
             progressIndicator.setVisibility(View.VISIBLE);
@@ -454,13 +648,15 @@ public class CourseDetailActivity extends AppCompatActivity {
             // Hide other video elements
             videoView.setVisibility(View.GONE);
             videoPlaceholder.setVisibility(View.GONE);
-            btnMarkComplete.setVisibility(View.GONE); // Will be shown when video loads
             
             // Convert YouTube URL to embed format for better WebView compatibility
             String embedUrl = convertToEmbedUrl(videoUrl);
             
             // Load the YouTube embed URL in WebView
             youtubeWebView.loadUrl(embedUrl);
+            
+            // Note: The completion button will be shown in onPageFinished callback
+            // after the video loads successfully
             
         } catch (Exception e) {
             Toast.makeText(this, "Error loading YouTube video: " + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -495,6 +691,10 @@ public class CourseDetailActivity extends AppCompatActivity {
         return null;
     }
 
+    /**
+     * Start tracking video playback progress
+     * Updates progress every second and saves to Firebase every 10 seconds
+     */
     private void startProgressLoop() {
         progressHandler.removeCallbacksAndMessages(null);
         progressHandler.postDelayed(new Runnable() {
@@ -509,19 +709,41 @@ public class CourseDetailActivity extends AppCompatActivity {
                     isPlaying = true;
                 }
                 
-                if (isPlaying) {
+                if (isPlaying && currentLecture != null && !currentLecture.completed) {
                     currentWatchSeconds += 1;
-                    if (currentUserId != null && currentLecture != null && currentWatchSeconds % 10 == 0) {
+                    
+                    // Update progress to Firebase every 10 seconds for better performance
+                    if (currentUserId != null && currentWatchSeconds % 10 == 0) {
                         courseService.updateLectureProgress(currentUserId, courseId, currentLecture.id, currentWatchSeconds, false,
                                 new CourseService.ProgressCallback() {
-                                    @Override public void onSuccess(Models.Progress progress) {}
-                                    @Override public void onError(String error) {}
+                                    @Override public void onSuccess(Models.Progress progress) {
+                                        // Progress updated successfully
+                                    }
+                                    @Override public void onError(String error) {
+                                        // Log error but continue tracking
+                                        Log.w("CourseDetail", "Failed to update progress: " + error);
+                                    }
                                 });
                     }
+                    
+                    // Update lecture progress UI if available
+                    updateLectureProgressUI(currentWatchSeconds, currentLecture.duration);
                 }
+                
                 progressHandler.postDelayed(this, 1000);
             }
         }, 1000);
+    }
+
+    /**
+     * Update the lecture progress UI to show current watch time vs total duration
+     */
+    private void updateLectureProgressUI(int watchSeconds, int totalDuration) {
+        if (totalDuration > 0) {
+            int progressPercentage = (watchSeconds * 100) / totalDuration;
+            // You can update a progress indicator here if you want to show individual lecture progress
+            // For now, we'll just track the time in the background
+        }
     }
 
     @Override
