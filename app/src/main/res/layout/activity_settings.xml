@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="#FFFFFF">
 
     <!-- App Bar -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/card"
-        app:elevation="4dp">
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_back"
+            app:navigationIconTint="#000000"
             app:title="Settings"
-            app:titleTextColor="@color/foreground"
-            app:navigationIcon="@drawable/ic_profile"
-            app:navigationIconTint="@color/primary" />
+            app:titleTextColor="#000000" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -41,33 +41,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="@color/card"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp">
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="20dp"
-                    android:gravity="center_vertical">
+                    android:padding="20dp">
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="72dp"
                         android:layout_height="72dp"
                         android:layout_marginEnd="16dp"
-                        app:cardBackgroundColor="@color/primary"
+                        app:cardBackgroundColor="@android:color/transparent"
                         app:cardCornerRadius="36dp"
-                        app:cardElevation="8dp">
+                        app:cardElevation="0dp">
 
                         <ImageView
                             android:id="@+id/ivProfilePicture"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
+                            android:layout_width="72dp"
+                            android:layout_height="72dp"
                             android:layout_gravity="center"
+                            android:scaleType="centerCrop"
                             android:src="@drawable/ic_profile"
-                            android:tint="@color/white"
-                            android:scaleType="centerCrop" />
+                            android:tint="#80000000" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -81,18 +81,19 @@
                             android:id="@+id/tvUserName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
                             android:text="John Doe"
-                            android:textColor="@color/foreground"
-                            android:textSize="20sp"
-                            android:fontFamily="sans-serif-medium" />
+                            android:textColor="#000000"
+                            android:textSize="20sp" />
 
                         <TextView
                             android:id="@+id/tvUserEmail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
+                            android:fontFamily="@font/manrope_medium"
                             android:text="john.doe@example.com"
-                            android:textColor="@color/muted_foreground"
+                            android:textColor="#80000000"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -101,7 +102,8 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_profile"
-                        android:tint="@color/muted_foreground" />
+                        android:tint="#80000000"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
@@ -111,20 +113,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
                 android:layout_marginStart="4dp"
+                android:layout_marginBottom="12dp"
+                android:fontFamily="@font/manrope_semibold"
                 android:text="General"
-                android:textColor="@color/primary"
-                android:textSize="16sp"
-                android:fontFamily="sans-serif-medium" />
+                android:textColor="#000000"
+                android:textSize="16sp" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="@color/card"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp">
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -136,19 +138,19 @@
                         android:id="@+id/settingNotifications"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp"
-                        android:gravity="center_vertical"
+                        android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
-                        android:background="?attr/selectableItemBackground">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="20dp">
 
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_marginEnd="16dp"
                             android:src="@drawable/ic_notification"
-                            android:tint="@color/primary" />
+                            android:tint="#80000000" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -159,17 +161,18 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_semibold"
                                 android:text="Notifications"
-                                android:textColor="@color/foreground"
-                                android:textSize="16sp"
-                                android:fontFamily="sans-serif-medium" />
+                                android:textColor="#000000"
+                                android:textSize="16sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
+                                android:fontFamily="@font/manrope_medium"
                                 android:text="Manage push notifications"
-                                android:textColor="@color/muted_foreground"
+                                android:textColor="#80000000"
                                 android:textSize="14sp" />
 
                         </LinearLayout>
@@ -179,8 +182,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="true"
-                            app:thumbTint="@color/white"
-                            app:trackTint="@color/primary" />
+                            app:thumbTint="#FFFFFF"
+                            app:trackTint="#000000" />
 
                     </LinearLayout>
 
@@ -188,26 +191,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginHorizontal="20dp"
-                        android:background="@color/border" />
+                        android:background="#1A000000" />
 
                     <!-- Dark Mode -->
                     <LinearLayout
                         android:id="@+id/settingDarkMode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp"
-                        android:gravity="center_vertical"
+                        android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
-                        android:background="?attr/selectableItemBackground">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="20dp">
 
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_marginEnd="16dp"
                             android:src="@drawable/ic_settings"
-                            android:tint="@color/primary" />
+                            android:tint="#80000000" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -218,17 +221,18 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_semibold"
                                 android:text="Dark Mode"
-                                android:textColor="@color/foreground"
-                                android:textSize="16sp"
-                                android:fontFamily="sans-serif-medium" />
+                                android:textColor="#000000"
+                                android:textSize="16sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
+                                android:fontFamily="@font/manrope_medium"
                                 android:text="Switch to dark theme"
-                                android:textColor="@color/muted_foreground"
+                                android:textColor="#80000000"
                                 android:textSize="14sp" />
 
                         </LinearLayout>
@@ -237,8 +241,8 @@
                             android:id="@+id/switchDarkMode"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:thumbTint="@color/white"
-                            app:trackTint="@color/primary" />
+                            app:thumbTint="#FFFFFF"
+                            app:trackTint="#000000" />
 
                     </LinearLayout>
 
@@ -246,26 +250,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginHorizontal="20dp"
-                        android:background="@color/border" />
+                        android:background="#1A000000" />
 
                     <!-- Language -->
                     <LinearLayout
                         android:id="@+id/settingLanguage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp"
-                        android:gravity="center_vertical"
+                        android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
-                        android:background="?attr/selectableItemBackground">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="20dp">
 
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_marginEnd="16dp"
                             android:src="@drawable/ic_profile"
-                            android:tint="@color/primary" />
+                            android:tint="#80000000" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -276,17 +280,18 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_semibold"
                                 android:text="Language"
-                                android:textColor="@color/foreground"
-                                android:textSize="16sp"
-                                android:fontFamily="sans-serif-medium" />
+                                android:textColor="#000000"
+                                android:textSize="16sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
+                                android:fontFamily="@font/manrope_medium"
                                 android:text="English"
-                                android:textColor="@color/muted_foreground"
+                                android:textColor="#80000000"
                                 android:textSize="14sp" />
 
                         </LinearLayout>
@@ -295,7 +300,7 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@drawable/ic_profile"
-                            android:tint="@color/muted_foreground" />
+                            android:tint="#80000000" />
 
                     </LinearLayout>
 
@@ -307,20 +312,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
                 android:layout_marginStart="4dp"
+                android:layout_marginBottom="12dp"
+                android:fontFamily="@font/manrope_semibold"
                 android:text="Account"
-                android:textColor="@color/primary"
-                android:textSize="16sp"
-                android:fontFamily="sans-serif-medium" />
+                android:textColor="#000000"
+                android:textSize="16sp" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="@color/card"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp">
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -332,19 +337,19 @@
                         android:id="@+id/settingEditProfile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp"
-                        android:gravity="center_vertical"
+                        android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
-                        android:background="?attr/selectableItemBackground">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="20dp">
 
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_marginEnd="16dp"
                             android:src="@drawable/ic_profile"
-                            android:tint="@color/primary" />
+                            android:tint="#80000000" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -355,17 +360,18 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_semibold"
                                 android:text="Edit Profile"
-                                android:textColor="@color/foreground"
-                                android:textSize="16sp"
-                                android:fontFamily="sans-serif-medium" />
+                                android:textColor="#000000"
+                                android:textSize="16sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
+                                android:fontFamily="@font/manrope_medium"
                                 android:text="Update your personal information"
-                                android:textColor="@color/muted_foreground"
+                                android:textColor="#80000000"
                                 android:textSize="14sp" />
 
                         </LinearLayout>
@@ -374,7 +380,7 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@drawable/ic_profile"
-                            android:tint="@color/muted_foreground" />
+                            android:tint="#80000000" />
 
                     </LinearLayout>
 
@@ -382,26 +388,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginHorizontal="20dp"
-                        android:background="@color/border" />
+                        android:background="#1A000000" />
 
                     <!-- Change Password -->
                     <LinearLayout
                         android:id="@+id/settingChangePassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp"
-                        android:gravity="center_vertical"
+                        android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
-                        android:background="?attr/selectableItemBackground">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="20dp">
 
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_marginEnd="16dp"
                             android:src="@drawable/ic_settings"
-                            android:tint="@color/primary" />
+                            android:tint="#80000000" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -412,17 +418,18 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_semibold"
                                 android:text="Change Password"
-                                android:textColor="@color/foreground"
-                                android:textSize="16sp"
-                                android:fontFamily="sans-serif-medium" />
+                                android:textColor="#000000"
+                                android:textSize="16sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
+                                android:fontFamily="@font/manrope_medium"
                                 android:text="Update your account password"
-                                android:textColor="@color/muted_foreground"
+                                android:textColor="#80000000"
                                 android:textSize="14sp" />
 
                         </LinearLayout>
@@ -431,7 +438,7 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@drawable/ic_profile"
-                            android:tint="@color/muted_foreground" />
+                            android:tint="#80000000" />
 
                     </LinearLayout>
 
@@ -439,41 +446,41 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginHorizontal="20dp"
-                        android:background="@color/border" />
+                        android:background="#1A000000" />
 
                     <!-- Logout -->
                     <LinearLayout
                         android:id="@+id/settingLogout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp"
-                        android:gravity="center_vertical"
+                        android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
-                        android:background="?attr/selectableItemBackground">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="20dp">
 
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_marginEnd="16dp"
                             android:src="@drawable/ic_profile"
-                            android:tint="@color/error" />
+                            android:tint="#AF3232" />
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/manrope_semibold"
                             android:text="Logout"
-                            android:textColor="@color/error"
-                            android:textSize="16sp"
-                            android:fontFamily="sans-serif-medium" />
+                            android:textColor="#AF3232"
+                            android:textSize="16sp" />
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@drawable/ic_profile"
-                            android:tint="@color/error" />
+                            android:tint="#AF3232" />
 
                     </LinearLayout>
 
@@ -485,20 +492,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
                 android:layout_marginStart="4dp"
+                android:layout_marginBottom="12dp"
+                android:fontFamily="@font/manrope_semibold"
                 android:text="About"
-                android:textColor="@color/primary"
-                android:textSize="16sp"
-                android:fontFamily="sans-serif-medium" />
+                android:textColor="#000000"
+                android:textSize="16sp" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
-                app:cardBackgroundColor="@color/card"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp">
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -509,16 +516,16 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="20dp"
-                        android:gravity="center_vertical">
+                        android:padding="20dp">
 
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_marginEnd="16dp"
-                            android:src="@mipmap/ic_launcher_round"
-                            android:scaleType="centerCrop" />
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/ic_launcher_round" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -529,17 +536,18 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/manrope_semibold"
                                 android:text="LoopLab"
-                                android:textColor="@color/foreground"
-                                android:textSize="16sp"
-                                android:fontFamily="sans-serif-medium" />
+                                android:textColor="#000000"
+                                android:textSize="16sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
+                                android:fontFamily="@font/manrope_medium"
                                 android:text="Version 1.0.0"
-                                android:textColor="@color/muted_foreground"
+                                android:textColor="#80000000"
                                 android:textSize="14sp" />
 
                         </LinearLayout>

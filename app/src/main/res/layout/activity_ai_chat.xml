@@ -74,61 +74,61 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+
         <!-- Configuration Error Banner -->
         <TextView
             android:id="@+id/tvConfigHint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="AI not configured. Ask admin to set Gemini API key."
-            android:padding="16dp"
-            android:textColor="@color/error"
             android:background="@color/error_light"
-            android:visibility="gone"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
+            android:padding="16dp"
+            android:text="AI not configured. Ask admin to set Gemini API key."
+            android:textColor="@color/error"
             android:textSize="14sp"
-            android:fontFamily="sans-serif-medium"/>
+            android:visibility="gone" />
 
         <!-- Welcome Message (shown when no messages) -->
         <LinearLayout
             android:id="@+id/welcomeContainer"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
             android:gravity="center"
-            android:padding="32dp"
+            android:orientation="vertical"
             android:visibility="visible">
 
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/ic_ai"
+                android:layout_marginBottom="24dp"
                 android:background="@drawable/bg_gradient_accent"
-                android:padding="20dp"
                 android:contentDescription="AI Assistant"
-                app:tint="@color/white"
-                android:layout_marginBottom="24dp"/>
+                android:padding="20dp"
+                android:src="@drawable/ic_ai"
+                app:tint="@color/white" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
                 android:text="How can I help you today?"
                 android:textColor="@color/light_foreground"
                 android:textSize="24sp"
-                android:textStyle="bold"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center"
-                android:layout_marginBottom="16dp"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="I'm your AI learning assistant. Ask me anything about your courses, assignments, or general questions!"
-                android:textColor="@color/light_muted_foreground"
-                android:textSize="16sp"
                 android:gravity="center"
                 android:lineSpacingExtra="4dp"
-                android:maxLines="3"/>
+                android:maxLines="3"
+                android:text="I'm your AI learning assistant. Ask me anything about your courses, assignments, or general questions!"
+                android:textColor="@color/light_muted_foreground"
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -137,60 +137,60 @@
             android:id="@+id/rvMessages"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginBottom="16dp"
             android:layout_weight="1"
+            android:clipToPadding="false"
             android:paddingHorizontal="16dp"
             android:paddingTop="16dp"
             android:paddingBottom="8dp"
-            android:clipToPadding="false"
-            android:visibility="gone"
-            android:layout_marginBottom="16dp"/>
+            android:visibility="gone" />
 
         <!-- Typing Indicator -->
         <LinearLayout
             android:id="@+id/typingIndicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="16dp"
-            android:gravity="center_vertical"
             android:visibility="gone">
 
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/ic_ai"
+                android:layout_marginEnd="12dp"
                 android:background="@drawable/bg_gradient_accent"
-                android:padding="6dp"
                 android:contentDescription="AI Assistant"
-                app:tint="@color/white"
-                android:layout_marginEnd="12dp"/>
+                android:padding="6dp"
+                android:src="@drawable/ic_ai"
+                app:tint="@color/white" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:background="@drawable/bg_modern_card"
+                android:orientation="horizontal"
                 android:padding="12dp">
 
                 <View
                     android:layout_width="8dp"
                     android:layout_height="8dp"
-                    android:background="@drawable/bg_gradient_accent"
                     android:layout_marginEnd="4dp"
-                    android:alpha="0.6"/>
+                    android:alpha="0.6"
+                    android:background="@drawable/bg_gradient_accent" />
 
                 <View
                     android:layout_width="8dp"
                     android:layout_height="8dp"
-                    android:background="@drawable/bg_gradient_accent"
                     android:layout_marginEnd="4dp"
-                    android:alpha="0.8"/>
+                    android:alpha="0.8"
+                    android:background="@drawable/bg_gradient_accent" />
 
                 <View
                     android:layout_width="8dp"
                     android:layout_height="8dp"
-                    android:background="@drawable/bg_gradient_accent"
-                    android:alpha="1.0"/>
+                    android:alpha="1.0"
+                    android:background="@drawable/bg_gradient_accent" />
 
             </LinearLayout>
 
@@ -201,56 +201,55 @@
             android:id="@+id/inputArea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
             android:background="@color/light_card"
-            android:elevation="8dp">
-
+            android:elevation="8dp"
+            android:orientation="vertical"
+            android:padding="16dp">
 
 
             <!-- Input Container -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
                 android:background="@drawable/bg_modern_card"
-                android:padding="4dp"
+                android:elevation="2dp"
+                android:gravity="center_vertical"
                 android:minHeight="56dp"
-                android:elevation="2dp">
+                android:orientation="horizontal"
+                android:padding="4dp">
 
-            <EditText
-                android:id="@+id/etMessage"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                <EditText
+                    android:id="@+id/etMessage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/light_input"
+                    android:drawablePadding="8dp"
+                    android:fadeScrollbars="false"
+                    android:fontFamily="sans-serif"
                     android:hint="Message Gemini AI..."
                     android:inputType="textCapSentences|textMultiLine"
                     android:maxLines="4"
                     android:minHeight="48dp"
                     android:padding="12dp"
-                    android:background="@color/light_input"
+                    android:scrollbars="vertical"
                     android:textColor="@color/light_foreground"
                     android:textColorHint="@color/light_muted_foreground"
-                    android:textSize="16sp"
-                    android:fontFamily="sans-serif"
-                    android:scrollbars="vertical"
-                    android:fadeScrollbars="false"
-                    android:drawablePadding="8dp"/>
+                    android:textSize="16sp" />
 
                 <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSend"
+                    android:id="@+id/btnSend"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_gradient_accent"
                     android:contentDescription="Send message"
-                    app:icon="@drawable/ic_send"
-                    app:iconTint="@color/white"
-                    app:iconGravity="textStart"
-                    app:iconSize="20dp"
                     app:cornerRadius="24dp"
                     app:elevation="0dp"
-                    app:rippleColor="@color/ripple_light"/>
+                    app:icon="@drawable/ic_send"
+                    app:iconGravity="textStart"
+                    app:iconSize="20dp"
+                    app:iconTint="@color/white"
+                    app:rippleColor="@color/ripple_light" />
 
             </LinearLayout>
 
@@ -261,11 +260,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif"
                 android:text="0/4000"
                 android:textColor="@color/light_muted_foreground"
                 android:textSize="12sp"
-                android:fontFamily="sans-serif"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         </LinearLayout>
 

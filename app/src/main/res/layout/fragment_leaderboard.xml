@@ -3,21 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient_primary">
+    android:background="#FFFFFF">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        app:elevation="0dp">
+        app:elevation="0dp"
+        android:fitsSystemWindows="true">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
             app:title="Leaderboard"
-            app:titleTextColor="@color/white"
-            app:background="@android:color/transparent" />
+            app:titleTextColor="#000000" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -37,9 +38,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardBackgroundColor="@color/card"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp">
+                app:cardBackgroundColor="#92D8FF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -51,19 +52,21 @@
                         android:id="@+id/tvLeaderboardTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/manrope_bold"
                         android:text="Top Performers"
-                        android:textColor="@color/foreground"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="8dp" />
+                        android:textColor="#000000"
+                        android:textSize="32sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_medium"
+                        android:lineSpacingMultiplier="1.2"
                         android:text="See who's leading the learning journey"
-                        android:textColor="@color/muted_foreground"
-                        android:textSize="16sp"
-                        android:lineSpacingMultiplier="1.2" />
+                        android:textColor="#3283AF"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
@@ -74,9 +77,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="@color/card"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -89,23 +92,25 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/tvTotalParticipants"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_semibold"
                             android:text="150"
-                            android:textColor="@color/looplab_blue"
+                            android:textColor="#000000"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_medium"
                             android:text="Participants"
-                            android:textColor="@color/muted_foreground"
+                            android:textColor="#80000000"
                             android:textSize="12sp" />
 
                     </LinearLayout>
@@ -115,23 +120,25 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/tvAveragePoints"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_semibold"
                             android:text="850"
-                            android:textColor="@color/looplab_blue"
+                            android:textColor="#000000"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_medium"
                             android:text="Avg Points"
-                            android:textColor="@color/muted_foreground"
+                            android:textColor="#80000000"
                             android:textSize="12sp" />
 
                     </LinearLayout>
@@ -141,23 +148,25 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/tvTopScore"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_semibold"
                             android:text="1,250"
-                            android:textColor="@color/looplab_blue"
+                            android:textColor="#000000"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_medium"
                             android:text="Top Score"
-                            android:textColor="@color/muted_foreground"
+                            android:textColor="#80000000"
                             android:textSize="12sp" />
 
                     </LinearLayout>
@@ -178,34 +187,36 @@
                 android:id="@+id/emptyState"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:gravity="center"
+                android:orientation="vertical"
                 android:padding="40dp"
                 android:visibility="gone">
 
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
+                    android:layout_marginBottom="16dp"
                     android:src="@drawable/ic_leaderboard"
-                    android:tint="@color/muted_foreground"
-                    android:layout_marginBottom="16dp" />
+                    android:tint="#80000000" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/manrope_semibold"
                     android:text="No Leaderboard Data"
-                    android:textColor="@color/muted_foreground"
+                    android:textColor="#80000000"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="8dp" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_medium"
+                    android:gravity="center"
                     android:text="Start learning to appear on the leaderboard!"
-                    android:textColor="@color/muted_foreground"
-                    android:textSize="14sp"
-                    android:gravity="center" />
+                    android:textColor="#80000000"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -221,9 +232,7 @@
         android:layout_gravity="center"
         android:indeterminate="true"
         android:visibility="gone"
-        app:indicatorColor="@color/looplab_blue"
-        app:trackColor="@color/muted" />
+        app:indicatorColor="#000000"
+        app:trackColor="#80000000" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-
