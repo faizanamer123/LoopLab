@@ -4,27 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient_primary">
+    android:background="#FFFFFF">
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progressIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        app:indicatorColor="#000000"
         android:visibility="gone"/>
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        app:elevation="0dp">
+        app:elevation="0dp"
+        android:fitsSystemWindows="true">
+
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="Teacher Dashboard"
-            app:titleTextColor="@color/primary_foreground"
+            app:title="Dashboard"
+            app:titleTextColor="#000000"
+            android:layout_marginHorizontal="4dp"
             app:background="@android:color/transparent" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -45,40 +49,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardBackgroundColor="@color/card"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="8dp"
-                app:strokeColor="@color/primary_glow"
-                app:strokeWidth="1dp">
+                app:cardBackgroundColor="#90FCC8"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="24dp"
-                    android:background="@drawable/bg_gradient_accent">
+                    android:padding="24dp">
 
                     <TextView
                         android:id="@+id/tvWelcomeMessage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Welcome back, Teacher!"
-                        android:textColor="@color/primary_foreground"
+                        android:textColor="#000000"
                         android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:fontFamily="sans-serif-medium" />
+                        android:fontFamily="@font/manrope_bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="4dp"
                         android:text="Inspire and guide your students"
-                        android:textColor="@color/primary_foreground"
+                        android:textColor="#1E8A57"
                         android:textSize="16sp"
-                        android:alpha="0.9" />
-
+                        android:alpha="0.9"
+                        android:fontFamily="@font/manrope_medium"/>
                 </LinearLayout>
-
             </com.google.android.material.card.MaterialCardView>
 
             <!-- Statistics Overview -->
@@ -86,11 +86,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Your Statistics"
-                android:textColor="@color/primary_foreground"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="16dp"
-                android:fontFamily="sans-serif-medium" />
+                android:textColor="#000000"
+                android:textSize="22sp"
+                android:fontFamily="@font/manrope_bold"
+                android:layout_marginBottom="16dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -102,100 +101,89 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardTotalCourses"
                     android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_weight="1"
+                    android:layout_height="200dp"
                     android:layout_marginEnd="8dp"
-                    app:cardBackgroundColor="@color/card"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="4dp"
-                    app:rippleColor="@color/ripple_light">
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:gravity="center_horizontal"
                         android:orientation="vertical"
-                        android:gravity="center"
-                        android:padding="16dp"
-                        android:background="@drawable/bg_modern_card">
+                        android:padding="16dp">
 
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginBottom="4dp"
                             android:src="@drawable/ic_courses"
-                            android:tint="@color/looplab_blue"
-                            android:background="@drawable/bg_progress_overlay"
-                            android:padding="8dp" />
+                            app:tint="#80000000" />
 
                         <TextView
                             android:id="@+id/tvTotalCourses"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="0"
-                            android:textColor="@color/looplab_blue"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
+                            android:fontFamily="@font/manrope_semibold"
+                            android:textColor="#000000"
+                            android:textSize="80sp"
+                            tools:text="14" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_medium"
                             android:text="Total Courses"
-                            android:textColor="@color/primary_foreground"
+                            android:textColor="#80000000"
                             android:textSize="14sp" />
-
                     </LinearLayout>
-
                 </com.google.android.material.card.MaterialCardView>
 
                 <!-- Total Students Card -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardTotalStudents"
                     android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_weight="1"
+                    android:layout_height="200dp"
                     android:layout_marginStart="8dp"
-                    app:cardBackgroundColor="@color/card"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="4dp"
-                    app:rippleColor="@color/ripple_light">
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:gravity="center_horizontal"
                         android:orientation="vertical"
-                        android:gravity="center"
-                        android:padding="16dp"
-                        android:background="@drawable/bg_modern_card">
+                        android:padding="16dp">
 
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginBottom="4dp"
                             android:src="@drawable/ic_profile"
-                            android:tint="@color/success"
-                            android:background="@drawable/bg_progress_overlay"
-                            android:padding="8dp" />
+                            app:tint="#80000000" />
 
                         <TextView
                             android:id="@+id/tvTotalStudents"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="0"
-                            android:textColor="@color/success"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
+                            android:fontFamily="@font/manrope_semibold"
+                            android:textColor="#000000"
+                            android:textSize="80sp"
+                            tools:text="243" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_medium"
                             android:text="Total Students"
-                            android:textColor="@color/primary_foreground"
+                            android:textColor="#80000000"
                             android:textSize="14sp" />
-
                     </LinearLayout>
-
                 </com.google.android.material.card.MaterialCardView>
-
             </LinearLayout>
 
             <LinearLayout
@@ -208,100 +196,89 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardLiveSessions"
                     android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_weight="1"
+                    android:layout_height="200dp"
                     android:layout_marginEnd="8dp"
-                    app:cardBackgroundColor="@color/card"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="4dp"
-                    app:rippleColor="@color/ripple_light">
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:gravity="center_horizontal"
                         android:orientation="vertical"
-                        android:gravity="center"
-                        android:padding="16dp"
-                        android:background="@drawable/bg_modern_card">
+                        android:padding="16dp">
 
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginBottom="4dp"
                             android:src="@drawable/ic_video"
-                            android:tint="@color/warning"
-                            android:background="@drawable/bg_progress_overlay"
-                            android:padding="8dp" />
+                            app:tint="#80000000" />
 
                         <TextView
                             android:id="@+id/tvLiveSessions"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="0"
-                            android:textColor="@color/warning"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
+                            android:fontFamily="@font/manrope_semibold"
+                            android:textColor="#000000"
+                            android:textSize="80sp"
+                            tools:text="07" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_medium"
                             android:text="Live Sessions"
-                            android:textColor="@color/primary_foreground"
+                            android:textColor="#80000000"
                             android:textSize="14sp" />
-
                     </LinearLayout>
-
                 </com.google.android.material.card.MaterialCardView>
 
                 <!-- Average Rating Card -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardAverageRating"
                     android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_weight="1"
+                    android:layout_height="200dp"
                     android:layout_marginStart="8dp"
-                    app:cardBackgroundColor="@color/card"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="4dp"
-                    app:rippleColor="@color/ripple_light">
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:gravity="center_horizontal"
                         android:orientation="vertical"
-                        android:gravity="center"
-                        android:padding="16dp"
-                        android:background="@drawable/bg_modern_card">
+                        android:padding="16dp">
 
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginBottom="4dp"
                             android:src="@drawable/ic_star"
-                            android:tint="@color/info"
-                            android:background="@drawable/bg_progress_overlay"
-                            android:padding="8dp" />
+                            app:tint="#80000000" />
 
                         <TextView
                             android:id="@+id/tvAverageRating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="0.0"
-                            android:textColor="@color/info"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
+                            android:fontFamily="@font/manrope_semibold"
+                            android:textColor="#000000"
+                            android:textSize="80sp"
+                            tools:text="4.8" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_medium"
                             android:text="Avg Rating"
-                            android:textColor="@color/primary_foreground"
+                            android:textColor="#80000000"
                             android:textSize="14sp" />
-
                     </LinearLayout>
-
                 </com.google.android.material.card.MaterialCardView>
-
             </LinearLayout>
 
             <!-- Quick Actions Section -->
@@ -309,11 +286,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Quick Actions"
-                android:textColor="@color/primary_foreground"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="16dp"
-                android:fontFamily="sans-serif-medium" />
+                android:textColor="#000000"
+                android:textSize="22sp"
+                android:fontFamily="@font/manrope_bold"
+                android:layout_marginBottom="16dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -323,87 +299,117 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnCreateCourse"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="60dp"
                     android:layout_marginBottom="12dp"
                     android:text="Create New Course"
+                    android:textColor="#000000"
+                    android:fontFamily="@font/manrope_semibold"
                     android:textSize="16sp"
-                    android:drawableStart="@drawable/ic_add"
-                    android:drawablePadding="16dp"
-                    app:cornerRadius="12dp"
-                    app:backgroundTint="@color/looplab_blue"
-                    app:iconTint="@color/primary_foreground"
-                    app:rippleColor="@color/ripple_light" />
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="20dp"
+                    android:textAllCaps="false"
+                    app:icon="@drawable/ic_add"
+                    app:iconTint="#6E94C9"
+                    app:iconPadding="16dp"
+                    app:cornerRadius="20dp"
+                    app:backgroundTint="#A0C3F9" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnStartLiveSession"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="60dp"
                     android:layout_marginBottom="12dp"
                     android:text="Start Live Session"
+                    android:textColor="#000000"
+                    android:fontFamily="@font/manrope_semibold"
                     android:textSize="16sp"
-                    android:drawableStart="@drawable/ic_video"
-                    android:drawablePadding="16dp"
-                    app:cornerRadius="12dp"
-                    app:backgroundTint="@color/success"
-                    app:iconTint="@color/primary_foreground"
-                    app:rippleColor="@color/ripple_light" />
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="20dp"
+                    android:textAllCaps="false"
+                    app:icon="@drawable/ic_video"
+                    app:iconTint="#6E94C9"
+                    app:iconPadding="16dp"
+                    app:cornerRadius="20dp"
+                    app:backgroundTint="#A0C3F9" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnManageStudents"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="60dp"
                     android:layout_marginBottom="12dp"
                     android:text="Manage Students"
+                    android:textColor="#000000"
+                    android:fontFamily="@font/manrope_semibold"
                     android:textSize="16sp"
-                    android:drawableStart="@drawable/ic_profile"
-                    android:drawablePadding="16dp"
-                    app:cornerRadius="12dp"
-                    app:backgroundTint="@color/warning"
-                    app:iconTint="@color/primary_foreground"
-                    app:rippleColor="@color/ripple_light" />
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="20dp"
+                    android:textAllCaps="false"
+                    app:icon="@drawable/ic_profile"
+                    app:iconTint="#6E94C9"
+                    app:iconPadding="16dp"
+                    app:cornerRadius="20dp"
+                    app:backgroundTint="#A0C3F9" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnViewAnalytics"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="60dp"
                     android:layout_marginBottom="12dp"
                     android:text="View Analytics"
+                    android:textColor="#000000"
+                    android:fontFamily="@font/manrope_semibold"
                     android:textSize="16sp"
-                    android:drawableStart="@drawable/ic_analytics"
-                    android:drawablePadding="16dp"
-                    app:cornerRadius="12dp"
-                    app:backgroundTint="@color/info"
-                    app:iconTint="@color/primary_foreground"
-                    app:rippleColor="@color/ripple_light" />
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="20dp"
+                    android:textAllCaps="false"
+                    app:icon="@drawable/ic_analytics"
+                    app:iconTint="#6E94C9"
+                    app:iconPadding="16dp"
+                    app:cornerRadius="20dp"
+                    app:backgroundTint="#A0C3F9" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnViewEvents"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="60dp"
                     android:layout_marginBottom="12dp"
                     android:text="View Events"
+                    android:textColor="#000000"
+                    android:fontFamily="@font/manrope_semibold"
                     android:textSize="16sp"
-                    android:drawableStart="@drawable/ic_events"
-                    android:drawablePadding="16dp"
-                    app:cornerRadius="12dp"
-                    app:backgroundTint="@color/looplab_blue"
-                    app:iconTint="@color/primary_foreground"
-                    app:rippleColor="@color/ripple_light" />
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="20dp"
+                    android:textAllCaps="false"
+                    app:icon="@drawable/ic_events"
+                    app:iconTint="#6E94C9"
+                    app:iconPadding="16dp"
+                    app:cornerRadius="20dp"
+                    app:backgroundTint="#A0C3F9" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAIChatbot"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="60dp"
                     android:layout_marginBottom="12dp"
                     android:text="AI Assistant"
+                    android:textColor="#000000"
+                    android:fontFamily="@font/manrope_semibold"
                     android:textSize="16sp"
-                    android:drawableStart="@drawable/ic_ai"
-                    android:drawablePadding="16dp"
-                    app:cornerRadius="12dp"
-                    app:backgroundTint="@color/secondary"
-                    app:iconTint="@color/primary_foreground"
-                    app:rippleColor="@color/ripple_light" />
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="20dp"
+                    android:textAllCaps="false"
+                    app:icon="@drawable/ic_ai"
+                    app:iconTint="#6E94C9"
+                    app:iconPadding="16dp"
+                    app:cornerRadius="20dp"
+                    app:backgroundTint="#A0C3F9" />
 
             </LinearLayout>
 
@@ -412,18 +418,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Recent Activity"
-                android:textColor="@color/primary_foreground"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="16dp"
-                android:fontFamily="sans-serif-medium" />
+                android:textColor="#000000"
+                android:textSize="22sp"
+                android:fontFamily="@font/manrope_bold"
+                android:layout_marginBottom="16dp"/>
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/card"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp">
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -433,24 +438,18 @@
 
                     <TextView
                         android:id="@+id/tvRecentActivity"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="No recent activity"
-                        android:textColor="@color/muted_foreground"
+                        android:textColor="#80000000"
                         android:textSize="16sp"
-                        android:gravity="center"
+                        android:fontFamily="@font/manrope_medium"
+                        android:gravity="center_vertical"
                         android:drawableStart="@drawable/ic_time"
                         android:drawablePadding="12dp"
-                        android:drawableTint="@color/muted_foreground" />
-
+                        app:drawableTint="#80000000" />
                 </LinearLayout>
-
             </com.google.android.material.card.MaterialCardView>
-
         </LinearLayout>
-
     </androidx.core.widget.NestedScrollView>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-

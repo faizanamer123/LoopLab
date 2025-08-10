@@ -3,99 +3,88 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient_primary">
+    android:background="#000000">
 
-    <!-- Logo Section -->
     <LinearLayout
         android:id="@+id/logoSection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4">
 
-        <!-- App Logo/Image -->
         <ImageView
             android:id="@+id/ivLogo"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/ic_launcher_foreground"
-            android:background="@drawable/bg_progress_overlay"
-            android:padding="24dp"
-            android:layout_marginBottom="32dp" />
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:src="@drawable/logo_splash" />
 
-        <!-- App Name -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="LoopLab"
-            android:textColor="@color/primary_foreground"
-            android:textSize="36sp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-medium"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/manrope_bold"
+            android:text="Loop Lab"
+            android:textColor="#FFFFFF"
+            android:textSize="42sp" />
 
-        <!-- App Tagline -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Your Gateway to Learning &amp; Events"
-            android:textColor="@color/primary_foreground"
-            android:textSize="16sp"
-            android:alpha="0.9"
-            android:gravity="center" />
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/manrope_medium"
+            android:text="Connect. Learn. Grow."
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
-    <!-- Loading Section -->
     <LinearLayout
+        android:id="@+id/loadingSection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginBottom="16dp"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/versionInfo"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="64dp">
+        app:layout_constraintStart_toStartOf="parent">
 
-        <!-- Loading Progress -->
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progressIndicator"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginBottom="16dp"
-            app:indicatorColor="@color/looplab_blue"
-            app:trackColor="@color/muted_foreground"
-            app:indicatorSize="48dp"
-            app:trackThickness="4dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:indeterminate="true"
+            app:indicatorColor="#707CFF"
+            app:indicatorSize="32dp"
+            app:trackColor="#26FFFFFF" />
 
-        <!-- Loading Text -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope_semibold"
             android:text="Loading..."
-            android:textColor="@color/primary_foreground"
-            android:textSize="14sp"
-            android:alpha="0.8" />
+            android:textColor="#BFFFFFFF"
+            android:textSize="14sp" />
 
     </LinearLayout>
 
-    <!-- Version Info -->
     <TextView
+        android:id="@+id/versionInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="@font/manrope_medium"
         android:text="Version 1.0.0"
-        android:textColor="@color/primary_foreground"
+        android:textColor="#80FFFFFF"
         android:textSize="12sp"
-        android:alpha="0.6"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="24dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-

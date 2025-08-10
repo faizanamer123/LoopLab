@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.looplab.R;
 import com.example.looplab.data.FirebaseRefs;
 import com.example.looplab.ui.auth.LoginActivity;
@@ -29,6 +31,11 @@ public class SplashActivity extends AppCompatActivity {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
 
+        ImageView ivLogo = findViewById(R.id.ivLogo);
+        Glide.with(this)
+                .asGif()
+                .load(R.drawable.logo_splash) // your_logo_animation.gif in res/drawable
+                .into(ivLogo);
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             if (currentUser != null) {
                 // User is logged in, check if they have a role

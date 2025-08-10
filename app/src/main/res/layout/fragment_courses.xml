@@ -4,29 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/primary"
-        android:theme="@style/ThemeOverlay.Material3.Dark"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/transparent"
         app:title="Courses"
-        app:titleTextColor="@color/on_primary" />
+        app:titleTextColor="#000000"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Title"
+        style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:boxBackgroundMode="outline"
-        app:startIconDrawable="@android:drawable/ic_menu_search">
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:boxBackgroundColor="#F0F0F0"
+        app:boxCornerRadiusTopStart="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
+        app:boxCornerRadiusBottomEnd="16dp"
+        app:startIconDrawable="@drawable/ic_search"
+        app:startIconTint="#80000000">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Search courses..." />
+            android:hint="Search courses..."
+            android:fontFamily="@font/manrope_medium"
+            android:textColor="#000000"
+            android:textColorHint="#80000000" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -36,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         app:selectionRequired="true"
         app:singleSelection="true">
 
@@ -44,24 +60,36 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="All"
+            android:fontFamily="@font/manrope_semibold"
+            app:chipBackgroundColor="@color/chip_background_selector"
+            android:textColor="@color/chip_text_selector"
             style="@style/Widget.Material3.Chip.Filter" />
 
         <com.google.android.material.chip.Chip
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Android"
+            android:fontFamily="@font/manrope_semibold"
+            app:chipBackgroundColor="@color/chip_background_selector"
+            android:textColor="@color/chip_text_selector"
             style="@style/Widget.Material3.Chip.Filter" />
 
         <com.google.android.material.chip.Chip
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Web Dev"
+            android:fontFamily="@font/manrope_semibold"
+            app:chipBackgroundColor="@color/chip_background_selector"
+            android:textColor="@color/chip_text_selector"
             style="@style/Widget.Material3.Chip.Filter" />
 
         <com.google.android.material.chip.Chip
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="AI/ML"
+            android:fontFamily="@font/manrope_semibold"
+            app:chipBackgroundColor="@color/chip_background_selector"
+            android:textColor="@color/chip_text_selector"
             style="@style/Widget.Material3.Chip.Filter" />
 
     </com.google.android.material.chip.ChipGroup>
@@ -82,6 +110,7 @@
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:paddingBottom="80dp"
+                android:paddingHorizontal="16dp"
                 tools:listitem="@layout/item_course_enhanced" />
 
             <LinearLayout
@@ -96,6 +125,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="No courses found"
+                    android:textColor="#000000"
+                    android:fontFamily="@font/manrope_bold"
                     android:textAppearance="?attr/textAppearanceHeadline6" />
 
                 <TextView
@@ -103,8 +134,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Try adjusting your search or filters"
+                    android:fontFamily="@font/manrope_medium"
                     android:textAppearance="?attr/textAppearanceBody2"
-                    android:textColor="@color/text_secondary" />
+                    android:textColor="#80000000" />
 
             </LinearLayout>
 
@@ -119,6 +151,7 @@
                 <com.google.android.material.progressindicator.CircularProgressIndicator
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:indicatorColor="#000000"
                     android:indeterminate="true" />
 
                 <TextView
@@ -126,7 +159,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="Loading courses..."
-                    android:textAppearance="?attr/textAppearanceBody2" />
+                    android:fontFamily="@font/manrope_medium"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="#80000000"/>
 
             </LinearLayout>
 
