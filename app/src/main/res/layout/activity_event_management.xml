@@ -3,28 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient_primary">
+    android:background="#FFFFFF">
 
     <!-- Header -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        app:elevation="0dp">
+        app:elevation="0dp"
+        android:fitsSystemWindows="true">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@android:color/transparent"
-            app:contentInsetStart="0dp"
-            app:contentInsetEnd="0dp">
+            app:contentInsetEnd="0dp"
+            app:contentInsetStart="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp">
 
@@ -33,19 +34,20 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_back"
                     android:contentDescription="Back"
-                    android:tint="@color/white" />
+                    android:src="@drawable/ic_back"
+                    android:tint="#000000" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/manrope_bold"
+                    android:gravity="center"
                     android:text="Event Management"
-                    android:textColor="@color/white"
+                    android:textColor="#000000"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:gravity="center" />
+                    android:textStyle="bold" />
 
                 <View
                     android:layout_width="48dp"
@@ -74,9 +76,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardBackgroundColor="@color/card"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp">
+                app:cardBackgroundColor="#90FCC8"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -87,19 +89,22 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/manrope_bold"
                         android:text="Manage Events"
-                        android:textColor="@color/foreground"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="8dp" />
+                        android:textColor="#000000"
+                        android:textSize="32sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_medium"
+                        android:lineSpacingMultiplier="1.2"
                         android:text="Create, edit, and manage all events in the LoopLab platform."
-                        android:textColor="@color/muted_foreground"
-                        android:textSize="16sp"
-                        android:lineSpacingMultiplier="1.2" />
+                        android:textColor="#000000"
+                        android:alpha="0.7"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
@@ -110,9 +115,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardBackgroundColor="@color/card"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp">
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -122,27 +127,29 @@
 
                     <!-- Search -->
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:hint="Search events..."
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        app:boxBackgroundColor="@android:color/transparent"
-                        app:boxCornerRadiusTopStart="12dp"
-                        app:boxCornerRadiusTopEnd="12dp"
-                        app:boxCornerRadiusBottomStart="12dp"
-                        app:boxCornerRadiusBottomEnd="12dp"
-                        app:boxStrokeColor="@color/looplab_blue"
-                        app:hintTextColor="@color/looplab_blue"
-                        app:startIconDrawable="@drawable/ic_search"
-                        app:startIconTint="@color/looplab_blue">
+                        android:textColorHint="#80000000"
+                        app:boxBackgroundColor="#FFFFFF"
+                        app:boxCornerRadiusBottomEnd="20dp"
+                        app:boxCornerRadiusBottomStart="20dp"
+                        app:boxCornerRadiusTopEnd="20dp"
+                        app:boxCornerRadiusTopStart="20dp"
+                        app:boxStrokeColor="#000000"
+                        app:boxStrokeWidth="2dp"
+                        app:hintTextColor="#80000000"
+                        app:startIconDrawable="@null">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etSearch"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_medium"
                             android:inputType="text"
-                            android:textColor="@color/foreground"
+                            android:textColor="#000000"
                             android:textSize="16sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -155,32 +162,33 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnFilterEvents"
+                            style="@style/Widget.Material3.Button.UnelevatedButton"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_height="60dp"
                             android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manrope_semibold"
                             android:text="Filter"
-                            android:textSize="14sp"
-                            style="@style/Widget.Material3.Button.OutlinedButton"
-                            app:cornerRadius="12dp"
-                            app:strokeColor="@color/looplab_blue"
-                            android:textColor="@color/looplab_blue"
-                            app:icon="@drawable/ic_sort"
-                            app:iconGravity="textStart" />
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            app:backgroundTint="#FF9292"
+                            app:cornerRadius="30dp"
+                            app:icon="@null" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnAddEvent"
+                            style="@style/Widget.Material3.Button.UnelevatedButton"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_height="60dp"
                             android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manrope_semibold"
                             android:text="Add Event"
-                            android:textSize="14sp"
-                            app:cornerRadius="12dp"
-                            app:backgroundTint="@color/looplab_blue"
-                            android:textColor="@color/white"
-                            app:icon="@drawable/ic_add"
-                            app:iconGravity="textStart" />
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            app:backgroundTint="#BEF294"
+                            app:cornerRadius="30dp"
+                            app:icon="@null" />
 
                     </LinearLayout>
 
@@ -207,28 +215,21 @@
         android:layout_gravity="center"
         android:indeterminate="true"
         android:visibility="gone"
-        app:indicatorColor="@color/looplab_blue"
-        app:trackColor="@color/muted" />
+        app:indicatorColor="#000000"
+        app:trackColor="#80000000" />
 
     <!-- Floating Action Button for Adding Events -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddEvent"
-        android:layout_width="71dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:layout_marginBottom="112dp"
         android:src="@drawable/ic_add"
-        android:translationY="-80dp"
-        app:backgroundTint="@color/primary"
-        app:fabCustomSize="70dp"
+        android:visibility="gone"
+        app:backgroundTint="#000000"
         app:fabSize="auto"
-        app:layout_dodgeInsetEdges="bottom"
         app:maxImageSize="30dp"
         app:tint="@color/white" />
-
-
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
