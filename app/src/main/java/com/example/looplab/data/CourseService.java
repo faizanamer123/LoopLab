@@ -433,10 +433,14 @@ public class CourseService {
     
     // Get user progress for a specific course (simplified version)
     public void getUserProgress(String userId, String courseId, ProgressCallback callback) {
+        Log.d(TAG, "Getting user progress for userId: " + userId + ", courseId: " + courseId);
+        
         FirebaseRefs.progress().whereEqualTo("userId", userId)
                 .whereEqualTo("courseId", courseId)
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
+                    Log.d(TAG, "Found " + querySnapshot.size() + " progress documents");
+                    
                     Models.Progress userProgress = new Models.Progress();
                     userProgress.userId = userId;
                     userProgress.courseId = courseId;
@@ -444,14 +448,23 @@ public class CourseService {
                     userProgress.watchTime = 0;
                     
                     for (var doc : querySnapshot.getDocuments()) {
+                        Log.d(TAG, "Raw document data: " + doc.getData());
                         Models.Progress progress = doc.toObject(Models.Progress.class);
                         if (progress != null) {
+                            Log.d(TAG, "Progress doc - lectureId: " + progress.lectureId + 
+                                  ", completed: " + progress.completed + ", watchTime: " + progress.watchTime);
                             if (progress.completed) {
                                 userProgress.completedLectures.add(progress.lectureId);
+                                Log.d(TAG, "Added completed lecture: " + progress.lectureId);
                             }
                             userProgress.watchTime += progress.watchTime;
+                        } else {
+                            Log.e(TAG, "Failed to convert document to Progress object");
                         }
                     }
+                    
+                    Log.d(TAG, "Final user progress - completedLectures: " + userProgress.completedLectures.size() + 
+                          ", total watchTime: " + userProgress.watchTime);
                     
                     callback.onSuccess(userProgress);
                 })

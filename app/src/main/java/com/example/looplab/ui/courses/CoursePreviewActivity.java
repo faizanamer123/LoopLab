@@ -207,9 +207,13 @@ public class CoursePreviewActivity extends AppCompatActivity {
     }
     
     private void loadActualCourseProgress(String courseId) {
-        courseService.getCourseProgress(currentUserId, courseId, new CourseService.ProgressCallback() {
+        Log.d("CoursePreview", "Loading actual course progress for course: " + courseId + ", user: " + currentUserId);
+        courseService.getUserProgress(currentUserId, courseId, new CourseService.ProgressCallback() {
             @Override
             public void onSuccess(Models.Progress progress) {
+                Log.d("CoursePreview", "Progress loaded - completedLectures: " + 
+                      (progress.completedLectures != null ? progress.completedLectures.size() : "null"));
+                
                 // Calculate progress percentage based on completed lectures vs total lectures
                 if (progress.completedLectures != null && progress.completedLectures.size() > 0) {
                     // Get total lectures count for this course
@@ -219,6 +223,9 @@ public class CoursePreviewActivity extends AppCompatActivity {
                             int totalLectures = lectures.size();
                             int completedLectures = progress.completedLectures.size();
                             int progressPercentage = totalLectures > 0 ? (completedLectures * 100) / totalLectures : 0;
+                            
+                            Log.d("CoursePreview", "Progress calculated - Total: " + totalLectures + 
+                                  ", Completed: " + completedLectures + ", Percentage: " + progressPercentage + "%");
                             
                             tvProgressPercent.setText(progressPercentage + "%");
                             courseProgressBar.setProgress(progressPercentage);
@@ -235,12 +242,14 @@ public class CoursePreviewActivity extends AppCompatActivity {
                         
                         @Override
                         public void onError(String error) {
+                            Log.e("CoursePreview", "Error getting course lectures: " + error);
                             // Fallback to 0% progress
                             tvProgressPercent.setText("0%");
                             courseProgressBar.setProgress(0);
                         }
                     });
                 } else {
+                    Log.d("CoursePreview", "No completed lectures found");
                     // No completed lectures
                     tvProgressPercent.setText("0%");
                     courseProgressBar.setProgress(0);
@@ -249,6 +258,7 @@ public class CoursePreviewActivity extends AppCompatActivity {
             
             @Override
             public void onError(String error) {
+                Log.e("CoursePreview", "Error loading progress: " + error);
                 // Fallback to 0% progress
                 tvProgressPercent.setText("0%");
                 courseProgressBar.setProgress(0);

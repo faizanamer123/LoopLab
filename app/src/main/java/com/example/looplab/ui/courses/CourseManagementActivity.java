@@ -406,7 +406,7 @@ public class CourseManagementActivity extends AppCompatActivity {
             
             private void loadActualCourseProgress(String courseId) {
                 CourseService courseService = new CourseService();
-                courseService.getCourseProgress(currentUserId, courseId, new CourseService.ProgressCallback() {
+                courseService.getUserProgress(currentUserId, courseId, new CourseService.ProgressCallback() {
                     @Override
                     public void onSuccess(Models.Progress progress) {
                         if (progress.completedLectures != null && progress.completedLectures.size() > 0) {
