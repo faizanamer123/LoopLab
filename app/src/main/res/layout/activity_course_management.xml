@@ -38,6 +38,7 @@
                     android:tint="@color/white" />
 
                 <TextView
+                    android:id="@+id/tvToolbarTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -74,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardBackgroundColor="@drawable/bg_modern_card"
+                app:cardBackgroundColor="@color/card"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp">
 
@@ -122,7 +123,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="80dp"
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/looplab_blue"
         app:tint="@color/white" />

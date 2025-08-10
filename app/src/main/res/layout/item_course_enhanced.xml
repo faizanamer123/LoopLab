@@ -13,6 +13,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/courseInfoContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -101,7 +102,8 @@
             android:id="@+id/progressOverlay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_below="@id/courseInfoContainer"
+            android:layout_marginTop="8dp"
             android:background="@color/primary"
             android:orientation="horizontal"
             android:padding="8dp"

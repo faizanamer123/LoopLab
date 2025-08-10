@@ -242,7 +242,7 @@ public class ChatService {
                     callback.onError("Failed to get messages: " + e.getMessage());
                 });
     }
-
+    
     // Listen to messages for a chat in real-time (caller must hold and remove the returned registration)
     public ListenerRegistration listenToChatMessages(String chatId, MessageCallback callback) {
         // Use only equality filter to avoid composite index requirement for quick start
@@ -290,7 +290,7 @@ public class ChatService {
                         try {
                             Models.Message m = doc.toObject(Models.Message.class);
                             if (m != null && (m.senderId == null || !m.senderId.equals(userId))) {
-                                FirebaseRefs.messages().document(doc.getId()).update("isRead", true);
+                        FirebaseRefs.messages().document(doc.getId()).update("isRead", true);
                             }
                         } catch (Exception ignored) {}
                     }

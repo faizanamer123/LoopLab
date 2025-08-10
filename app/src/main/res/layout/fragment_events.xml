@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="@drawable/bg_modern_card"
+                app:cardBackgroundColor="@color/card"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp">
 
@@ -118,7 +118,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="@drawable/bg_modern_card"
+                app:cardBackgroundColor="@color/card"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp">
 
@@ -204,7 +204,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@drawable/bg_modern_card"
+                app:cardBackgroundColor="@color/card"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp">
 
@@ -284,9 +284,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
+        android:layout_marginBottom="112dp"
+        android:translationY="-48dp"
         android:src="@drawable/ic_add"
-        android:visibility="gone"
+        android:visibility="visible"
         app:backgroundTint="@color/primary"
+        app:layout_dodgeInsetEdges="bottom"
         app:tint="@color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

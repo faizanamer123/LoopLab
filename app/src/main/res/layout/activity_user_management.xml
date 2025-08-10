@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardBackgroundColor="@drawable/bg_modern_card"
+                app:cardBackgroundColor="@color/card"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp">
 
@@ -110,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardBackgroundColor="@drawable/bg_modern_card"
+                app:cardBackgroundColor="@color/card"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp">
 

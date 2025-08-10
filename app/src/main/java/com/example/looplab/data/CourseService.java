@@ -107,7 +107,6 @@ public class CourseService {
     // Get courses by instructor
     public void getCoursesByInstructor(String instructorId, CourseListCallback callback) {
         FirebaseRefs.courses().whereEqualTo("instructorId", instructorId)
-                .orderBy("createdAt", com.google.firebase.firestore.Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     List<Models.Course> courses = new ArrayList<>();
@@ -118,6 +117,8 @@ public class CourseService {
                             courses.add(course);
                         }
                     }
+                    // Sort courses by createdAt in descending order (newest first) in memory
+                    courses.sort((c1, c2) -> Long.compare(c2.createdAt, c1.createdAt));
                     callback.onSuccess(courses);
                 })
                 .addOnFailureListener(e -> {
@@ -130,11 +131,15 @@ public class CourseService {
     public void addLecture(Models.Lecture lecture, CourseCallback callback) {
         lecture.id = FirebaseRefs.lectures().document().getId();
         lecture.createdAt = System.currentTimeMillis();
-        lecture.isPublished = false;
+        // Keep the isPublished value from the lecture object
+        
+        // Log the lecture data before saving
+        Log.d(TAG, "Adding lecture - ID: " + lecture.id + ", Title: " + lecture.title + 
+              ", VideoURL: " + lecture.videoUrl + ", isPublished: " + lecture.isPublished);
         
         FirebaseRefs.lectures().document(lecture.id).set(lecture.toMap())
                 .addOnSuccessListener(aVoid -> {
-                    Log.d(TAG, "Lecture added: " + lecture.id);
+                    Log.d(TAG, "Lecture added successfully: " + lecture.id + " with video URL: " + lecture.videoUrl);
                     updateCourseLectureCount(lecture.courseId, callback);
                 })
                 .addOnFailureListener(e -> {
@@ -158,19 +163,25 @@ public class CourseService {
     
     // Get lectures for a course
     public void getCourseLectures(String courseId, LectureCallback callback) {
+        Log.d(TAG, "Getting lectures for course: " + courseId);
         FirebaseRefs.lectures().whereEqualTo("courseId", courseId)
                 .whereEqualTo("isPublished", true)
-                .orderBy("order", com.google.firebase.firestore.Query.Direction.ASCENDING)
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     List<Models.Lecture> lectures = new ArrayList<>();
+                    Log.d(TAG, "Found " + querySnapshot.size() + " published lectures for course: " + courseId);
                     for (var doc : querySnapshot.getDocuments()) {
                         Models.Lecture lecture = doc.toObject(Models.Lecture.class);
                         if (lecture != null) {
                             lecture.id = doc.getId();
                             lectures.add(lecture);
+                            Log.d(TAG, "Lecture loaded - ID: " + lecture.id + ", Title: " + lecture.title + 
+                                  ", VideoURL: " + lecture.videoUrl + ", isPublished: " + lecture.isPublished);
                         }
                     }
+                    // Sort lectures by order in ascending order in memory
+                    lectures.sort((l1, l2) -> Integer.compare(l1.order, l2.order));
+                    Log.d(TAG, "Returning " + lectures.size() + " sorted lectures");
                     callback.onSuccess(lectures);
                 })
                 .addOnFailureListener(e -> {

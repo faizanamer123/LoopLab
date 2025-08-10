@@ -1,10 +1,13 @@
 package com.example.looplab.ui.admin;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -18,13 +21,17 @@ import com.example.looplab.data.EventService;
 import com.example.looplab.data.FirebaseRefs;
 import com.example.looplab.data.model.Models;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class EventManagementActivity extends AppCompatActivity {
 
@@ -42,7 +49,8 @@ public class EventManagementActivity extends AppCompatActivity {
         rv = findViewById(R.id.rvEvents);
         progress = findViewById(R.id.progressIndicator);
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
-        FloatingActionButton fab = findViewById(R.id.btnAddEvent);
+        MaterialButton btnAddEvent = findViewById(R.id.btnAddEvent);
+        com.google.android.material.floatingactionbutton.FloatingActionButton fabAddEvent = findViewById(R.id.fabAddEvent);
 
         adapter = new EventsAdapter(new EventsAdapter.Listener() {
             @Override public void onEdit(Models.EventItem e) { editEvent(e); }
@@ -51,7 +59,8 @@ public class EventManagementActivity extends AppCompatActivity {
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter);
 
-        fab.setOnClickListener(v -> showCreateEventDialog());
+        btnAddEvent.setOnClickListener(v -> showCreateEventDialog());
+        fabAddEvent.setOnClickListener(v -> showCreateEventDialog());
         loadEvents();
     }
 
@@ -74,64 +83,275 @@ public class EventManagementActivity extends AppCompatActivity {
     }
 
     private void showCreateEventDialog() {
-        // Simple inline inputs for title and description
+        // Create layout with all input fields
         LinearLayout v = new LinearLayout(this);
         v.setOrientation(LinearLayout.VERTICAL);
         int pad = (int) (16 * getResources().getDisplayMetrics().density);
         v.setPadding(pad, pad, pad, pad);
+        
+        // Title input
         EditText etTitle = new EditText(this);
-        etTitle.setHint("Title");
+        etTitle.setHint("Event Title");
+        etTitle.setLayoutParams(new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, 
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+        etTitle.setPadding(pad, pad, pad, pad);
+        
+        // Description input
         EditText etDesc = new EditText(this);
-        etDesc.setHint("Description");
+        etDesc.setHint("Event Description");
+        etDesc.setLayoutParams(new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, 
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+        etDesc.setPadding(pad, pad, pad, pad);
+        
+        // Location input
+        EditText etLocation = new EditText(this);
+        etLocation.setHint("Event Location");
+        etLocation.setLayoutParams(new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, 
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+        etLocation.setPadding(pad, pad, pad, pad);
+        
+        // Date and time selection buttons
+        LinearLayout dateTimeLayout = new LinearLayout(this);
+        dateTimeLayout.setOrientation(LinearLayout.HORIZONTAL);
+        dateTimeLayout.setLayoutParams(new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, 
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+        
+        MaterialButton btnStartDate = new MaterialButton(this);
+        btnStartDate.setText("Start Date & Time");
+        btnStartDate.setLayoutParams(new LinearLayout.LayoutParams(
+            0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f
+        ));
+        btnStartDate.setStrokeColorResource(R.color.looplab_blue);
+        btnStartDate.setStrokeWidth(2);
+        
+        MaterialButton btnEndDate = new MaterialButton(this);
+        btnEndDate.setText("End Date & Time");
+        btnEndDate.setLayoutParams(new LinearLayout.LayoutParams(
+            0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f
+        ));
+        btnEndDate.setStrokeColorResource(R.color.looplab_blue);
+        btnEndDate.setStrokeWidth(2);
+        
+        dateTimeLayout.addView(btnStartDate);
+        dateTimeLayout.addView(btnEndDate);
+        
+        // Add all views to main layout
         v.addView(etTitle);
         v.addView(etDesc);
-        if (etTitle != null) etTitle.setHint("Title");
-        if (etDesc != null) etDesc.setHint("Description");
+        v.addView(etLocation);
+        v.addView(dateTimeLayout);
+        
+        // Variables to store selected dates
+        long[] selectedStartTime = {System.currentTimeMillis() + 3600_000}; // +1h default
+        long[] selectedEndTime = {System.currentTimeMillis() + 7200_000}; // +2h default
+        
+        // Start date/time picker
+        btnStartDate.setOnClickListener(v1 -> {
+            showDateTimePicker(selectedStartTime, btnStartDate, "Start Date & Time");
+        });
+        
+        // End date/time picker
+        btnEndDate.setOnClickListener(v1 -> {
+            showDateTimePicker(selectedEndTime, btnEndDate, "End Date & Time");
+        });
+        
+        // Update button texts with initial values
+        updateDateTimeButtonText(btnStartDate, selectedStartTime[0]);
+        updateDateTimeButtonText(btnEndDate, selectedEndTime[0]);
 
         new MaterialAlertDialogBuilder(this)
                 .setTitle("Create Event")
                 .setView(v)
                 .setPositiveButton("Create", (d, w) -> {
                     Models.EventItem ev = new Models.EventItem();
-                    ev.title = etTitle != null ? etTitle.getText().toString().trim() : "";
-                    ev.description = etDesc != null ? etDesc.getText().toString().trim() : "";
-                    ev.startTime = System.currentTimeMillis() + 3600_000; // +1h
-                    ev.endTime = ev.startTime + 3600_000;
-                    ev.location = "Online";
+                    ev.title = etTitle.getText().toString().trim();
+                    ev.description = etDesc.getText().toString().trim();
+                    ev.location = etLocation.getText().toString().trim();
+                    ev.startTime = selectedStartTime[0];
+                    ev.endTime = selectedEndTime[0];
                     ev.organizerId = com.google.firebase.auth.FirebaseAuth.getInstance().getUid();
                     ev.organizerName = "Admin";
+                    
+                    if (ev.title.isEmpty()) {
+                        Toast.makeText(this, "Please enter event title", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    
                     eventService.createEvent(ev, new EventService.EventCallback() {
-                        @Override public void onSuccess() { Toast.makeText(EventManagementActivity.this, "Event created", Toast.LENGTH_SHORT).show(); loadEvents(); }
-                        @Override public void onError(String error) { Toast.makeText(EventManagementActivity.this, error, Toast.LENGTH_SHORT).show(); }
+                        @Override public void onSuccess() { 
+                            Toast.makeText(EventManagementActivity.this, "Event created", Toast.LENGTH_SHORT).show(); 
+                            loadEvents(); 
+                        }
+                        @Override public void onError(String error) { 
+                            Toast.makeText(EventManagementActivity.this, error, Toast.LENGTH_SHORT).show(); 
+                        }
                     });
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
     }
 
+    private void showDateTimePicker(long[] selectedTime, MaterialButton button, String title) {
+        // Get current date and time
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(selectedTime[0]);
+        
+        // Show date picker first
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+            this,
+            (view, year, month, dayOfMonth) -> {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                
+                // After date is selected, show time picker
+                TimePickerDialog timePickerDialog = new TimePickerDialog(
+                    this,
+                    (view1, hourOfDay, minute) -> {
+                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        calendar.set(Calendar.MINUTE, minute);
+                        calendar.set(Calendar.SECOND, 0);
+                        calendar.set(Calendar.MILLISECOND, 0);
+                        
+                        selectedTime[0] = calendar.getTimeInMillis();
+                        updateDateTimeButtonText(button, selectedTime[0]);
+                    },
+                    calendar.get(Calendar.HOUR_OF_DAY),
+                    calendar.get(Calendar.MINUTE),
+                    true
+                );
+                timePickerDialog.show();
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        );
+        datePickerDialog.show();
+    }
+    
+    private void updateDateTimeButtonText(MaterialButton button, long timestamp) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.getDefault());
+        String formattedDate = dateFormat.format(new Date(timestamp));
+        button.setText(formattedDate);
+    }
+
     private void editEvent(Models.EventItem item) {
+        // Create layout with all input fields
         LinearLayout v = new LinearLayout(this);
         v.setOrientation(LinearLayout.VERTICAL);
         int pad = (int) (16 * getResources().getDisplayMetrics().density);
         v.setPadding(pad, pad, pad, pad);
+        
+        // Title input
         EditText etTitle = new EditText(this);
-        etTitle.setHint("Title");
+        etTitle.setHint("Event Title");
         etTitle.setText(item.title);
+        etTitle.setLayoutParams(new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, 
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+        etTitle.setPadding(pad, pad, pad, pad);
+        
+        // Description input
         EditText etDesc = new EditText(this);
-        etDesc.setHint("Description");
+        etDesc.setHint("Event Description");
         etDesc.setText(item.description);
+        etDesc.setLayoutParams(new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, 
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+        etDesc.setPadding(pad, pad, pad, pad);
+        
+        // Location input
+        EditText etLocation = new EditText(this);
+        etLocation.setHint("Event Location");
+        etLocation.setText(item.location != null ? item.location : "");
+        etLocation.setLayoutParams(new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, 
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+        etLocation.setPadding(pad, pad, pad, pad);
+        
+        // Date and time selection buttons
+        LinearLayout dateTimeLayout = new LinearLayout(this);
+        dateTimeLayout.setOrientation(LinearLayout.HORIZONTAL);
+        dateTimeLayout.setLayoutParams(new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, 
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+        
+        MaterialButton btnStartDate = new MaterialButton(this);
+        btnStartDate.setLayoutParams(new LinearLayout.LayoutParams(
+            0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f
+        ));
+        btnStartDate.setStrokeColorResource(R.color.looplab_blue);
+        btnStartDate.setStrokeWidth(2);
+        
+        MaterialButton btnEndDate = new MaterialButton(this);
+        btnEndDate.setLayoutParams(new LinearLayout.LayoutParams(
+            0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f
+        ));
+        btnEndDate.setStrokeColorResource(R.color.looplab_blue);
+        btnEndDate.setStrokeWidth(2);
+        
+        dateTimeLayout.addView(btnStartDate);
+        dateTimeLayout.addView(btnEndDate);
+        
+        // Add all views to main layout
         v.addView(etTitle);
         v.addView(etDesc);
+        v.addView(etLocation);
+        v.addView(dateTimeLayout);
+        
+        // Variables to store selected dates
+        long[] selectedStartTime = {item.startTime};
+        long[] selectedEndTime = {item.endTime};
+        
+        // Start date/time picker
+        btnStartDate.setOnClickListener(v1 -> {
+            showDateTimePicker(selectedStartTime, btnStartDate, "Start Date & Time");
+        });
+        
+        // End date/time picker
+        btnEndDate.setOnClickListener(v1 -> {
+            showDateTimePicker(selectedEndTime, btnEndDate, "End Date & Time");
+        });
+        
+        // Update button texts with current values
+        updateDateTimeButtonText(btnStartDate, selectedStartTime[0]);
+        updateDateTimeButtonText(btnEndDate, selectedEndTime[0]);
 
         new MaterialAlertDialogBuilder(this)
                 .setTitle("Edit Event")
                 .setView(v)
                 .setPositiveButton("Save", (d, w) -> {
-                    item.title = etTitle != null ? etTitle.getText().toString().trim() : item.title;
-                    item.description = etDesc != null ? etDesc.getText().toString().trim() : item.description;
+                    item.title = etTitle.getText().toString().trim();
+                    item.description = etDesc.getText().toString().trim();
+                    item.location = etLocation.getText().toString().trim();
+                    item.startTime = selectedStartTime[0];
+                    item.endTime = selectedEndTime[0];
+                    
+                    if (item.title.isEmpty()) {
+                        Toast.makeText(this, "Please enter event title", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    
                     eventService.updateEvent(item, new EventService.EventCallback() {
-                        @Override public void onSuccess() { Toast.makeText(EventManagementActivity.this, "Updated", Toast.LENGTH_SHORT).show(); loadEvents(); }
-                        @Override public void onError(String error) { Toast.makeText(EventManagementActivity.this, error, Toast.LENGTH_SHORT).show(); }
+                        @Override public void onSuccess() { 
+                            Toast.makeText(EventManagementActivity.this, "Updated", Toast.LENGTH_SHORT).show(); 
+                            loadEvents(); 
+                        }
+                        @Override public void onError(String error) { 
+                            Toast.makeText(EventManagementActivity.this, error, Toast.LENGTH_SHORT).show(); 
+                        }
                     });
                 })
                 .setNegativeButton("Cancel", null)
@@ -174,10 +394,10 @@ public class EventManagementActivity extends AppCompatActivity {
             btnDelete = itemView.findViewById(R.id.btnDelete);
         }
         void bind(Models.EventItem e, EventsAdapter.Listener l) {
-            tvTitle.setText(e.title);
-            tvMeta.setText(e.location + " • " + new java.text.SimpleDateFormat("MMM d, HH:mm").format(new java.util.Date(e.startTime)));
-            btnEdit.setOnClickListener(v -> l.onEdit(e));
-            btnDelete.setOnClickListener(v -> l.onDelete(e));
+            if (tvTitle != null) tvTitle.setText(e.title);
+            if (tvMeta != null) tvMeta.setText(e.location + " • " + new java.text.SimpleDateFormat("MMM d, HH:mm").format(new java.util.Date(e.startTime)));
+            if (btnEdit != null) btnEdit.setOnClickListener(v -> l.onEdit(e));
+            if (btnDelete != null) btnDelete.setOnClickListener(v -> l.onDelete(e));
         }
     }
 }

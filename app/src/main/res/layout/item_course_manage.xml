@@ -49,13 +49,22 @@
                 android:id="@+id/btnThumb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Thumbnail" />
+                android:text="Thumbnail"
+                style="@style/Widget.Material3.Button.OutlinedButton" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                style="@style/Widget.Material3.Button.OutlinedButton" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnOpen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Open" />
+                android:text="Open"
+                style="@style/Widget.Material3.Button.OutlinedButton" />
         </LinearLayout>
 
     </LinearLayout>

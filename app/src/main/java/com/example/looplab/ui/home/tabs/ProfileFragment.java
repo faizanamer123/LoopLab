@@ -1,5 +1,6 @@
 package com.example.looplab.ui.home.tabs;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -100,8 +101,8 @@ public class ProfileFragment extends Fragment {
 
         // Edit Profile
         cardEditProfile.setOnClickListener(v -> {
-            // TODO: Navigate to edit profile screen
-            Toast.makeText(getContext(), "Edit Profile coming soon!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), com.example.looplab.ui.profile.EditProfileActivity.class);
+            startActivityForResult(intent, 1001);
         });
 
         // Settings
@@ -116,6 +117,15 @@ public class ProfileFragment extends Fragment {
                 ((com.example.looplab.ui.home.HomeActivity) getActivity()).openLeaderboard();
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1001 && resultCode == Activity.RESULT_OK) {
+            // Profile was updated, reload user data
+            loadUserData();
+        }
     }
 }
 

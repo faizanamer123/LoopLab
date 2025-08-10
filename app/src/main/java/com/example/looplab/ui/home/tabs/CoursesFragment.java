@@ -335,8 +335,8 @@ public class CoursesFragment extends Fragment {
             }
             
             private void handlePreviewButton(Models.Course course) {
-                android.content.Intent i = new android.content.Intent(itemView.getContext(), com.example.looplab.ui.courses.CourseDetailActivity.class);
-                i.putExtra(com.example.looplab.ui.courses.CourseDetailActivity.EXTRA_COURSE_ID, course.id);
+                android.content.Intent i = new android.content.Intent(itemView.getContext(), com.example.looplab.ui.courses.CoursePreviewActivity.class);
+                i.putExtra(com.example.looplab.ui.courses.CoursePreviewActivity.EXTRA_COURSE_ID, course.id);
                 itemView.getContext().startActivity(i);
             }
         }

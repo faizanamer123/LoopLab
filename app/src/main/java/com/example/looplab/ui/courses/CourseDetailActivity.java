@@ -1,5 +1,7 @@
 package com.example.looplab.ui.courses;
 
+import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -100,7 +102,14 @@ public class CourseDetailActivity extends AppCompatActivity {
             if (c != null && getSupportActionBar() != null) {
                 getSupportActionBar().setTitle(c.title);
                 getSupportActionBar().setSubtitle(c.instructorName);
+                
+                // Show course info in the UI
+                if (c.description != null && !c.description.isEmpty()) {
+                    // You can add a TextView for description if needed
+                }
             }
+        }).addOnFailureListener(e -> {
+            Toast.makeText(this, "Failed to load course: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -113,7 +122,15 @@ public class CourseDetailActivity extends AppCompatActivity {
                 if (lectures == null) lectures = new ArrayList<>();
                 lecturesAdapter.submit(lectures);
                 tvEmpty.setVisibility(lectures.isEmpty() ? View.VISIBLE : View.GONE);
-                if (!lectures.isEmpty()) playLecture(lectures.get(0));
+                
+                // Show course info even if no lectures
+                if (lectures.isEmpty()) {
+                    // Load course info to show at least something
+                    loadCourseHeader();
+                } else {
+                    // Auto-play first lecture
+                    playLecture(lectures.get(0));
+                }
             }
 
             @Override
@@ -121,6 +138,9 @@ public class CourseDetailActivity extends AppCompatActivity {
                 progressIndicator.setVisibility(View.GONE);
                 tvEmpty.setVisibility(View.VISIBLE);
                 Toast.makeText(CourseDetailActivity.this, "Failed to load lectures: " + error, Toast.LENGTH_SHORT).show();
+                
+                // Still try to load course info
+                loadCourseHeader();
             }
         });
     }
@@ -130,25 +150,153 @@ public class CourseDetailActivity extends AppCompatActivity {
             Toast.makeText(this, "Lecture has no video", Toast.LENGTH_SHORT).show();
             return;
         }
+        
         currentLecture = lecture;
         currentWatchSeconds = 0;
-        videoView.setVideoURI(Uri.parse(lecture.videoUrl));
-        videoView.setOnPreparedListener(mp -> {
-            videoView.start();
-            startProgressLoop();
-        });
-        videoView.setOnCompletionListener(mp -> {
-            if (currentUserId != null) {
-                courseService.updateLectureProgress(currentUserId, courseId, lecture.id, currentWatchSeconds, true,
-                        new CourseService.ProgressCallback() {
-                            @Override
-                            public void onSuccess(Models.Progress progress) {}
+        
+        // Check if it's a YouTube video
+        if (isYouTubeVideo(lecture.videoUrl)) {
+            openYouTubeVideo(lecture.videoUrl);
+            return;
+        }
+        
+        try {
+            Uri videoUri = getVideoUri(lecture.videoUrl);
+            
+            // Set up video view with better error handling
+            videoView.setVideoURI(videoUri);
+            
+            videoView.setOnPreparedListener(mp -> {
+                // Video is ready to play
+                videoView.start();
+                startProgressLoop();
+                
+                // Set video view size to maintain aspect ratio
+                int videoWidth = mp.getVideoWidth();
+                int videoHeight = mp.getVideoHeight();
+                if (videoWidth > 0 && videoHeight > 0) {
+                    // You can adjust the video view size here if needed
+                }
+            });
+            
+            videoView.setOnErrorListener((mp, what, extra) -> {
+                String errorMsg = "Video playback error";
+                switch (what) {
+                    case MediaPlayer.MEDIA_ERROR_UNKNOWN:
+                        errorMsg = "Unknown video error";
+                        break;
+                    case MediaPlayer.MEDIA_ERROR_SERVER_DIED:
+                        errorMsg = "Video server error";
+                        break;
+                    case MediaPlayer.MEDIA_ERROR_IO:
+                        errorMsg = "Video I/O error";
+                        break;
+                    case MediaPlayer.MEDIA_ERROR_MALFORMED:
+                        errorMsg = "Video format error";
+                        break;
+                    case MediaPlayer.MEDIA_ERROR_NOT_VALID_FOR_PROGRESSIVE_PLAYBACK:
+                        errorMsg = "Video not suitable for streaming";
+                        break;
+                }
+                Toast.makeText(this, errorMsg, Toast.LENGTH_LONG).show();
+                return true; // Error handled
+            });
+            
+            videoView.setOnCompletionListener(mp -> {
+                if (currentUserId != null) {
+                    courseService.updateLectureProgress(currentUserId, courseId, lecture.id, currentWatchSeconds, true,
+                            new CourseService.ProgressCallback() {
+                                @Override
+                                public void onSuccess(Models.Progress progress) {}
 
-                            @Override
-                            public void onError(String error) {}
-                        });
+                                @Override
+                                public void onError(String error) {}
+                            });
+                }
+            });
+            
+        } catch (Exception e) {
+            Toast.makeText(this, "Error loading video: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+    
+    /**
+     * Convert various video URL formats to proper URIs
+     * Supports direct video URLs and other streaming services
+     * Note: YouTube videos are handled separately in playLecture method
+     */
+    private Uri getVideoUri(String videoUrl) {
+        if (videoUrl == null || videoUrl.isEmpty()) {
+            throw new IllegalArgumentException("Video URL cannot be null or empty");
+        }
+        
+        // Handle direct video URLs
+        if (videoUrl.startsWith("http://") || videoUrl.startsWith("https://")) {
+            return Uri.parse(videoUrl);
+        }
+        
+        // Handle local file paths
+        if (videoUrl.startsWith("file://")) {
+            return Uri.parse(videoUrl);
+        }
+        
+        // Handle content URIs
+        if (videoUrl.startsWith("content://")) {
+            return Uri.parse(videoUrl);
+        }
+        
+        // Default case - assume it's a direct URL
+        return Uri.parse(videoUrl);
+    }
+    
+    /**
+     * Extract YouTube video ID from various YouTube URL formats
+     */
+    private String extractYouTubeVideoId(String youtubeUrl) {
+        if (youtubeUrl.contains("youtube.com/watch?v=")) {
+            return youtubeUrl.split("v=")[1].split("&")[0];
+        } else if (youtubeUrl.contains("youtu.be/")) {
+            return youtubeUrl.split("youtu.be/")[1].split("\\?")[0];
+        }
+        return null;
+    }
+    
+    /**
+     * Check if the given URL is a YouTube video
+     */
+    private boolean isYouTubeVideo(String videoUrl) {
+        return videoUrl != null && (videoUrl.contains("youtube.com") || videoUrl.contains("youtu.be"));
+    }
+    
+    /**
+     * Open YouTube video in YouTube app or browser
+     */
+    private void openYouTubeVideo(String videoUrl) {
+        try {
+            // First, try to open in YouTube app
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(videoUrl));
+            intent.setPackage("com.google.android.youtube");
+            
+            // Check if YouTube app is installed
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+                Toast.makeText(this, "Opening YouTube video in YouTube app", Toast.LENGTH_SHORT).show();
+            } else {
+                // If YouTube app is not installed, open in browser
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(videoUrl));
+                startActivity(browserIntent);
+                Toast.makeText(this, "Opening YouTube video in browser", Toast.LENGTH_SHORT).show();
             }
-        });
+        } catch (Exception e) {
+            // Fallback to browser if there's any error
+            try {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(videoUrl));
+                startActivity(browserIntent);
+                Toast.makeText(this, "Opening YouTube video in browser", Toast.LENGTH_SHORT).show();
+            } catch (Exception browserError) {
+                Toast.makeText(this, "Error opening YouTube video: " + browserError.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private void startProgressLoop() {

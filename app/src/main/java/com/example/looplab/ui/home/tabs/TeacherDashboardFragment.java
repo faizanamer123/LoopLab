@@ -234,16 +234,9 @@ public class TeacherDashboardFragment extends Fragment {
     }
 
     private void showCreateCourseDialog() {
-        // Show course creation form
-        new MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Create New Course")
-                .setMessage("Course creation feature will be implemented here with form fields for title, description, category, etc.")
-                .setPositiveButton("Create", (dialog, which) -> {
-                    Toast.makeText(getContext(), "Course created successfully!", Toast.LENGTH_SHORT).show();
-                    loadDashboardData(); // Refresh data
-                })
-                .setNegativeButton("Cancel", null)
-                .show();
+        // Navigate to course creation activity
+        Intent intent = new Intent(getActivity(), com.example.looplab.ui.courses.CreateCourseActivity.class);
+        startActivity(intent);
     }
 
     private void showStartLiveSessionDialog() {
@@ -290,61 +283,21 @@ public class TeacherDashboardFragment extends Fragment {
 
     // Implementation methods for different features
     private void showMyCourses() {
-        if (currentUserId == null) return;
-        
-        FirebaseRefs.courses().whereEqualTo("instructorId", currentUserId).get()
-                .addOnSuccessListener(querySnapshot -> {
-                    List<String> courseTitles = new ArrayList<>();
-                    for (DocumentSnapshot doc : querySnapshot.getDocuments()) {
-                        Models.Course course = doc.toObject(Models.Course.class);
-                        if (course != null) {
-                            courseTitles.add(course.title);
-                        }
-                    }
-                    
-                    String[] courses = courseTitles.toArray(new String[0]);
-                    new MaterialAlertDialogBuilder(requireContext())
-                            .setTitle("My Courses (" + courses.length + ")")
-                            .setItems(courses, (dialog, which) -> {
-                                Toast.makeText(getContext(), "Selected: " + courses[which], Toast.LENGTH_SHORT).show();
-                            })
-                            .setPositiveButton("Close", null)
-                            .show();
-                });
+        // Navigate to course management activity
+        Intent intent = new Intent(getActivity(), com.example.looplab.ui.courses.CourseManagementActivity.class);
+        startActivity(intent);
     }
 
     private void showEditCourseDialog() {
-        if (currentUserId == null) return;
-        
-        FirebaseRefs.courses().whereEqualTo("instructorId", currentUserId).get()
-                .addOnSuccessListener(querySnapshot -> {
-                    List<String> courseTitles = new ArrayList<>();
-                    for (DocumentSnapshot doc : querySnapshot.getDocuments()) {
-                        Models.Course course = doc.toObject(Models.Course.class);
-                        if (course != null) {
-                            courseTitles.add(course.title);
-                        }
-                    }
-                    
-                    String[] courses = courseTitles.toArray(new String[0]);
-                    new MaterialAlertDialogBuilder(requireContext())
-                            .setTitle("Select Course to Edit")
-                            .setItems(courses, (dialog, which) -> {
-                                Toast.makeText(getContext(), "Editing: " + courses[which], Toast.LENGTH_SHORT).show();
-                            })
-                            .setPositiveButton("Edit", null)
-                            .setNegativeButton("Cancel", null)
-                            .show();
-                });
+        // Navigate to course management activity where editing can be done
+        Intent intent = new Intent(getActivity(), com.example.looplab.ui.courses.CourseManagementActivity.class);
+        startActivity(intent);
     }
 
     private void showCourseAnalytics() {
-        new MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Course Analytics")
-                .setMessage("• Total Views: 1,250\n• Average Rating: 4.5/5\n• Completion Rate: 78%\n• Student Engagement: 85%")
-                .setPositiveButton("View Details", null)
-                .setNegativeButton("Close", null)
-                .show();
+        // Navigate to analytics activity for detailed course analytics
+        Intent intent = new Intent(getActivity(), com.example.looplab.ui.admin.AnalyticsActivity.class);
+        startActivity(intent);
     }
 
     private void showEnrolledStudents() {
@@ -394,12 +347,9 @@ public class TeacherDashboardFragment extends Fragment {
     }
 
     private void showStudentProgress() {
-        new MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Student Progress")
-                .setMessage("• John Smith: 85% complete\n• Sarah Johnson: 92% complete\n• Michael Chen: 67% complete\n• Average Progress: 81%")
-                .setPositiveButton("View Details", null)
-                .setNegativeButton("Close", null)
-                .show();
+        // Navigate to analytics activity for detailed student progress
+        Intent intent = new Intent(getActivity(), com.example.looplab.ui.admin.AnalyticsActivity.class);
+        startActivity(intent);
     }
 
     private void showSendMessages() {

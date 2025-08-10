@@ -55,6 +55,10 @@ public class CreateLectureActivity extends AppCompatActivity {
             Toast.makeText(this, "Title and Video URL required", Toast.LENGTH_SHORT).show();
             return;
         }
+        
+        // Log the video URL for debugging
+        android.util.Log.d("CreateLecture", "Saving lecture with video URL: " + url);
+        
         Models.Lecture l = new Models.Lecture();
         l.courseId = courseId;
         l.title = title;
@@ -63,9 +67,20 @@ public class CreateLectureActivity extends AppCompatActivity {
         l.duration = dur;
         l.order = (int) (System.currentTimeMillis() / 1000);
         l.isPublished = true;
+        
+        // Log the lecture object before saving
+        android.util.Log.d("CreateLecture", "Lecture object created - isPublished: " + l.isPublished + ", videoUrl: " + l.videoUrl);
+        
         courseService.addLecture(l, new CourseService.CourseCallback() {
-            @Override public void onSuccess() { Toast.makeText(CreateLectureActivity.this, "Lecture added", Toast.LENGTH_SHORT).show(); finish(); }
-            @Override public void onError(String error) { Toast.makeText(CreateLectureActivity.this, error, Toast.LENGTH_SHORT).show(); }
+            @Override public void onSuccess() { 
+                android.util.Log.d("CreateLecture", "Lecture saved successfully");
+                Toast.makeText(CreateLectureActivity.this, "Lecture added", Toast.LENGTH_SHORT).show(); 
+                finish(); 
+            }
+            @Override public void onError(String error) { 
+                android.util.Log.e("CreateLecture", "Error saving lecture: " + error);
+                Toast.makeText(CreateLectureActivity.this, error, Toast.LENGTH_SHORT).show(); 
+            }
         });
     }
 }

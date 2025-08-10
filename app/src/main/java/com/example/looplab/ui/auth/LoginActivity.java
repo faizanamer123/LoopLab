@@ -10,6 +10,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.looplab.R;
+import com.example.looplab.data.FirebaseRefs;
 import com.example.looplab.ui.auth.role.RoleSelectionActivity;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -69,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 auth.signInWithEmailAndPassword(email, password)
-                        .addOnSuccessListener(result -> proceedToRoleSelection())
+                        .addOnSuccessListener(result -> checkUserRoleAndProceed())
                         .addOnFailureListener(e -> Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
             }
         });
@@ -97,6 +98,40 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.tvCreateAccount).setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
         });
+    }
+
+    private void checkUserRoleAndProceed() {
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null) {
+            // Check if user already has a role in Firestore
+            com.example.looplab.data.FirebaseRefs.users().document(currentUser.getUid())
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            String role = documentSnapshot.getString("role");
+                            if (role != null && !role.isEmpty()) {
+                                // User has a role, go directly to home
+                                Intent intent = new Intent(LoginActivity.this, com.example.looplab.ui.home.HomeActivity.class);
+                                intent.putExtra("role", role);
+                                startActivity(intent);
+                            } else {
+                                // User exists but no role, go to role selection
+                                proceedToRoleSelection();
+                            }
+                        } else {
+                            // User exists in auth but not in Firestore, go to role selection
+                            proceedToRoleSelection();
+                        }
+                        finish();
+                    })
+                    .addOnFailureListener(e -> {
+                        // Error checking user data, go to role selection as fallback
+                        proceedToRoleSelection();
+                    });
+        } else {
+            // No user, go to role selection
+            proceedToRoleSelection();
+        }
     }
 
     private void proceedToRoleSelection() {
@@ -132,7 +167,7 @@ public class LoginActivity extends AppCompatActivity {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         auth.signInWithCredential(credential).addOnCompleteListener(this, t -> {
             if (t.isSuccessful()) {
-                proceedToRoleSelection();
+                checkUserRoleAndProceed();
             } else {
                 Toast.makeText(this, "Auth failed: " + (t.getException() != null ? t.getException().getMessage() : "Unknown error"), Toast.LENGTH_SHORT).show();
             }

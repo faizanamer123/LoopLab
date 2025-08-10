@@ -219,11 +219,11 @@
                 android:minHeight="56dp"
                 android:elevation="2dp">
 
-                <EditText
-                    android:id="@+id/etMessage"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+            <EditText
+                android:id="@+id/etMessage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                     android:hint="Message Gemini AI..."
                     android:inputType="textCapSentences|textMultiLine"
                     android:maxLines="4"
@@ -239,7 +239,7 @@
                     android:drawablePadding="8dp"/>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnSend"
+                android:id="@+id/btnSend"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_gradient_accent"

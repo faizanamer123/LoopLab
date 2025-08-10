@@ -11,6 +11,7 @@ public final class Models {
         public String email;
         public String role; // admin | teacher | student
         public String photoUrl;
+        public String bio;
         public List<String> badges;
         public int points;
         public boolean verified;
@@ -26,6 +27,7 @@ public final class Models {
             m.put("email", email);
             m.put("role", role);
             m.put("photoUrl", photoUrl);
+            m.put("bio", bio);
             m.put("badges", badges);
             m.put("points", points);
             m.put("verified", verified);

@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardBackgroundColor="@drawable/bg_modern_card"
+                app:cardBackgroundColor="@color/card"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp">
 
@@ -110,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardBackgroundColor="@drawable/bg_modern_card"
+                app:cardBackgroundColor="@color/card"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp">
 
@@ -209,5 +209,26 @@
         android:visibility="gone"
         app:indicatorColor="@color/looplab_blue"
         app:trackColor="@color/muted" />
+
+    <!-- Floating Action Button for Adding Events -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddEvent"
+        android:layout_width="71dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="112dp"
+        android:src="@drawable/ic_add"
+        android:translationY="-80dp"
+        app:backgroundTint="@color/primary"
+        app:fabCustomSize="70dp"
+        app:fabSize="auto"
+        app:layout_dodgeInsetEdges="bottom"
+        app:maxImageSize="30dp"
+        app:tint="@color/white" />
+
+
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
