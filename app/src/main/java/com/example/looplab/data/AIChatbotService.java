@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -51,6 +54,22 @@ public class AIChatbotService {
         }
     }
 
+    public AIChatbotService() {
+        this.client = new OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(true)
+                .build();
+        this.gson = new Gson();
+        this.prefs = null; // No context needed for new interface
+        this.mainHandler = new Handler(Looper.getMainLooper());
+        this.conversationHistory = new ArrayList<>();
+
+        // Ensure API key configured
+        ensureDefaultApiKey();
+    }
+
     public AIChatbotService(Context context) {
         this.client = new OkHttpClient.Builder()
                 .connectTimeout(30, TimeUnit.SECONDS)
@@ -68,6 +87,28 @@ public class AIChatbotService {
 
         // Load conversation history on initialization
         loadConversationHistory();
+    }
+
+    // New simplified interface for AIChatActivity
+    public void sendMessage(String message, Callback callback) {
+        if (message == null || message.trim().isEmpty()) {
+            return;
+        }
+
+        // Get API key dynamically
+        String apiKey = getApiKey();
+        if (apiKey == null || apiKey.isEmpty()) {
+            return;
+        }
+
+        // Create dynamic system prompt (default to student role)
+        String systemPrompt = createDynamicSystemPrompt("student");
+
+        // Create request body
+        JsonObject requestBody = createRequestBody(systemPrompt, message);
+
+        // Execute request
+        executeRequest(requestBody, apiKey, callback);
     }
 
     public interface ChatbotCallback {
@@ -104,6 +145,28 @@ public class AIChatbotService {
 
         // Execute request asynchronously
         executeRequest(requestBody, apiKey, callback);
+    }
+
+    private void executeRequest(JsonObject requestBody, String apiKey, Callback callback) {
+        RequestBody body = RequestBody.create(requestBody.toString(), JSON);
+        Request request = new Request.Builder()
+                .url(GEMINI_API_URL + "?key=" + apiKey)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("User-Agent", "LoopLab-Android-App/1.0")
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(@NonNull okhttp3.Call call, @NonNull IOException e) {
+                callback.onFailure(call, e);
+            }
+
+            @Override
+            public void onResponse(@NonNull okhttp3.Call call, @NonNull okhttp3.Response response) throws IOException {
+                callback.onResponse(call, response);
+            }
+        });
     }
 
     private void executeRequest(JsonObject requestBody, String apiKey, ChatbotCallback callback) {
@@ -301,6 +364,7 @@ public class AIChatbotService {
     }
 
     private void saveConversationHistory() {
+        if (prefs == null) return; // Can't save without context
         try {
             String historyJson = gson.toJson(conversationHistory);
             prefs.edit().putString("chat_history", historyJson).apply();
@@ -310,6 +374,7 @@ public class AIChatbotService {
     }
 
     private void loadConversationHistory() {
+        if (prefs == null) return; // Can't load without context
         try {
             String historyJson = prefs.getString("chat_history", "[]");
             ChatMessage[] messages = gson.fromJson(historyJson, ChatMessage[].class);
@@ -332,13 +397,22 @@ public class AIChatbotService {
         }
     }
 
-    private String getApiKey() {
-        return prefs.getString("gemini_api_key", "");
+    public String getApiKey() {
+        if (prefs != null) {
+            return prefs.getString("gemini_api_key", "");
+        } else {
+            // For the new constructor without context, return the default API key
+            return DEFAULT_API_KEY;
+        }
     }
 
     // Public methods for configuration and management
     public void setApiKey(String apiKey) {
-        prefs.edit().putString("gemini_api_key", apiKey != null ? apiKey.trim() : "").apply();
+        if (prefs != null) {
+            prefs.edit().putString("gemini_api_key", apiKey != null ? apiKey.trim() : "").apply();
+        }
+        // For the new constructor without context, we can't save the API key
+        // but we can still use the provided one
     }
 
     public boolean isConfigured() {
@@ -354,7 +428,9 @@ public class AIChatbotService {
 
     public void clearConversationHistory() {
         conversationHistory.clear();
-        prefs.edit().remove("chat_history").apply();
+        if (prefs != null) {
+            prefs.edit().remove("chat_history").apply();
+        }
     }
 
     public List<ChatMessage> getConversationHistory() {
@@ -362,10 +438,12 @@ public class AIChatbotService {
     }
 
     public void updateConfiguration(double temperature, int maxTokens) {
-        prefs.edit()
-                .putFloat("ai_temperature", (float) temperature)
-                .putInt("ai_max_tokens", maxTokens)
-                .apply();
+        if (prefs != null) {
+            prefs.edit()
+                    .putFloat("ai_temperature", (float) temperature)
+                    .putInt("ai_max_tokens", maxTokens)
+                    .apply();
+        }
     }
 
     private String handleErrorResponse(Response response) {

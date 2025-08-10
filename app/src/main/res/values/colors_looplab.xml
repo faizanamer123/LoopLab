@@ -197,6 +197,7 @@
     <!-- ========================= -->
     <color name="transparent">#00000000</color>
     <color name="semi_transparent">#80000000</color>
+    <!-- white and black are defined in colors.xml -->
 
     <!-- Gray Scale -->
     <color name="gray_50">#F9FAFB</color>
