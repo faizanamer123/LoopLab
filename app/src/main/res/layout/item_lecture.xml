@@ -6,44 +6,46 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="8dp"
     android:layout_marginVertical="4dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="2dp"
-    app:cardBackgroundColor="@color/surface"
-    app:strokeWidth="1dp"
-    app:strokeColor="@color/outline">
+    app:cardBackgroundColor="#D6A1FF"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@android:color/transparent"
+    app:strokeWidth="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        android:padding="16dp">
 
         <!-- Play Button -->
         <FrameLayout
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/bg_play_button"
+            android:background="@null"
             android:gravity="center">
 
             <ImageView
                 android:id="@+id/ivPlayButton"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:contentDescription="Play lecture"
                 android:src="@drawable/ic_play"
-                android:tint="@color/white"
-                android:contentDescription="Play lecture" />
+                android:tint="#000000" />
 
             <!-- Progress Circle for Completed Lectures -->
             <ImageView
                 android:id="@+id/ivCompleted"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:contentDescription="Lecture completed"
                 android:src="@drawable/ic_check_circle"
-                android:tint="@color/success"
-                android:visibility="gone"
-                android:contentDescription="Lecture completed" />
+                android:tint="#000000"
+                android:visibility="gone" />
 
         </FrameLayout>
 
@@ -58,21 +60,24 @@
                 android:id="@+id/tvTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lecture title"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/text_primary"
+                android:ellipsize="end"
+                android:fontFamily="@font/manrope_bold"
                 android:maxLines="2"
-                android:ellipsize="end" />
+                android:text="Lecture title"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvMeta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:fontFamily="@font/manrope_medium"
                 android:text="10m"
-                android:textSize="14sp"
-                android:textColor="@color/text_secondary" />
+                android:textColor="#000000"
+                android:alpha="0.7"
+                android:textSize="14sp" />
 
             <!-- Progress Bar for Current Lecture -->
             <LinearLayout
@@ -86,26 +91,28 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <com.google.android.material.progressindicator.LinearProgressIndicator
                         android:id="@+id/lectureProgressBar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginEnd="8dp"
-                        app:trackCornerRadius="4dp"
-                        app:indicatorColor="@color/primary"
-                        app:trackColor="@color/surface_variant" />
+                        android:layout_weight="1"
+                        app:indicatorColor="#000000"
+                        app:trackColor="#4D000000"
+                        app:trackCornerRadius="4dp" />
 
                     <TextView
                         android:id="@+id/tvProgressText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_medium"
                         android:text="0%"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_secondary" />
+                        android:textColor="#000000"
+                        android:alpha="0.7"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -119,13 +126,12 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="8dp"
+            android:contentDescription="Lecture status"
             android:src="@drawable/ic_lock_modern"
-            android:tint="@color/text_secondary"
-            android:visibility="gone"
-            android:contentDescription="Lecture status" />
+            android:tint="#000000"
+            android:alpha="0.7"
+            android:visibility="gone" />
 
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>
-
-
