@@ -86,6 +86,7 @@ public final class Models {
         public int order;
         public long createdAt;
         public boolean isPublished;
+        public boolean completed; // Added completed property
 
         public Map<String, Object> toMap() {
             Map<String, Object> m = new HashMap<>();
@@ -99,6 +100,7 @@ public final class Models {
             m.put("order", order);
             m.put("createdAt", createdAt);
             m.put("isPublished", isPublished);
+            m.put("completed", completed); // Added completed to map
             return m;
         }
     }
@@ -134,6 +136,7 @@ public final class Models {
         public int watchTime; // in seconds
         public long lastWatched;
         public long completedAt;
+        public List<String> completedLectures; // List of completed lecture IDs
 
         public Map<String, Object> toMap() {
             Map<String, Object> m = new HashMap<>();
@@ -145,6 +148,7 @@ public final class Models {
             m.put("watchTime", watchTime);
             m.put("lastWatched", lastWatched);
             m.put("completedAt", completedAt);
+            m.put("completedLectures", completedLectures);
             return m;
         }
     }

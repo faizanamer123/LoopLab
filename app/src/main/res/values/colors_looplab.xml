@@ -198,6 +198,10 @@
     <color name="transparent">#00000000</color>
     <color name="semi_transparent">#80000000</color>
 
+    <!-- Common named colors used in layouts -->
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+
     <!-- Gray Scale -->
     <color name="gray_50">#F9FAFB</color>
     <color name="gray_100">#F3F4F6</color>

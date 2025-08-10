@@ -5,6 +5,7 @@
     
     <!-- Background Colors -->
     <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#F5F5F5</color>
     <color name="selection_highlight">#FFBB86FC</color>
 
     <!-- Text Colors -->
@@ -19,10 +20,13 @@
     
     <!-- Card and Divider Colors -->
     <color name="divider">#E0E0E0</color>
+    <color name="outline">#E0E0E0</color>
     
     <!-- Status Colors -->
     <color name="online">#4CAF50</color>
     <color name="offline">#9E9E9E</color>
+    <!-- success color moved to colors_looplab.xml -->
+    <!-- ripple_light color moved to colors_looplab.xml -->
     
     <!-- Transparent Colors defined in colors_looplab.xml -->
     
@@ -38,9 +42,8 @@
     <color name="text_secondary">#757575</color>
     <color name="text_disabled">#BDBDBD</color>
 
-    <!-- Common named colors used in layouts -->
-    <color name="white">#FFFFFFFF</color>
-    <color name="black">#FF000000</color>
+    <!-- Common named colors - these are defined in colors_looplab.xml -->
+    <!-- white and black colors moved to colors_looplab.xml -->
     
     <!-- Gradient Colors -->
     <color name="gradient_start">#1976D2</color>

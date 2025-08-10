@@ -40,6 +40,11 @@ public class CourseService {
         void onError(String error);
     }
     
+    public interface SingleCourseCallback {
+        void onSuccess(Models.Course course);
+        void onError(String error);
+    }
+    
     // Create a new course (for teachers)
     public void createCourse(Models.Course course, CourseCallback callback) {
         course.id = FirebaseRefs.courses().document().getId();
@@ -101,6 +106,28 @@ public class CourseService {
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Error getting courses", e);
                     callback.onError("Failed to get courses: " + e.getMessage());
+                });
+    }
+    
+    // Get a single course by ID
+    public void getCourse(String courseId, SingleCourseCallback callback) {
+        FirebaseRefs.courses().document(courseId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Models.Course course = documentSnapshot.toObject(Models.Course.class);
+                        if (course != null) {
+                            course.id = documentSnapshot.getId();
+                            callback.onSuccess(course);
+                        } else {
+                            callback.onError("Failed to parse course data");
+                        }
+                    } else {
+                        callback.onError("Course not found");
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error getting course", e);
+                    callback.onError("Failed to get course: " + e.getMessage());
                 });
     }
     
@@ -401,6 +428,36 @@ public class CourseService {
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Error getting course progress", e);
                     callback.onError("Failed to get course progress: " + e.getMessage());
+                });
+    }
+    
+    // Get user progress for a specific course (simplified version)
+    public void getUserProgress(String userId, String courseId, ProgressCallback callback) {
+        FirebaseRefs.progress().whereEqualTo("userId", userId)
+                .whereEqualTo("courseId", courseId)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    Models.Progress userProgress = new Models.Progress();
+                    userProgress.userId = userId;
+                    userProgress.courseId = courseId;
+                    userProgress.completedLectures = new ArrayList<>();
+                    userProgress.watchTime = 0;
+                    
+                    for (var doc : querySnapshot.getDocuments()) {
+                        Models.Progress progress = doc.toObject(Models.Progress.class);
+                        if (progress != null) {
+                            if (progress.completed) {
+                                userProgress.completedLectures.add(progress.lectureId);
+                            }
+                            userProgress.watchTime += progress.watchTime;
+                        }
+                    }
+                    
+                    callback.onSuccess(userProgress);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error getting user progress", e);
+                    callback.onError("Failed to get user progress: " + e.getMessage());
                 });
     }
     
