@@ -99,6 +99,9 @@ public class ChatFragment extends Fragment {
         
         currentUserId = FirebaseAuth.getInstance().getCurrentUser() != null ? 
             FirebaseAuth.getInstance().getCurrentUser().getUid() : null;
+        
+        android.util.Log.d("ChatFragment", "Initialized with currentUserId: " + currentUserId);
+        
         dateFormat = new SimpleDateFormat("EEEE, MMMM d", Locale.getDefault());
     }
 
@@ -197,6 +200,8 @@ public class ChatFragment extends Fragment {
             return;
         }
         
+        android.util.Log.d("ChatFragment", "Loading conversations for user: " + currentUserId);
+        
         // Load user's conversations (map from chats collection when needed)
         // Listen to conversations if available; otherwise fall back to chats
         FirebaseRefs.conversations()
@@ -210,30 +215,63 @@ public class ChatFragment extends Fragment {
                     }
                     
                     if (snap == null || e != null) {
+                        android.util.Log.d("ChatFragment", "Conversations query failed, falling back to chats");
                         // fallback to chats collection if conversations not present
                         loadFromChatsFallback();
                         return;
                     }
                     if (snap.isEmpty()) {
+                        android.util.Log.d("ChatFragment", "No conversations found, falling back to chats");
                         // no conversations documents; use chats
                         loadFromChatsFallback();
                         return;
                     }
                     
+                    android.util.Log.d("ChatFragment", "Found conversations: " + snap.size());
+                    
                     allConversations.clear();
+                    
+                    // Track how many conversations need name resolution
+                    final int[] pendingResolutions = {0};
+                    final boolean[] hasPendingResolutions = {false};
+                    
                     for (DocumentSnapshot d : snap.getDocuments()) {
                         Models.Conversation conv = d.toObject(Models.Conversation.class);
                         if (conv != null) {
                             conv.id = d.getId();
+                            android.util.Log.d("ChatFragment", "Processing conversation: " + conv.id + ", type: " + conv.type + ", name: " + conv.name);
+                            
+                            allConversations.add(conv);
+                            
                             // Ensure 1:1 chat shows other participant name if missing
                             if ("1:1".equals(conv.type) && (conv.name == null || conv.name.isEmpty())) {
-                                resolveOneToOneName(conv);
+                                android.util.Log.d("ChatFragment", "Need to resolve name for 1:1 conversation: " + conv.id);
+                                hasPendingResolutions[0] = true;
+                                pendingResolutions[0]++;
+                                
+                                // Resolve the name and update the counter
+                                resolveOneToOneNameWithCallback(conv, () -> {
+                                    pendingResolutions[0]--;
+                                    android.util.Log.d("ChatFragment", "Name resolution completed for conversation: " + conv.id + ", remaining: " + pendingResolutions[0]);
+                                    // If all resolutions are done, update the UI
+                                    if (pendingResolutions[0] <= 0) {
+                                        if (getActivity() != null) {
+                                            getActivity().runOnUiThread(() -> {
+                                                android.util.Log.d("ChatFragment", "All name resolutions completed, updating UI");
+                                                filterConversations();
+                                            });
+                                        }
+                                    }
+                                });
                             }
-                            allConversations.add(conv);
                         }
                     }
                     
-                    filterConversations();
+                    // If no conversations need name resolution, update UI immediately
+                    if (!hasPendingResolutions[0]) {
+                        android.util.Log.d("ChatFragment", "No name resolutions needed, updating UI immediately");
+                        filterConversations();
+                    }
                 });
     }
 
@@ -249,10 +287,20 @@ public class ChatFragment extends Fragment {
                         showEmptyState();
                         return;
                     }
+                    
+                    android.util.Log.d("ChatFragment", "Loading conversations from chats fallback, found: " + snap.size());
+                    
                     allConversations.clear();
+                    
+                    // Track how many conversations need name resolution
+                    final int[] pendingResolutions = {0};
+                    final boolean[] hasPendingResolutions = {false};
+                    
                     for (DocumentSnapshot d : snap.getDocuments()) {
                         com.example.looplab.data.model.Models.Chat c = d.toObject(com.example.looplab.data.model.Models.Chat.class);
                         if (c != null) {
+                            android.util.Log.d("ChatFragment", "Processing chat: " + d.getId() + ", type: " + c.type + ", name: " + c.name);
+                            
                             Models.Conversation conv = new Models.Conversation();
                             conv.id = c.id != null ? c.id : d.getId();
                             conv.name = c.name != null ? c.name : ("group".equals(c.type) ? "Group" : "");
@@ -263,40 +311,81 @@ public class ChatFragment extends Fragment {
                             conv.lastMessageSender = c.lastMessageSender;
                             conv.createdAt = c.createdAt;
                             conv.isActive = true;
-                            if ("1:1".equals(conv.type) && (conv.name == null || conv.name.isEmpty())) {
-                                resolveOneToOneName(conv);
-                            }
+                            
+                            android.util.Log.d("ChatFragment", "Created conversation: " + conv.id + ", name: " + conv.name + ", participants: " + conv.participants);
+                            
                             allConversations.add(conv);
+                            
+                            // If this is a 1:1 chat without a name, resolve it
+                            if ("1:1".equals(conv.type) && (conv.name == null || conv.name.isEmpty())) {
+                                android.util.Log.d("ChatFragment", "Need to resolve name for 1:1 chat: " + conv.id);
+                                hasPendingResolutions[0] = true;
+                                pendingResolutions[0]++;
+                                
+                                // Resolve the name and update the counter
+                                resolveOneToOneNameWithCallback(conv, () -> {
+                                    pendingResolutions[0]--;
+                                    android.util.Log.d("ChatFragment", "Name resolution completed for chat: " + conv.id + ", remaining: " + pendingResolutions[0]);
+                                    // If all resolutions are done, update the UI
+                                    if (pendingResolutions[0] <= 0) {
+                                        if (getActivity() != null) {
+                                            getActivity().runOnUiThread(() -> {
+                                                android.util.Log.d("ChatFragment", "All name resolutions completed, updating UI");
+                                                filterConversations();
+                                            });
+                                        }
+                                    }
+                                });
+                            }
                         }
                     }
-                    filterConversations();
+                    
+                    // If no conversations need name resolution, update UI immediately
+                    if (!hasPendingResolutions[0]) {
+                        android.util.Log.d("ChatFragment", "No name resolutions needed, updating UI immediately");
+                        filterConversations();
+                    }
                 });
     }
 
     private void filterConversations() {
+        android.util.Log.d("ChatFragment", "Filtering conversations, total: " + allConversations.size());
+        
         List<Models.Conversation> filteredConversations = new ArrayList<>();
         
         for (Models.Conversation conv : allConversations) {
+            android.util.Log.d("ChatFragment", "Filtering conversation: " + conv.id + ", name: " + conv.name + ", type: " + conv.type);
+            
             boolean matchesSearch = searchQuery.isEmpty() || 
                 conv.name.toLowerCase().contains(searchQuery) ||
                 (conv.lastMessage != null && conv.lastMessage.toLowerCase().contains(searchQuery));
             
             if (matchesSearch) {
                 filteredConversations.add(conv);
+                android.util.Log.d("ChatFragment", "Added to filtered list: " + conv.id + " with name: " + conv.name);
             }
         }
         
-                    // Sort by lastMessageTime desc so latest chats surface
-                    java.util.Collections.sort(filteredConversations, (a,b) -> Long.compare(b.lastMessageTime, a.lastMessageTime));
+        // Sort by lastMessageTime desc so latest chats surface
+        java.util.Collections.sort(filteredConversations, (a,b) -> Long.compare(b.lastMessageTime, a.lastMessageTime));
+        
+        android.util.Log.d("ChatFragment", "Filtered conversations count: " + filteredConversations.size());
         updateConversationsDisplay(filteredConversations);
     }
 
     private void updateConversationsDisplay(List<Models.Conversation> conversations) {
+        android.util.Log.d("ChatFragment", "Updating conversations display with " + conversations.size() + " conversations");
+        
         if (conversations.isEmpty()) {
             showEmptyState();
         } else {
             hideEmptyState();
             adapter.submitList(conversations);
+            
+            // Log each conversation being displayed
+            for (Models.Conversation conv : conversations) {
+                android.util.Log.d("ChatFragment", "Displaying conversation: " + conv.id + " with name: " + conv.name);
+            }
         }
     }
 
@@ -470,19 +559,49 @@ public class ChatFragment extends Fragment {
         startActivity(i);
     }
 
-    // Resolve display name for 1:1 chats where name is missing
-    private void resolveOneToOneName(Models.Conversation conv) {
-        if (conv == null || conv.participants == null || conv.participants.size() != 2) return;
-        if (conv.name != null && !conv.name.isEmpty()) return;
+
+
+    // Overload for callback-based resolution
+    private void resolveOneToOneNameWithCallback(Models.Conversation conv, Runnable onComplete) {
+        if (conv == null || conv.participants == null || conv.participants.size() != 2) {
+            onComplete.run(); // No-op if not a 1:1
+            return;
+        }
+        if (conv.name != null && !conv.name.isEmpty()) {
+            onComplete.run(); // Already resolved
+            return;
+        }
+
+        // Debug logging
+        android.util.Log.d("ChatFragment", "Resolving name for conversation: " + conv.id);
+        android.util.Log.d("ChatFragment", "Current user ID: " + currentUserId);
+        android.util.Log.d("ChatFragment", "Participants: " + conv.participants);
+
         String otherId = conv.participants.get(0).equals(currentUserId) ? conv.participants.get(1) : conv.participants.get(0);
+        
+        android.util.Log.d("ChatFragment", "Other participant ID: " + otherId);
+        
         FirebaseRefs.users().document(otherId).get()
                 .addOnSuccessListener(doc -> {
-                    Models.UserProfile u = doc.toObject(Models.UserProfile.class);
-                    String display = (u != null && u.name != null && !u.name.isEmpty()) ? u.name : "Chat";
-                    conv.name = display;
-                    // Trigger UI refresh
-                    filterConversations();
-        });
+                    if (doc.exists()) {
+                        Models.UserProfile u = doc.toObject(Models.UserProfile.class);
+                        String display = (u != null && u.name != null && !u.name.isEmpty()) ? u.name : "Chat";
+                        conv.name = display;
+                        
+                        android.util.Log.d("ChatFragment", "Set conversation name to: " + display + " for user: " + otherId);
+                        
+                        onComplete.run(); // Call the callback after resolution
+                    } else {
+                        conv.name = "Chat";
+                        android.util.Log.d("ChatFragment", "User document not found, set name to: Chat");
+                        onComplete.run(); // Call the callback after resolution
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    conv.name = "Chat";
+                    android.util.Log.d("ChatFragment", "Error resolving name: " + e.getMessage());
+                    onComplete.run(); // Call the callback after resolution
+                });
     }
 
     @Override
