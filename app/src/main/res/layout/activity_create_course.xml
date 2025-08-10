@@ -3,28 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient_primary">
+    android:background="#FFFFFF">
 
     <!-- Header -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        app:elevation="0dp">
+        app:elevation="0dp"
+        android:fitsSystemWindows="true">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@android:color/transparent"
-            app:contentInsetStart="0dp"
-            app:contentInsetEnd="0dp">
+            app:contentInsetEnd="0dp"
+            app:contentInsetStart="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp">
 
@@ -33,19 +34,20 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_back"
                     android:contentDescription="Back"
-                    android:tint="@color/white" />
+                    android:src="@drawable/ic_back"
+                    android:tint="#000000" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/manrope_bold"
+                    android:gravity="center"
                     android:text="Create New Course"
-                    android:textColor="@color/white"
+                    android:textColor="#000000"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:gravity="center" />
+                    android:textStyle="bold" />
 
                 <View
                     android:layout_width="48dp"
@@ -69,14 +71,15 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Header Section -->
+            <!-- Header Section (Hidden as per new design) -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardBackgroundColor="@color/card"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp">
+                android:visibility="gone"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -87,19 +90,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
                         android:text="Create New Course"
-                        android:textColor="@color/foreground"
+                        android:textColor="#000000"
                         android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="8dp" />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:lineSpacingMultiplier="1.2"
                         android:text="Fill in the details below to create a new course for your students."
-                        android:textColor="@color/muted_foreground"
-                        android:textSize="16sp"
-                        android:lineSpacingMultiplier="1.2" />
+                        android:textColor="#80000000"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
@@ -110,9 +113,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardBackgroundColor="@color/card"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp">
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -123,145 +126,156 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/manrope_bold"
                         android:text="Course Details"
-                        android:textColor="@color/foreground"
+                        android:textColor="#000000"
                         android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="16dp" />
+                        android:textStyle="bold" />
 
                     <!-- Course Title -->
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:hint="Course Title"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        app:boxBackgroundColor="@android:color/transparent"
-                        app:boxCornerRadiusTopStart="12dp"
-                        app:boxCornerRadiusTopEnd="12dp"
-                        app:boxCornerRadiusBottomStart="12dp"
-                        app:boxCornerRadiusBottomEnd="12dp"
-                        app:boxStrokeColor="@color/looplab_blue"
-                        app:hintTextColor="@color/looplab_blue"
-                        app:startIconDrawable="@drawable/ic_book"
-                        app:startIconTint="@color/looplab_blue">
+                        android:textColorHint="#80000000"
+                        app:boxBackgroundColor="#FFFFFF"
+                        app:boxCornerRadiusBottomEnd="20dp"
+                        app:boxCornerRadiusBottomStart="20dp"
+                        app:boxCornerRadiusTopEnd="20dp"
+                        app:boxCornerRadiusTopStart="20dp"
+                        app:boxStrokeColor="#000000"
+                        app:boxStrokeWidth="2dp"
+                        app:hintTextColor="#80000000"
+                        app:startIconDrawable="@null">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etCourseTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:textColor="@color/foreground"
+                            android:fontFamily="@font/manrope_medium"
+                            android:inputType="textCapWords"
+                            android:textColor="#000000"
                             android:textSize="16sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Course Description -->
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:hint="Course Description"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        app:boxBackgroundColor="@android:color/transparent"
-                        app:boxCornerRadiusTopStart="12dp"
-                        app:boxCornerRadiusTopEnd="12dp"
-                        app:boxCornerRadiusBottomStart="12dp"
-                        app:boxCornerRadiusBottomEnd="12dp"
-                        app:boxStrokeColor="@color/looplab_blue"
-                        app:hintTextColor="@color/looplab_blue"
-                        app:startIconDrawable="@drawable/ic_chat"
-                        app:startIconTint="@color/looplab_blue">
+                        android:textColorHint="#80000000"
+                        app:boxBackgroundColor="#FFFFFF"
+                        app:boxCornerRadiusBottomEnd="20dp"
+                        app:boxCornerRadiusBottomStart="20dp"
+                        app:boxCornerRadiusTopEnd="20dp"
+                        app:boxCornerRadiusTopStart="20dp"
+                        app:boxStrokeColor="#000000"
+                        app:boxStrokeWidth="2dp"
+                        app:hintTextColor="#80000000"
+                        app:startIconDrawable="@null">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etCourseDescription"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textMultiLine"
-                            android:minLines="3"
+                            android:fontFamily="@font/manrope_medium"
+                            android:inputType="textMultiLine|textCapSentences"
                             android:maxLines="5"
-                            android:textColor="@color/foreground"
+                            android:minLines="3"
+                            android:textColor="#000000"
                             android:textSize="16sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Number of Lectures -->
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:hint="Number of Lectures"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        app:boxBackgroundColor="@android:color/transparent"
-                        app:boxCornerRadiusTopStart="12dp"
-                        app:boxCornerRadiusTopEnd="12dp"
-                        app:boxCornerRadiusBottomStart="12dp"
-                        app:boxCornerRadiusBottomEnd="12dp"
-                        app:boxStrokeColor="@color/looplab_blue"
-                        app:hintTextColor="@color/looplab_blue"
-                        app:startIconDrawable="@drawable/ic_video"
-                        app:startIconTint="@color/looplab_blue">
+                        android:textColorHint="#80000000"
+                        app:boxBackgroundColor="#FFFFFF"
+                        app:boxCornerRadiusBottomEnd="20dp"
+                        app:boxCornerRadiusBottomStart="20dp"
+                        app:boxCornerRadiusTopEnd="20dp"
+                        app:boxCornerRadiusTopStart="20dp"
+                        app:boxStrokeColor="#000000"
+                        app:boxStrokeWidth="2dp"
+                        app:hintTextColor="#80000000"
+                        app:startIconDrawable="@null">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etLectureCount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_medium"
                             android:inputType="number"
-                            android:textColor="@color/foreground"
+                            android:textColor="#000000"
                             android:textSize="16sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Category Spinner -->
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:hint="Category"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                        app:boxBackgroundColor="@android:color/transparent"
-                        app:boxCornerRadiusTopStart="12dp"
-                        app:boxCornerRadiusTopEnd="12dp"
-                        app:boxCornerRadiusBottomStart="12dp"
-                        app:boxCornerRadiusBottomEnd="12dp"
-                        app:boxStrokeColor="@color/looplab_blue"
-                        app:hintTextColor="@color/looplab_blue"
-                        app:startIconDrawable="@drawable/ic_category"
-                        app:startIconTint="@color/looplab_blue">
+                        android:textColorHint="#80000000"
+                        app:boxBackgroundColor="#FFFFFF"
+                        app:boxCornerRadiusBottomEnd="20dp"
+                        app:boxCornerRadiusBottomStart="20dp"
+                        app:boxCornerRadiusTopEnd="20dp"
+                        app:boxCornerRadiusTopStart="20dp"
+                        app:boxStrokeColor="#000000"
+                        app:boxStrokeWidth="2dp"
+                        app:hintTextColor="#80000000"
+                        app:startIconDrawable="@null">
 
                         <AutoCompleteTextView
                             android:id="@+id/spinnerCategory"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_medium"
                             android:inputType="none"
-                            android:textColor="@color/foreground"
+                            android:textColor="#000000"
                             android:textSize="16sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Difficulty Spinner -->
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="24dp"
                         android:hint="Difficulty Level"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                        app:boxBackgroundColor="@android:color/transparent"
-                        app:boxCornerRadiusTopStart="12dp"
-                        app:boxCornerRadiusTopEnd="12dp"
-                        app:boxCornerRadiusBottomStart="12dp"
-                        app:boxCornerRadiusBottomEnd="12dp"
-                        app:boxStrokeColor="@color/looplab_blue"
-                        app:hintTextColor="@color/looplab_blue"
-                        app:startIconDrawable="@drawable/ic_star"
-                        app:startIconTint="@color/looplab_blue">
+                        android:textColorHint="#80000000"
+                        app:boxBackgroundColor="#FFFFFF"
+                        app:boxCornerRadiusBottomEnd="20dp"
+                        app:boxCornerRadiusBottomStart="20dp"
+                        app:boxCornerRadiusTopEnd="20dp"
+                        app:boxCornerRadiusTopStart="20dp"
+                        app:boxStrokeColor="#000000"
+                        app:boxStrokeWidth="2dp"
+                        app:hintTextColor="#80000000"
+                        app:startIconDrawable="@null">
 
                         <AutoCompleteTextView
                             android:id="@+id/spinnerDifficulty"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_medium"
                             android:inputType="none"
-                            android:textColor="@color/foreground"
+                            android:textColor="#000000"
                             android:textSize="16sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -270,31 +284,38 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="end">
+                        android:gravity="end"
+                        android:orientation="horizontal">
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnCancel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/Widget.Material3.Button.UnelevatedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manrope_semibold"
                             android:text="Cancel"
-                            android:textColor="@color/looplab_blue"
-                            style="@style/Widget.Material3.Button.OutlinedButton"
-                            app:cornerRadius="20dp"
-                            app:strokeColor="@color/looplab_blue"
-                            android:layout_marginEnd="12dp" />
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            app:backgroundTint="#A0C3F9"
+                            app:cornerRadius="30dp"
+                            app:strokeColor="@null" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnCreateCourse"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/Widget.Material3.Button.UnelevatedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manrope_semibold"
                             android:text="Create Course"
-                            android:textColor="@color/white"
-                            app:backgroundTint="@color/looplab_blue"
-                            app:cornerRadius="20dp"
-                            app:icon="@drawable/ic_add"
-                            app:iconGravity="textStart"
-                            app:iconPadding="8dp" />
+                            android:textColor="#FFFFFF"
+                            android:textSize="13sp"
+                            app:backgroundTint="#000000"
+                            app:cornerRadius="30dp"
+                            app:icon="@null" />
 
                     </LinearLayout>
 

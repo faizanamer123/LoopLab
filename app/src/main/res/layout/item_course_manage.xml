@@ -1,74 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="12dp"
-    android:layout_marginVertical="6dp"
-    android:background="@drawable/bg_modern_card">
+    android:padding="16dp"
+    android:layout_marginVertical="8dp"
+    android:background="#BEF294">
 
     <ImageView
         android:id="@+id/ivThumb"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
+        android:layout_width="70dp"
+        android:layout_height="80dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_courses" />
+        android:src="@drawable/mailbox" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:paddingStart="12dp">
+        android:paddingStart="16dp">
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:fontFamily="@font/manrope_bold"
+            android:textColor="#000000"
+            android:textSize="16sp"
             android:text="Course Title" />
 
         <TextView
             android:id="@+id/tvMeta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Meta" />
+            android:fontFamily="@font/manrope_medium"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:text="Meta Information" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/swPublish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope_semibold"
+            android:textColor="#000000"
             android:text="Published" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnThumb"
+                style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_semibold"
                 android:text="Thumbnail"
-                style="@style/Widget.Material3.Button.OutlinedButton" />
+                android:textColor="#000000"
+                android:textSize="10sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnEdit"
+                style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_semibold"
                 android:text="Edit"
-                style="@style/Widget.Material3.Button.OutlinedButton" />
+                android:textColor="#000000"
+                android:textSize="10sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnOpen"
+                style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_semibold"
                 android:text="Open"
-                style="@style/Widget.Material3.Button.OutlinedButton" />
+                android:textColor="#000000"
+                android:textSize="10sp" />
         </LinearLayout>
 
     </LinearLayout>
 
 </LinearLayout>
-
-
