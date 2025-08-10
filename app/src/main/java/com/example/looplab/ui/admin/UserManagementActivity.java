@@ -13,7 +13,7 @@ import com.example.looplab.R;
 import com.example.looplab.data.FirebaseRefs;
 import com.example.looplab.data.model.Models;
 import com.example.looplab.ui.lists.UsersAdapter;
-import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
@@ -30,7 +30,7 @@ public class UserManagementActivity extends AppCompatActivity {
     private UsersAdapter adapter;
     private TextInputEditText etSearch;
     private ChipGroup chipGroupFilters;
-    private MaterialButton btnAddUser;
+    private FloatingActionButton btnAddUser;
     private String currentFilter = "all";
 
     @Override
