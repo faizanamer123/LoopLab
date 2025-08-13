@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="16dp"
-    app:cardBackgroundColor="@color/card"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="4dp"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?attr/selectableItemBackground">
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="#A0C3F9"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,8 +21,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
 
             <!-- Profile Picture -->
             <FrameLayout
@@ -34,9 +34,10 @@
                     android:id="@+id/ivProfilePicture"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_profile"
-                    android:background="@drawable/bg_progress_overlay" />
+                    app:tint="#6E94C9" />
 
             </FrameLayout>
 
@@ -45,27 +46,29 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:fontFamily="@font/manrope_bold"
                     android:text="User Name"
-                    android:textColor="@color/foreground"
+                    android:textColor="#000000"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="4dp" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/manrope_medium"
                     android:text="user@email.com"
-                    android:textColor="@color/muted_foreground"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="8dp" />
+                    android:textColor="#6E94C9"
+                    android:textSize="14sp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -76,22 +79,26 @@
                         android:id="@+id/chipRole"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/manrope_semibold"
                         android:text="STUDENT"
+                        android:textColor="#FFFFFF"
                         android:textSize="10sp"
-                        android:textColor="@color/white"
-                        app:chipBackgroundColor="@color/success"
+                        app:chipBackgroundColor="#6E94C9"
                         app:chipMinHeight="24dp"
-                        android:layout_marginEnd="8dp" />
+                        app:chipStrokeWidth="0dp" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_semibold"
                         android:text="ACTIVE"
+                        android:textColor="#FFFFFF"
                         android:textSize="10sp"
-                        android:textColor="@color/white"
-                        app:chipBackgroundColor="@color/success"
-                        app:chipMinHeight="24dp" />
+                        app:chipBackgroundColor="#6E94C9"
+                        app:chipMinHeight="24dp"
+                        app:chipStrokeWidth="0dp" />
 
                 </LinearLayout>
 
@@ -103,16 +110,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tvPoints"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/manrope_bold"
                 android:text="1250 pts"
-                android:textColor="@color/looplab_blue"
+                android:textColor="#000000"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -124,50 +132,38 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnEdit"
+                    style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/manrope_semibold"
                     android:text="Edit"
+                    android:textColor="#6E94C9"
                     android:textSize="12sp"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    app:cornerRadius="16dp"
-                    app:strokeColor="@color/looplab_blue"
-                    android:textColor="@color/looplab_blue"
-                    app:icon="@drawable/ic_edit"
-                    app:iconSize="14dp"
-                    app:iconGravity="textStart"
-                    app:iconPadding="4dp"
-                    android:layout_marginEnd="8dp" />
+                    app:icon="@null" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnToggleStatus"
+                    style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/manrope_semibold"
                     android:text="Deactivate"
+                    android:textColor="#6E94C9"
                     android:textSize="12sp"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    app:cornerRadius="16dp"
-                    app:strokeColor="@color/warning"
-                    android:textColor="@color/warning"
-                    app:icon="@drawable/ic_person"
-                    app:iconSize="14dp"
-                    app:iconGravity="textStart"
-                    app:iconPadding="4dp"
-                    android:layout_marginEnd="8dp" />
+                    app:icon="@null" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnDelete"
+                    style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_semibold"
                     android:text="Delete"
+                    android:textColor="#AF3232"
                     android:textSize="12sp"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    app:cornerRadius="16dp"
-                    app:strokeColor="@color/error"
-                    android:textColor="@color/error"
-                    app:icon="@drawable/ic_delete"
-                    app:iconSize="14dp"
-                    app:iconGravity="textStart"
-                    app:iconPadding="4dp" />
+                    app:icon="@null" />
 
             </LinearLayout>
 

@@ -248,8 +248,8 @@
     <!-- ========================= -->
 
     <style name="Widget.LoopLab.BottomNavigation" parent="Widget.Material3.BottomNavigationView">
-        <item name="itemIconTint">@color/bottom_nav_item_tint</item>
-        <item name="itemTextColor">@color/bottom_nav_item_tint</item>
+        <item name="itemIconTint">@color/bottom_nav_icon_tint_selector</item>
+        <item name="itemTextColor">@color/bottom_nav_icon_tint_selector</item>
         <item name="itemRippleColor">@color/ripple_light</item>
         <item name="labelVisibilityMode">labeled</item>
         <item name="android:background">@color/card</item>

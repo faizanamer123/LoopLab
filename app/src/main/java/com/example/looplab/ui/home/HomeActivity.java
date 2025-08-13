@@ -1,5 +1,6 @@
 package com.example.looplab.ui.home;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -31,6 +32,16 @@ public class HomeActivity extends AppCompatActivity {
 
         role = getIntent().getStringExtra("role");
         bottomNavigationView = findViewById(R.id.bottomNav);
+        bottomNavigationView.setItemIconTintList(null);
+        try {
+            // This works for newer Material Design versions
+            bottomNavigationView.setItemActiveIndicatorColor(
+                    android.content.res.ColorStateList.valueOf(Color.WHITE)
+            );
+        } catch (Exception e) {
+            // Fallback for older versions - you might need a custom style
+            // The XML approach with app:itemBackground should work instead
+        }
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment fragment;

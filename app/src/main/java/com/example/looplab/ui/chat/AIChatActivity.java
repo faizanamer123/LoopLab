@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.example.looplab.R;
 import com.example.looplab.data.AIChatbotService;
 import com.google.android.material.button.MaterialButton;
@@ -41,10 +42,11 @@ import okhttp3.Response;
 public class AIChatActivity extends AppCompatActivity {
     private static final String TAG = "AIChatActivity";
 
+    private RelativeLayout welcomeContainer;
     private RecyclerView rvMessages;
     private EditText etMessage;
-    private MaterialButton btnSend;
-    private LinearLayout welcomeContainer;
+    private FloatingActionButton btnSend;
+
     private LinearLayout typingIndicator;
     private TextView tvCharCount;
     private TextView tvConfigHint;
@@ -57,22 +59,22 @@ public class AIChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         try {
-        setContentView(R.layout.activity_ai_chat);
+            setContentView(R.layout.activity_ai_chat);
 
             // Initialize AI service
             aiService = new AIChatbotService();
-            
+
             // Initialize views
             initializeViews();
             setupToolbar();
             setupMessageInput();
             setupRecyclerView();
-            
+
             // Check if AI is configured
             checkAIConfiguration();
-            
+
         } catch (Exception e) {
             Log.e(TAG, "Error in onCreate", e);
             showError("Failed to initialize chat", e.getMessage());
@@ -125,7 +127,7 @@ public class AIChatActivity extends AppCompatActivity {
                     int charCount = s.length();
                     tvCharCount.setText(charCount + "/4000");
                     tvCharCount.setVisibility(charCount > 0 ? View.VISIBLE : View.GONE);
-                    
+
                     // Enable/disable send button
                     btnSend.setEnabled(charCount > 0 && !isTyping);
                 }
@@ -219,7 +221,7 @@ public class AIChatActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             String responseBody = response.body().string();
                             String aiResponse = parseAIResponse(responseBody);
-                            
+
                             runOnUiThread(() -> {
                                 showTypingIndicator(false);
                                 if (aiResponse != null) {
@@ -276,16 +278,16 @@ public class AIChatActivity extends AppCompatActivity {
         try {
             messages.add(message);
             adapter.notifyItemInserted(messages.size() - 1);
-            
+
             // Hide welcome container when first message is added
             if (messages.size() == 1) {
                 welcomeContainer.setVisibility(View.GONE);
                 rvMessages.setVisibility(View.VISIBLE);
             }
-            
+
             // Scroll to bottom
             rvMessages.post(() -> rvMessages.smoothScrollToPosition(messages.size() - 1));
-            
+
         } catch (Exception e) {
             Log.e(TAG, "Error adding message", e);
         }
@@ -296,7 +298,7 @@ public class AIChatActivity extends AppCompatActivity {
             isTyping = show;
             typingIndicator.setVisibility(show ? View.VISIBLE : View.GONE);
             btnSend.setEnabled(!show && etMessage.getText().length() > 0);
-            
+
             if (show) {
                 rvMessages.post(() -> rvMessages.smoothScrollToPosition(messages.size()));
             }
@@ -376,7 +378,7 @@ public class AIChatActivity extends AppCompatActivity {
             private final TextView tvAITime;
 
             MessageViewHolder(View itemView) {
-            super(itemView);
+                super(itemView);
 
                 // Initialize views
                 userMessageContainer = itemView.findViewById(R.id.userMessageContainer);

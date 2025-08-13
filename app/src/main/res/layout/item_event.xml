@@ -5,8 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    app:cardBackgroundColor="#FF9292"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    app:strokeWidth="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,8 +20,9 @@
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceHeadline6"
-            android:textColor="@color/text_primary"
+            android:fontFamily="@font/manrope_bold"
+            android:textColor="#000000"
+            android:textSize="20sp"
             tools:text="Tech Conference 2025" />
 
         <TextView
@@ -27,8 +30,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textAppearance="?attr/textAppearanceBody2"
-            android:textColor="@color/text_secondary"
+            android:fontFamily="@font/manrope_semibold"
+            android:textColor="#AF3232"
+            android:textSize="14sp"
             tools:text="Jan 15, 2025 • 10:00 AM" />
 
         <TextView
@@ -36,8 +40,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textAppearance="?attr/textAppearanceBody2"
-            android:textColor="@color/text_secondary"
+            android:fontFamily="@font/manrope_medium"
+            android:textColor="#AF3232"
+            android:textSize="14sp"
             tools:text="Join us for an exciting tech conference featuring the latest innovations in technology." />
 
         <LinearLayout
@@ -48,22 +53,27 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnRegister"
+                style="@style/Widget.Material3.Button.UnelevatedButton"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_height="60dp"
                 android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:fontFamily="@font/manrope_semibold"
                 android:text="@string/register_for_event"
-                android:textColor="@color/white"
-                android:background="@drawable/bg_register_button_ripple"
-                app:backgroundTint="@null" />
+                android:textColor="#FFFFFF"
+                app:backgroundTint="#000000"
+                app:cornerRadius="30dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCalendar"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_semibold"
                 android:text="@string/add_to_calendar"
-                app:strokeColor="@color/primary" />
+                android:textColor="#AF3232"
+                app:strokeColor="@android:color/transparent" />
 
         </LinearLayout>
 
@@ -72,8 +82,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            android:gravity="end">
+            android:gravity="end"
+            android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/btnEdit"
@@ -83,7 +93,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Edit event"
                 android:src="@drawable/ic_edit"
-                android:tint="@color/primary" />
+                android:tint="#AF3232" />
 
             <ImageButton
                 android:id="@+id/btnDelete"
@@ -92,7 +102,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Delete event"
                 android:src="@drawable/ic_delete"
-                android:tint="@color/error" />
+                android:tint="#AF3232" />
 
         </LinearLayout>
 

@@ -5,8 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    app:cardBackgroundColor="#FFDDC1"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    app:strokeWidth="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,8 +25,9 @@
                 android:id="@+id/tvCourseTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                android:textColor="@color/text_primary"
+                android:fontFamily="@font/manrope_bold"
+                android:textColor="#000000"
+                android:textSize="20sp"
                 tools:text="Android Development Course" />
 
             <TextView
@@ -32,8 +35,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="@color/text_secondary"
+                android:fontFamily="@font/manrope_semibold"
+                android:textColor="#D8793F"
+                android:textSize="14sp"
                 tools:text="by John Smith" />
 
             <LinearLayout
@@ -46,8 +50,9 @@
                     android:id="@+id/tvLectureCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceCaption"
-                    android:textColor="@color/text_secondary"
+                    android:fontFamily="@font/manrope_medium"
+                    android:textColor="#D8793F"
+                    android:textSize="12sp"
                     tools:text="12 lectures" />
 
                 <TextView
@@ -55,8 +60,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:textAppearance="?attr/textAppearanceCaption"
-                    android:textColor="@color/text_secondary"
+                    android:fontFamily="@font/manrope_medium"
+                    android:textColor="#D8793F"
+                    android:textSize="12sp"
                     tools:text="2.5 hours" />
 
                 <TextView
@@ -64,8 +70,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:textAppearance="?attr/textAppearanceCaption"
-                    android:textColor="@color/text_secondary"
+                    android:fontFamily="@font/manrope_medium"
+                    android:textColor="#D8793F"
+                    android:textSize="12sp"
                     tools:text="Beginner" />
 
             </LinearLayout>
@@ -78,20 +85,26 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnEnroll"
+                    style="@style/Widget.Material3.Button.UnelevatedButton"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_height="60dp"
                     android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/manrope_semibold"
                     android:text="Enroll"
-                    app:backgroundTint="@color/primary" />
+                    android:textColor="#FFFFFF"
+                    app:backgroundTint="#000000"
+                    app:cornerRadius="30dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnPreview"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_semibold"
                     android:text="Preview"
-                    app:strokeColor="@color/primary" />
+                    android:textColor="#D8793F"
+                    app:strokeColor="@android:color/transparent" />
 
             </LinearLayout>
 
@@ -103,8 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/courseInfoContainer"
-            android:layout_marginTop="8dp"
-            android:background="@color/primary"
+            android:background="#FFDDC1"
             android:orientation="horizontal"
             android:padding="8dp"
             android:visibility="gone">
@@ -114,15 +126,17 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/manrope_semibold"
                 android:text="Progress:"
-                android:textColor="@color/on_primary"
+                android:textColor="#000000"
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tvProgressPercent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/on_primary"
+                android:fontFamily="@font/manrope_semibold"
+                android:textColor="#000000"
                 android:textSize="12sp"
                 tools:text="75%" />
 
@@ -130,11 +144,11 @@
                 android:id="@+id/progressBar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:layout_marginStart="8dp"
                 android:layout_gravity="center_vertical"
-                app:indicatorColor="@color/on_primary"
-                app:trackColor="@color/primary_variant" />
+                android:layout_marginStart="8dp"
+                android:layout_weight="2"
+                app:indicatorColor="#000000"
+                app:trackColor="#4D000000" />
 
         </LinearLayout>
 
